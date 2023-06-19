@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using YCore.Exceptions;
 
 namespace YCore.API.IO
 {
@@ -12,7 +13,7 @@ namespace YCore.API.IO
     {
         [JsonPropertyName("error"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public CoreException? Exception { get; set; }
-        [JsonPropertyName("response"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [JsonPropertyName("data"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public object? ResponseObjects { get; set; }
     }
 }

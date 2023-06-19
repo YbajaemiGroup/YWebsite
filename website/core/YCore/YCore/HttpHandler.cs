@@ -1,6 +1,8 @@
 ﻿using System.Net;
 using System.Text.Json;
 using YCore.API;
+using YCore.API.IO;
+using YCore.Exceptions;
 
 namespace YCore
 {
@@ -32,17 +34,17 @@ namespace YCore
                 Logger.Log(LogSeverity.Warning, nameof(HttpHandler), "Cant get handler factory", e);
                 return;
             }
-            Response response = new() { Exception = CoreException.UnknownException };
+//            Response response = new() { Exception = CoreException.UnknownException };
             try
             {
                 IHandler handler = handlerFactory.Create(context);
-                response = handler.ProcessRequest();
+                //response = handler.ProcessRequest();
             }
             catch (Exception e)
             {
                 Logger.Log(LogSeverity.Error, nameof(HttpHandler), "Error", e);
             }
-            JsonSerializer.Serialize(context.Response.OutputStream, response);
+            //JsonSerializer.Serialize(context.Response.OutputStream, response);
             context.Response.OutputStream.Close();
         }
     }
