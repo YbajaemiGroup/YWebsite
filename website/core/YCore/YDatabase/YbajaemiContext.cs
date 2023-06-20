@@ -15,11 +15,10 @@ public partial class YbajaemiContext : DbContext
     }
 
     public YbajaemiContext(string connectionString, DbContextOptions<YbajaemiContext> options)
-        : base(options)
+            : base(options)
     {
         this.connectionString = connectionString;
     }
-
     public virtual DbSet<Game> Games { get; set; }
 
     public virtual DbSet<Image> Images { get; set; }
@@ -131,7 +130,7 @@ public partial class YbajaemiContext : DbContext
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Descr).HasColumnName("descr");
             entity.Property(e => e.GroupNumber).HasColumnName("group_number");
-            entity.Property(e => e.ImageName).HasColumnName("image_name");
+            entity.Property(e => e.ImageId).HasColumnName("image_id");
             entity.Property(e => e.Lose)
                 .HasDefaultValueSql("0")
                 .HasColumnName("lose");
@@ -145,8 +144,8 @@ public partial class YbajaemiContext : DbContext
                 .HasDefaultValueSql("0")
                 .HasColumnName("won");
 
-            entity.HasOne(d => d.ImageNameNavigation).WithMany(p => p.Players)
-                .HasForeignKey(d => d.ImageName)
+            entity.HasOne(d => d.Image).WithMany(p => p.Players)
+                .HasForeignKey(d => d.ImageId)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_player_image");
         });

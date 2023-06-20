@@ -9,7 +9,7 @@ public partial class Player
 
     public string Nickname { get; set; } = null!;
 
-    public int? ImageName { get; set; }
+    public int? ImageId { get; set; }
 
     public string? Descr { get; set; }
 
@@ -25,7 +25,7 @@ public partial class Player
 
     public virtual ICollection<Game> GamePlayer2Navigations { get; set; } = new List<Game>();
 
-    public virtual Image? ImageNameNavigation { get; set; }
+    public virtual Image? Image { get; set; }
 
     public virtual ICollection<Link> Links { get; set; } = new List<Link>();
 }

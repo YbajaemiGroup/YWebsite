@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using YCore.Crypto;
 using YDatabase;
 using YDatabase.Models;
 
@@ -40,114 +36,159 @@ namespace YCore.Data
             _connectionString = connectionString;
         }
 
-        public Game InsertGame(Game game)
+        public async Task<Game> InsertGame(Game game)
         {
-            throw new NotImplementedException();
+            var g = await Context.Games.AddAsync(game);
+            await CommitAsync();
+            return g.Entity;
         }
 
         public Game GetGame(int id)
         {
-            throw new NotImplementedException();
+            return Context.Games.First(g => g.Id == id);
         }
 
         public List<Game> GetGames()
         {
-            throw new NotImplementedException();
+            return Context.Games.ToList();
         }
 
         public Game UpdateGame(Game game)
         {
-            throw new NotImplementedException();
+            return Context.Games.Update(game).Entity;
         }
 
         public Player GetPlayer(int id)
         {
-            throw new NotImplementedException();
+            return Context.Players.First(p => p.Id == id);
         }
 
         public List<Player> GetPlayers()
         {
-            throw new NotImplementedException();
+            return Context.Players.ToList();
         }
 
-        public Player InsertPlayer(Player player)
+        public async Task<Player> InsertPlayer(Player player)
         {
-            throw new NotImplementedException();
+            var p = await Context.Players.AddAsync(player);
+            await CommitAsync();
+            return p.Entity;
         }
 
         public Player UpdatePlayer(Player player)
         {
-            throw new NotImplementedException();
+            return Context.Players.Update(player).Entity;
         }
 
-        public Link InsertLink(Link link)
+        public async Task<Link> InsertLink(Link link)
         {
-            throw new NotImplementedException();
+            var l = await Context.Links.AddAsync(link);
+            await CommitAsync();
+            return l.Entity;
         }
 
         public Link GetLink(int id)
         {
-            throw new NotImplementedException();
+            return Context.Links.First(l => l.Id == id);
         }
 
         public Link GetLinkByPlayerId(int playerId)
         {
-            throw new NotImplementedException();
+            return Context.Links.First(l => l.Player == playerId);
         }
 
         public bool DeleteLink(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var link = GetLink(id);
+                Context.Links.Remove(link);
+                return true;
+            }
+            catch (ArgumentNullException)
+            {
+                return false;
+            }
         }
 
         public List<Link> GetLinks()
         {
-            throw new NotImplementedException();
+            return Context.Links.ToList();
         }
 
         public List<Link> GetPlayerLinks(int playerId)
         {
-            throw new NotImplementedException();
+            return Context.Links.Where(l => l.Player == playerId).ToList();
         }
 
-        public Image InsertImage(Image image)
+        public async Task<Image> InsertImage(Image image)
         {
-            throw new NotImplementedException();
+            var i = await Context.Images.AddAsync(image);
+            await CommitAsync();
+            return i.Entity;
         }
 
         public Image GetImage(int id)
         {
-            throw new NotImplementedException();
+            return Context.Images.First(i => i.Id == id);
         }
 
         public List<Image> GetStaffImages()
         {
-            throw new NotImplementedException();
+            return Context.Images.Where(i => i.IsStaff).ToList();
         }
 
         public Image GetImageByPlayerId(int playerId)
         {
-            throw new NotImplementedException();
+            var player = GetPlayer(playerId);
+            return Context.Images.First(i => i.Id == player.ImageId);
         }
 
         public bool DeleteImage(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var image = GetImage(id);
+                Context.Images.Remove(image);
+                return true;
+            }
+            catch (ArgumentNullException)
+            {
+                return false;
+            }
         }
 
-        public bool CreateToken(string key)
+        public async void CreateToken(string key)
         {
-            throw new NotImplementedException();
+            string hash = YCoreCrypto.GetHash(key);
+            await Context.Tokens.AddAsync(new Token() { Hash = hash });
+            await CommitAsync();
         }
 
         public bool DeleteToken(string key)
         {
-            throw new NotImplementedException();
+            string hash = YCoreCrypto.GetHash(key);
+            try
+            {
+                var token = Context.Tokens.First(t => t.Hash == hash);
+                Context.Tokens.Remove(token);
+                return true;
+            }
+            catch (ArgumentNullException)
+            {
+                return false;
+            }
         }
 
         public bool ValidateToken(string key)
         {
-            throw new NotImplementedException();
+            string hash = YCoreCrypto.GetHash(key);
+            return Context.Tokens.Any(t => t.Hash == hash);
+        }
+
+        public async Task CommitAsync()
+        {
+            await Context.SaveChangesAsync();
         }
     }
 }
