@@ -35,7 +35,7 @@ namespace YCore
 //            Response response = new() { Exception = CoreException.UnknownException };
             try
             {
-                IHandler handler = handlerFactory.Create(context);
+                //IHandler handler = handlerFactory.Create(context);
                 //response = handler.ProcessRequest();
             }
             catch (Exception e)

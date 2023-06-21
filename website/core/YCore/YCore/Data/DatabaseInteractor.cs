@@ -85,7 +85,7 @@ internal class DatabaseInteractor : IDatabaseInteractor
 
     public Player UpdatePlayer(Player player)
     {
-        Logger.Log(LogSeverity.Debug, nameof(DatabaseInteractor), "Player updated.")
+        Logger.Log(LogSeverity.Debug, nameof(DatabaseInteractor), "Player updated.");
         return Context.Players.Update(player).Entity;
     }
 

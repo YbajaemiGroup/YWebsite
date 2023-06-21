@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using YCore.API.HandlerFactories;
 
 namespace YCore.API
 {
@@ -14,11 +15,12 @@ namespace YCore.API
             return url.Split("?")[0].Split("/")[^1];
         }
 
-        private IHandlerFactory GetHandlerFactory(string method)
+        private IHandlerFactory GetHandlerFactory(string method, HttpListenerContext context)
         {
             return method switch
             {
-                "token.create" => throw new NotImplementedException(),
+                "token.create" => new TokenCreateHandlerFactory(context),
+                "token.delete" => new TokenDeleteHandlerFactory(context),
                 _ => throw new ArgumentOutOfRangeException(nameof(method))
             };
         }
@@ -29,7 +31,7 @@ namespace YCore.API
             IHandlerFactory handlerFactory;
             try
             {
-                handlerFactory = GetHandlerFactory(method);
+                handlerFactory = GetHandlerFactory(method, context);
             }
             catch (ArgumentOutOfRangeException e)
             {
