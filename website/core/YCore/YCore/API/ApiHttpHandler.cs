@@ -1,10 +1,13 @@
-﻿using System.Net;
-using YCore.API;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace YCore
+namespace YCore.API
 {
-#warning это класс должен отвечать за определение, api это или нет и вызывать нужный обработчик. Код, что тут есть должен быть полностью переделан
-    internal class HttpHandler
+    internal class ApiHttpHandler
     {
         private string ExtractMethod(string url)
         {
@@ -15,7 +18,8 @@ namespace YCore
         {
             return method switch
             {
-                _ => throw new ArgumentOutOfRangeException()
+                "token.create" => throw new NotImplementedException(),
+                _ => throw new ArgumentOutOfRangeException(nameof(method))
             };
         }
 
@@ -32,10 +36,10 @@ namespace YCore
                 Logger.Log(LogSeverity.Warning, nameof(HttpHandler), "Cant get handler factory", e);
                 return;
             }
-//            Response response = new() { Exception = CoreException.UnknownException };
+            //            Response response = new() { Exception = CoreException.UnknownException };
             try
             {
-                IHandler handler = handlerFactory.Create(context);
+                IHandler handler = handlerFactory.GetHandler();
                 //response = handler.ProcessRequest();
             }
             catch (Exception e)

@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace YCore.API
 {
-    internal interface IHandlerFactory
+    public interface IHandlerFactory
     {
-        IHandler Create(HttpListenerContext context);
+        IHandler GetHandler();
 
     }
 }

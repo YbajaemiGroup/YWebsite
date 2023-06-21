@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using YCore.API.IO;
 
 namespace YCore.API
 {
-    public interface IHandler
+    internal static class Constants
     {
-        Response ProcessRequest();
     }
 }

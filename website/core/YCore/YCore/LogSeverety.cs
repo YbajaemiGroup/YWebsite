@@ -1,10 +1,9 @@
-﻿namespace YCore
+﻿namespace YCore;
+
+public enum LogSeverity
 {
-    enum LogSeverity
-    {
-        Debug,
-        Info,
-        Warning,
-        Error
-    }
+    Debug,
+    Info,
+    Warning,
+    Error
 }

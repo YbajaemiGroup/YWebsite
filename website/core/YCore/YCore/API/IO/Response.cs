@@ -1,9 +1,9 @@
 ﻿using System.Text.Json.Serialization;
-using YCore.Exceptions;
+using YCore.API.IO.Exceptions;
 
 namespace YCore.API.IO
 {
-    internal class Response
+    public class Response
     {
         [JsonPropertyName("error"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public CoreException? Exception { get; set; }
