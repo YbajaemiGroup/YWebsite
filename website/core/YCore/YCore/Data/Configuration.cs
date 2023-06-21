@@ -1,27 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 
 namespace YCore.Data
 {
-    internal static class Configuration
+    internal class Configuration
     {
-        public static string ImagesLocation
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
+        [JsonPropertyName("database_connection_string")]
+        public string DbConnectionString { get; private set; }
 
-        public static string StaffImagesLocation
+        [JsonPropertyName("images_location")]
+        public string ImagesLocation { get; private set; }
+        [JsonPropertyName("staff_images_location")]
+        public string StaffImagesLocation { get; private set; }
+
+        [JsonPropertyName("accepted_listen_addresses")]
+        public List<string> ListenAddresses { get; private set; }
+
+        
+        public Configuration(string dbConnectionString, string imagesLocation, string staffImagesLocation, List<string> listenAddresses)
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            DbConnectionString = dbConnectionString;
+            ImagesLocation = imagesLocation;
+            StaffImagesLocation = staffImagesLocation;
+            ListenAddresses = listenAddresses;
         }
     }
 }

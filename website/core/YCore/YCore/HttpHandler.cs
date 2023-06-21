@@ -2,6 +2,7 @@
 using System.Text.Json;
 using YCore.API;
 using YCore.API.IO;
+using YCore.Data;
 using YCore.Exceptions;
 
 namespace YCore

@@ -8,6 +8,13 @@ namespace YCore.Data.OS
 {
     public class ImagesOperator
     {
+        private string imagesLocation;
+
+        public ImagesOperator(string imagesLocation)
+        {
+            this.imagesLocation = imagesLocation;
+        }
+
         private byte[] ReadAllBytes(Stream reader)
         {
             const int bufferSize = 4096;
@@ -25,7 +32,7 @@ namespace YCore.Data.OS
         {
             try
             {
-                string uri = $"{Configuration.ImagesLocation}/{imageName}";
+                string uri = $"{imagesLocation}/{imageName}";
                 using var file = File.OpenRead(uri);
                 return ReadAllBytes(file);
             }
@@ -52,7 +59,7 @@ namespace YCore.Data.OS
             }
             try
             {
-                string uri = $"{Configuration.ImagesLocation}/{imageName}";
+                string uri = $"{imagesLocation}/{imageName}";
                 using var file = File.Create(uri, bytes.Length);
                 file.Write(bytes, 0, bytes.Length);
                 file.Flush();
@@ -75,7 +82,7 @@ namespace YCore.Data.OS
 
         public bool DeleteImage(string imageName)
         {
-            string uri = $"{Configuration.ImagesLocation}/{imageName}";
+            string uri = $"{imagesLocation}/{imageName}";
             try
             {
                 File.Delete(uri);
