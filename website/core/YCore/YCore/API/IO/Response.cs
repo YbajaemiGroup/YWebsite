@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 using YCore.Exceptions;
 
 namespace YCore.API.IO
@@ -14,6 +8,6 @@ namespace YCore.API.IO
         [JsonPropertyName("error"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public CoreException? Exception { get; set; }
         [JsonPropertyName("data"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public object? ResponseObjects { get; set; }
+        public object? ResponseData { get; set; }
     }
 }

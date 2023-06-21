@@ -8,7 +8,7 @@ namespace YCore.Data.OS
 {
     public class ImagesOperator
     {
-        private string imagesLocation;
+        private readonly string imagesLocation;
 
         public ImagesOperator(string imagesLocation)
         {
