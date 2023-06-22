@@ -1,9 +1,11 @@
 ﻿using System.Net;
+using System.Text.Json;
+using YApiModel;
 using YCore.Data;
 
 namespace YCore.API.HandlerFactories
 {
-    internal abstract class HandlerFactory
+    public abstract class HandlerFactory
     {
         protected string parameters = string.Empty;
 
@@ -34,6 +36,26 @@ namespace YCore.API.HandlerFactories
         protected bool TokenValidated(string token)
         {
             return DatabaseInteractor.Instance().ValidateToken(token);
+        }
+
+        public static T? GetData<T>(HttpListenerContext context) where T : class
+        {
+            using var reader = new StreamReader(context.Request.InputStream);
+            string json = reader.ReadToEnd();
+            try
+            {
+                var request = JsonSerializer.Deserialize<Request>(json);
+                if (request != null)
+                {
+                    var data = JsonSerializer.Deserialize<T>((JsonElement)request.Data);
+                    return data;
+                }
+                return null;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
     }
 }

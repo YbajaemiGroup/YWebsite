@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using YApiModel;
-using YCore.API.IO;
+﻿using YApiModel;
 using YCore.API.IO.Exceptions;
 
 namespace YCore.API.Handlers
 {
-    internal abstract class Handler
+    public abstract class Handler
     {
         protected CoreException? CoreException;
 

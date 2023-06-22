@@ -21,6 +21,7 @@ namespace YCore.API
             {
                 "token.create" => new TokenCreateHandlerFactory(context),
                 "token.delete" => new TokenDeleteHandlerFactory(context),
+                "bracket.updates.set" => new BracketSetUpdatesHandlerFactory(context),
                 _ => throw new ArgumentOutOfRangeException(nameof(method))
             };
         }

@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace YDatabase.Models;
 
 public partial class Game
 {
     public int Id { get; set; }
+
+    public int? UpdationId { get; set; }
 
     public int Player1 { get; set; }
 
@@ -15,7 +18,7 @@ public partial class Game
 
     public bool? IsUpper { get; set; }
 
-    public bool? IsGroup { get; set; }
+    public bool IsGroup { get; set; }
 
     public int? Winner { get; set; }
 

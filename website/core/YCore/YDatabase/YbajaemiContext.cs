@@ -43,6 +43,7 @@ public partial class YbajaemiContext : DbContext
             entity.ToTable("games", "tournier");
 
             entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.UpdationId).HasColumnName("updation_id");
             entity.Property(e => e.IsGroup).HasColumnName("is_group");
             entity.Property(e => e.IsUpper).HasColumnName("is_upper");
             entity.Property(e => e.Player1).HasColumnName("player1");

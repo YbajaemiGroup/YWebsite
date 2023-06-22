@@ -8,6 +8,8 @@ public interface IDatabaseInteractor
     Game GetGame(int id);
     List<Game> GetGames();
     Game UpdateGame(Game game);
+    List<Game> GetGroupGames();
+    List<Game> GetPlayOffGames();
 
     Player GetPlayer(int id);
     List<Player> GetPlayers();

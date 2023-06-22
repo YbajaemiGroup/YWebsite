@@ -7,7 +7,7 @@ namespace YCore.Data;
 /// <summary>
 /// Need LoadConnectionString before creating Instance
 /// </summary>
-internal class DatabaseInteractor : IDatabaseInteractor
+public class DatabaseInteractor : IDatabaseInteractor
 {
     private static DatabaseInteractor? _instance;
 
@@ -45,6 +45,24 @@ internal class DatabaseInteractor : IDatabaseInteractor
         return g.Entity;
     }
 
+    public int GetLastGamesUpdationId()
+    {
+        try
+        {
+            return Context.Games.Where(g => g.UpdationId != null)
+                .Max(g => g.UpdationId) ?? 0;
+        }
+        catch (InvalidOperationException)
+        {
+            return 0;
+        }
+        catch (Exception e)
+        {
+            Logger.Log(LogSeverity.Error, nameof(DatabaseInteractor), "Error occured while taking last updation id.", e);
+            return 0;
+        }
+    }
+
     public Game GetGame(int id)
     {
         Logger.Log(LogSeverity.Debug, nameof(DatabaseInteractor), "Game selected from database.");
@@ -61,6 +79,22 @@ internal class DatabaseInteractor : IDatabaseInteractor
     {
         Logger.Log(LogSeverity.Debug, nameof(DatabaseInteractor), "Game updated.");
         return Context.Games.Update(game).Entity;
+    }
+
+    public List<Game> GetGroupGames()
+    {
+        Logger.Log(LogSeverity.Debug, nameof(DatabaseInteractor), "Group games selected.");
+        return Context.Games.Where(g => g.IsGroup).ToList();
+    }
+
+    public List<Game> GetPlayOffGames()
+    {
+        Logger.Log(LogSeverity.Debug, nameof(DatabaseInteractor), "Play off games selected.");
+        int uid = GetLastGamesUpdationId();
+        return Context.Games
+            .Where(g => !g.IsGroup)
+            .Where(g => g.UpdationId == uid)
+            .ToList();
     }
 
     public Player GetPlayer(int id)
@@ -217,8 +251,15 @@ internal class DatabaseInteractor : IDatabaseInteractor
 
     public async Task CommitAsync()
     {
-        await Context.SaveChangesAsync();
-        Logger.Log(LogSeverity.Debug, nameof(DatabaseInteractor), "Changes saved.");
+        try
+        {
+            await Context.SaveChangesAsync();
+            Logger.Log(LogSeverity.Debug, nameof(DatabaseInteractor), "Changes saved.");
+        }
+        catch (Exception e)
+        {
+            Logger.Log(LogSeverity.Error, nameof(DatabaseInteractor), "Error occured while saving changes in database.", e);
+        }
     }
 
     public async Task WrileLog(LogSeverity logSeverity, string source, string message, Exception? exception = null)
