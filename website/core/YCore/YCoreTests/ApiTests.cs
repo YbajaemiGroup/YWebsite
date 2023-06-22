@@ -1,4 +1,5 @@
-﻿using YApiModel.Models;
+﻿using System.Text.Json;
+using YApiModel.Models;
 using YCore.API.Handlers;
 using YCore.Data;
 
@@ -9,7 +10,7 @@ namespace YCoreTests
         [Fact]
         public async void BracketSetUpdatesHandlerTest()
         {
-            DatabaseInteractor.LoadConnectionString("Host=localhost;Port=5432;Database=ybajaemi;Username=postgres;Password=nioder125;Include Error Detail=true");
+            DatabaseInteractor.LoadConnectionString("");
             var db = DatabaseInteractor.Instance();
             var player1 = await db.InsertPlayer(new()
             {
@@ -38,6 +39,13 @@ namespace YCoreTests
             };
             var bh = new BracketSetUpdatesHandler(bracket);
             bh.ProcessRequest();
+        }
+
+        [Fact]
+        public void BracketGetUpdatesHandlerTest()
+        {
+            DatabaseInteractor.LoadConnectionString("");
+            var resp = new BracketGetUpdatesHandler().ProcessRequest();
         }
     }
 }

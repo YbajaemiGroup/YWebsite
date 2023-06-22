@@ -9,5 +9,5 @@ public class Game
     [JsonPropertyName("player2")]
     public int Player2Id { get; set; }
     [JsonPropertyName("winner")]
-    public int WinnerId { get; set; }
+    public int? WinnerId { get; set; }
 }
