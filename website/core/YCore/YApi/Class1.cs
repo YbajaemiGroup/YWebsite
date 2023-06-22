@@ -1,7 +1,6 @@
-﻿namespace YApi
-{
-    public class Class1
-    {
+﻿namespace YApi;
 
-    }
+public class Class1
+{
+
 }
