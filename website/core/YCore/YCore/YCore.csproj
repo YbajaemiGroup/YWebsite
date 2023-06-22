@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\YApiModel\YApiModel.csproj" />
     <ProjectReference Include="..\YDatabase\YDatabase.csproj" />
   </ItemGroup>
 

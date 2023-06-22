@@ -7,9 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YCore", "YCore\YCore.csproj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YCoreTests", "YCoreTests\YCoreTests.csproj", "{EC39440F-F61E-4C92-96FC-98B64825B819}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YApi", "YApi\YApi.csproj", "{C27BF41F-9702-4A64-A09D-55A1D9B4EB9A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YApi", "YApi\YApi.csproj", "{C27BF41F-9702-4A64-A09D-55A1D9B4EB9A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YDatabase", "YDatabase\YDatabase.csproj", "{32436730-944D-400D-82B5-A65662842073}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YDatabase", "YDatabase\YDatabase.csproj", "{32436730-944D-400D-82B5-A65662842073}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YApiModel", "YApiModel\YApiModel.csproj", "{495FD8A3-2D06-478D-AF9C-A126442467A3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{32436730-944D-400D-82B5-A65662842073}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32436730-944D-400D-82B5-A65662842073}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{32436730-944D-400D-82B5-A65662842073}.Release|Any CPU.Build.0 = Release|Any CPU
+		{495FD8A3-2D06-478D-AF9C-A126442467A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{495FD8A3-2D06-478D-AF9C-A126442467A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{495FD8A3-2D06-478D-AF9C-A126442467A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{495FD8A3-2D06-478D-AF9C-A126442467A3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
