@@ -2,7 +2,7 @@
 
 namespace YCore.Data
 {
-    internal class Configuration
+    public class Configuration
     {
         [JsonPropertyName("database_connection_string")]
         public string DbConnectionString { get; private set; }
