@@ -4,7 +4,7 @@ using YCore.Data;
 
 namespace YCore.API.Handlers
 {
-    internal class TokenCreateHandler : Handler, IHandler
+    public class TokenCreateHandler : Handler, IHandler
     {
         private readonly string _key;
 
@@ -13,7 +13,7 @@ namespace YCore.API.Handlers
             _key = key;
         }
 
-        public void AddTokenToDb()
+        private void AddTokenToDb()
         {
             var db = DatabaseInteractor.Instance();
             try
@@ -28,6 +28,7 @@ namespace YCore.API.Handlers
 
         public Response ProcessRequest()
         {
+            AddTokenToDb();
             return GetResponse(null);
         }
     }

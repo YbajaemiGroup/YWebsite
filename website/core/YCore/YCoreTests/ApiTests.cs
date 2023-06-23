@@ -2,15 +2,17 @@
 using YApiModel.Models;
 using YCore.API.Handlers;
 using YCore.Data;
+using YDatabase.Models;
 
 namespace YCoreTests
 {
     public class ApiTests
     {
+
         [Fact]
         public async void BracketSetUpdatesHandlerTest()
         {
-            DatabaseInteractor.LoadConnectionString("");
+            DatabaseInteractor.LoadConnectionString(Constants.CONNECTION_STRING);
             var db = DatabaseInteractor.Instance();
             var player1 = await db.InsertPlayer(new()
             {
@@ -28,7 +30,7 @@ namespace YCoreTests
                     IsUpper = true,
                     Games = new()
                     {
-                        new Game()
+                        new YApiModel.Models.Game()
                         {
                             Player1Id = player1.Id,
                             Player2Id = player2.Id,
@@ -44,7 +46,7 @@ namespace YCoreTests
         [Fact]
         public void BracketGetUpdatesHandlerTest()
         {
-            DatabaseInteractor.LoadConnectionString("");
+            DatabaseInteractor.LoadConnectionString(Constants.CONNECTION_STRING);
             var resp = new BracketGetUpdatesHandler().ProcessRequest();
         }
     }

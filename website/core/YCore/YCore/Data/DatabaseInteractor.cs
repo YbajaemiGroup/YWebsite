@@ -228,6 +228,7 @@ public class DatabaseInteractor : IDatabaseInteractor
         {
             var token = Context.Tokens.First(t => t.Hash == hash);
             Context.Tokens.Remove(token);
+            CommitAsync().Wait();
             return true;
         }
         catch (ArgumentNullException)
@@ -244,7 +245,7 @@ public class DatabaseInteractor : IDatabaseInteractor
     public bool ValidateToken(string key)
     {
         string hash = YCoreCrypto.GetHash(key);
-        bool validated = Context.Tokens.Any(t => t.Hash == hash);
+        bool validated = Context.Tokens.AsQueryable().Any(t => t.Hash == hash);
         Logger.Log(LogSeverity.Info, nameof(DatabaseInteractor), $"Token {(validated ? "" : "not")} validated.");
         return validated;
     }

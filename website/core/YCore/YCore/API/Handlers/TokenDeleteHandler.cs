@@ -4,7 +4,7 @@ using YCore.Data;
 
 namespace YCore.API.Handlers
 {
-    internal class TokenDeleteHandler : Handler, IHandler
+    public class TokenDeleteHandler : Handler, IHandler
     {
         // token need to delete
         private readonly string _token;
@@ -16,8 +16,7 @@ namespace YCore.API.Handlers
 
         public Response ProcessRequest()
         {
-            DatabaseInteractor.Instance().DeleteToken(_token);
-            return new() { ResponseData = null };
+            return new() { ResponseData = DatabaseInteractor.Instance().DeleteToken(_token) };
         }
     }
 }
