@@ -4,7 +4,7 @@ using YCore.API.IO.Exceptions;
 
 namespace YCore.API.Handlers
 {
-    internal class TokenAuthentificationFailed : IHandler
+    internal class TokenAuthtorizationFailed : IHandler
     {
         public Response ProcessRequest()
         {

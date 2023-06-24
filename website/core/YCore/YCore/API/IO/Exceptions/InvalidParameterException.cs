@@ -9,5 +9,10 @@
             : base(false, CODE, MESSAGE)
         {
         }
+
+        public InvalidParameterException(string parameterName)
+            : base(false, CODE, $"{MESSAGE} Parameter: {parameterName}.")
+        {
+        }
     }
 }

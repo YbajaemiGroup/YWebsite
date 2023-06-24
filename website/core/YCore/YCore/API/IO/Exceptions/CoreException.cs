@@ -9,7 +9,7 @@ using YApiModel;
 
 namespace YCore.API.IO.Exceptions
 {
-    public abstract class CoreException
+    public class CoreException
     {
         [JsonIgnore]
         public bool Expected { get; set; }

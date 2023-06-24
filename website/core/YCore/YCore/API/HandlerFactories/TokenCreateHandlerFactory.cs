@@ -14,7 +14,7 @@ namespace YCore.API.HandlerFactories
             string token = GetParameter("token");
             if (!TokenValidated(token))
             {
-                return new TokenAuthentificationFailed();
+                return new TokenAuthtorizationFailed();
             }
             string key = GetParameter("token_source");
             return new TokenCreateHandler(key);

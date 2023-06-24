@@ -14,7 +14,7 @@ namespace YCore.API.HandlerFactories
             string token = GetParameter("token");
             if (string.IsNullOrEmpty(token) || !TokenValidated(token))
             {
-                return new TokenAuthentificationFailed();
+                return new TokenAuthtorizationFailed();
             }
             string d_token = GetParameter("d_token");
             return new TokenDeleteHandler(d_token);

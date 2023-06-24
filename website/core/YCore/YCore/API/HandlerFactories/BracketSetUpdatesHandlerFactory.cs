@@ -18,7 +18,7 @@ internal class BracketSetUpdatesHandlerFactory : HandlerFactory, IHandlerFactory
         string token = GetParameter("token");
         if (!TokenValidated(token))
         {
-            return new TokenAuthentificationFailed();
+            return new TokenAuthtorizationFailed();
         }
         if (bracket == null)
         {

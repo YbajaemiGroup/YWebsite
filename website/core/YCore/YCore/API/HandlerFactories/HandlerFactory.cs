@@ -7,10 +7,12 @@ namespace YCore.API.HandlerFactories
 {
     public abstract class HandlerFactory
     {
+        protected HttpListenerContext context;
         protected string parameters = string.Empty;
 
         protected HandlerFactory(HttpListenerContext context)
         {
+            this.context = context;
             parameters = context.Request.RawUrl ?? string.Empty;
         }
 
@@ -29,8 +31,13 @@ namespace YCore.API.HandlerFactories
             catch (Exception)
             {
                 Logger.Log(LogSeverity.Info, "HandlerFactory", $"Parameters parse failed. Parameter: {parameterName}.");
-                return string.Empty;
+                throw new ArgumentNullException(nameof(parameterName));
             }
+        }
+
+        protected string GetToken()
+        {
+            return GetParameter("token");
         }
 
         protected bool TokenValidated(string token)
@@ -38,7 +45,7 @@ namespace YCore.API.HandlerFactories
             return DatabaseInteractor.Instance().ValidateToken(token);
         }
 
-        public static T? GetData<T>(HttpListenerContext context) where T : class
+        public T? GetData<T>() where T : class
         {
             using var reader = new StreamReader(context.Request.InputStream);
             string json = reader.ReadToEnd();
