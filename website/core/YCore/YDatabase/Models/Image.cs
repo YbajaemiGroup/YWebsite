@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace YDatabase.Models;
+﻿namespace YDatabase.Models;
 
 public partial class Image
 {

@@ -6,6 +6,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using YApiModel;
+using YCore.API.Handlers;
 
 namespace YCore.API.IO.Exceptions
 {

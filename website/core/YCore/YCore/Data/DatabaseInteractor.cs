@@ -197,21 +197,6 @@ public class DatabaseInteractor : IDatabaseInteractor
         return Context.Images.First(i => i.Id == player.ImageId);
     }
 
-    public bool DeleteImage(int id)
-    {
-        Logger.Log(LogSeverity.Debug, nameof(DatabaseInteractor), "Delete image from database.");
-        try
-        {
-            var image = GetImage(id);
-            Context.Images.Remove(image);
-            return true;
-        }
-        catch (ArgumentNullException)
-        {
-            return false;
-        }
-    }
-
     public async void CreateToken(string key)
     {
         Logger.Log(LogSeverity.Info, nameof(DatabaseInteractor), "Token added in database.");

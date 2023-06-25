@@ -5,11 +5,19 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using YCore.API.HandlerFactories;
+using YCore.Data;
 
 namespace YCore.API
 {
     internal class ApiHttpHandler
     {
+        private Configuration configuration;
+
+        public ApiHttpHandler(Configuration configuration)
+        {
+            this.configuration = configuration;
+        }
+
         private string ExtractMethod(string url)
         {
             return url.Split("?")[0].Split("/")[^1];
@@ -26,6 +34,7 @@ namespace YCore.API
                 "links.get" => new LinksGetHandlerFactory(context),
                 "links.add" => new LinksAddHandlerFactory(context),
                 "links.delete" => new LinksDeleteHandlerFactory(context),
+                "images.load" => new ImagesLoadHandlerFactory(context, configuration.ImagesLocation),
                 _ => throw new ArgumentOutOfRangeException(nameof(method))
             };
         }

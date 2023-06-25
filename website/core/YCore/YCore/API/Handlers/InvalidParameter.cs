@@ -6,6 +6,7 @@ namespace YCore.API.Handlers
     public class InvalidParameter : IHandler
     {
         private readonly string? parameterName;
+        private readonly string? message;
 
         public InvalidParameter()
         {
@@ -16,10 +17,23 @@ namespace YCore.API.Handlers
             this.parameterName = parameterName;
         }
 
+        public InvalidParameter(string parameterName, string message)
+        {
+            this.parameterName = parameterName;
+            this.message = message;
+        }
+
         public Response ProcessRequest()
         {
             if (parameterName != null)
             {
+                if (message != null)
+                {
+                    return new()
+                    {
+                        Exception = new InvalidParameterException(parameterName, message)
+                    };
+                }
                 return new()
                 {
                     Exception = new InvalidParameterException(parameterName)

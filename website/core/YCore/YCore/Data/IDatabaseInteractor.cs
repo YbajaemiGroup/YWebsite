@@ -27,7 +27,6 @@ public interface IDatabaseInteractor
     Image GetImage(int id);
     List<Image> GetStaffImages();
     Image GetImageByPlayerId(int playerId);
-    bool DeleteImage(int id);
 
     void CreateToken(string key);
     bool DeleteToken(string key);
