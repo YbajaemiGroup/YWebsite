@@ -1,6 +1,6 @@
 ﻿namespace YApiModel;
 
-public enum ImageLocation
+public enum ImageType
 {
     Players,
     Resources

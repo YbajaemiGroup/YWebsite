@@ -13,7 +13,7 @@ namespace YCore.API.Handlers
             this.bracket = bracket;
         }
 
-        public Response ProcessRequest()
+        public IResponseSender GetResponseSender()
         {
             var db = DatabaseInteractor.Instance();
             int uid = db.GetLastGamesUpdationId();
@@ -35,7 +35,7 @@ namespace YCore.API.Handlers
                 }
             }
             Task.WaitAll(tasks.ToArray());
-            return GetResponse(null);
+            return GetResponseSender(null);
         }
     }
 }

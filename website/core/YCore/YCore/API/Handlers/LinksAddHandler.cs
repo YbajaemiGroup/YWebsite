@@ -1,4 +1,5 @@
 ﻿using YApiModel;
+using YCore.API.IO;
 using YCore.Data;
 
 namespace YCore.API.Handlers
@@ -12,18 +13,18 @@ namespace YCore.API.Handlers
             this.links = links;
         }
 
-        public Response ProcessRequest()
+        public IResponseSender GetResponseSender()
         {
             var db = DatabaseInteractor.Instance();
             var players = db.GetPlayers();
             var errorLinks = links.Where(l => !players.Any(p => p.Id == l.PlayerId));
             if (errorLinks.Any())
             {
-                return new Response()
+                return new JsonResponseSender(new Response()
                 {
                     Exception = new IO.Exceptions.InvalidDataException("Invalid player id. In data will be list of links with ivalid player id."),
                     ResponseData = errorLinks
-                };
+                });
             }
             var tasks = new List<Task<YDatabase.Models.Link>>();
             foreach (var link in links)
@@ -36,7 +37,7 @@ namespace YCore.API.Handlers
                 }));
             }
             Task.WaitAll(tasks.ToArray());
-            return GetResponse(tasks.Select(t => t.Result));
+            return GetResponseSender(tasks.Select(t => t.Result));
         }
     }
 }

@@ -8,7 +8,8 @@ namespace YCore.API.HandlerFactories
         private string imageName = string.Empty;
         private readonly string imagesLocation;
 
-        public ImagesLoadHandlerFactory(HttpListenerContext context, string imagesLocation) : base(context)
+        public ImagesLoadHandlerFactory(HttpListenerContext context, string imagesLocation) 
+            : base(context)
         {
             this.imagesLocation = imagesLocation;
         }
@@ -37,6 +38,7 @@ namespace YCore.API.HandlerFactories
             {
                 return new DataExpected();
             }
+
             return new ImagesLoadHandler(imageName, imagesLocation, imageBytes);
         }
     }

@@ -1,16 +1,16 @@
-﻿using YApiModel;
+﻿using YCore.API.IO;
 using YCore.API.IO.Exceptions;
 
 namespace YCore.API.Handlers
 {
     internal class DataExpected : IHandler
     {
-        public Response ProcessRequest()
+        public IResponseSender GetResponseSender()
         {
-            return new()
+            return new JsonResponseSender(new()
             {
                 Exception = new DataExpectedException()
-            };
+            });
         }
     }
 }

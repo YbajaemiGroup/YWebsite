@@ -12,11 +12,11 @@ namespace YCore.API.Handlers
             this.linkId = linkId;
         }
 
-        public Response ProcessRequest()
+        public IResponseSender GetResponseSender()
         {
             var db = DatabaseInteractor.Instance();
             db.DeleteLink(linkId);
-            return GetResponse(null);
+            return GetResponseSender(null);
         }
     }
 }

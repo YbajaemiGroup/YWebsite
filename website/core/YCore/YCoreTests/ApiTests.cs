@@ -40,14 +40,14 @@ namespace YCoreTests
                 }
             };
             var bh = new BracketSetUpdatesHandler(bracket);
-            bh.ProcessRequest();
+            bh.GetResponseSender();
         }
 
         [Fact]
         public void BracketGetUpdatesHandlerTest()
         {
             DatabaseInteractor.LoadConnectionString(Constants.CONNECTION_STRING);
-            var resp = new BracketGetUpdatesHandler().ProcessRequest();
+            var resp = new BracketGetUpdatesHandler().GetResponseSender();
         }
     }
 }

@@ -13,7 +13,7 @@ namespace YCore.API.Handlers
     public class BracketGetUpdatesHandler : Handler, IHandler
     {
 #warning протестировать на то, чтобы не было групповых игр тут
-        public Response ProcessRequest()
+        public IResponseSender GetResponseSender()
         {
             var db = DatabaseInteractor.Instance();
             var games = db.GetPlayOffGames();
@@ -64,7 +64,7 @@ namespace YCore.API.Handlers
                 }
             }
 
-            return GetResponse(responseData);
+            return GetResponseSender(responseData);
         }
     }
 }

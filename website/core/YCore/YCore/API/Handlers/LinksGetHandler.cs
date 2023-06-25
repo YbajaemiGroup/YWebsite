@@ -1,5 +1,4 @@
-﻿using YApiModel;
-using YCore.Data;
+﻿using YCore.Data;
 using YDatabase.Models;
 
 namespace YCore.API.Handlers
@@ -20,7 +19,7 @@ namespace YCore.API.Handlers
             playerIdSetted = true;
         }
 
-        public Response ProcessRequest()
+        public IResponseSender GetResponseSender()
         {
             var db = DatabaseInteractor.Instance();
             List<Link> links = db.GetLinks();
@@ -28,7 +27,7 @@ namespace YCore.API.Handlers
             {
                 links.RemoveAll(l => l.Player != playerId);
             }
-            return GetResponse(links);
+            return GetResponseSender(links);
         }
     }
 }

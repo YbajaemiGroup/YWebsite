@@ -10,7 +10,7 @@ internal class BracketSetUpdatesHandlerFactory : HandlerFactory, IHandlerFactory
 
     public BracketSetUpdatesHandlerFactory(HttpListenerContext context) : base(context)
     {
-        bracket = GetData<List<Round>>(context);
+        bracket = GetData<List<Round>>();
     }
 
     public IHandler GetHandler()

@@ -35,6 +35,7 @@ namespace YCore.API
                 "links.add" => new LinksAddHandlerFactory(context),
                 "links.delete" => new LinksDeleteHandlerFactory(context),
                 "images.load" => new ImagesLoadHandlerFactory(context, configuration.ImagesLocation),
+                "images.get" => new ImagesGetHandlerFactory(context, configuration.ImagesLocation, configuration.StaffImagesLocation),
                 _ => throw new ArgumentOutOfRangeException(nameof(method))
             };
         }
@@ -47,23 +48,13 @@ namespace YCore.API
             {
                 handlerFactory = GetHandlerFactory(method, context);
             }
-            catch (ArgumentOutOfRangeException e)
+            catch (ArgumentOutOfRangeException)
             {
-                Logger.Log(LogSeverity.Warning, nameof(HttpHandler), "Cant get handler factory", e);
                 return;
             }
-            //            Response response = new() { Exception = CoreException.UnknownException };
-            try
-            {
-                IHandler handler = handlerFactory.GetHandler();
-                //response = handler.ProcessRequest();
-            }
-            catch (Exception e)
-            {
-                Logger.Log(LogSeverity.Error, nameof(HttpHandler), "Error", e);
-            }
-            //JsonSerializer.Serialize(context.Response.OutputStream, response);
-            context.Response.OutputStream.Close();
+            IHandler handler = handlerFactory.GetHandler();
+            IResponseSender responseSender = handler.GetResponseSender();
+            responseSender.Send(context.Response.OutputStream);
         }
     }
 }

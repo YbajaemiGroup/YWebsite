@@ -1,5 +1,4 @@
-﻿using YApiModel;
-using YCore.API.IO;
+﻿using YCore.API.IO;
 using YCore.Data;
 
 namespace YCore.API.Handlers
@@ -14,9 +13,9 @@ namespace YCore.API.Handlers
             _token = token;
         }
 
-        public Response ProcessRequest()
+        public IResponseSender GetResponseSender()
         {
-            return new() { ResponseData = DatabaseInteractor.Instance().DeleteToken(_token) };
+            return new JsonResponseSender(new() { ResponseData = DatabaseInteractor.Instance().DeleteToken(_token) });
         }
     }
 }

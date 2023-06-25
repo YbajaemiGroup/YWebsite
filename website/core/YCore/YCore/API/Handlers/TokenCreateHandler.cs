@@ -1,6 +1,4 @@
-﻿using YApiModel;
-using YCore.API.IO;
-using YCore.Data;
+﻿using YCore.Data;
 
 namespace YCore.API.Handlers
 {
@@ -26,10 +24,10 @@ namespace YCore.API.Handlers
             }
         }
 
-        public Response ProcessRequest()
+        public IResponseSender GetResponseSender()
         {
             AddTokenToDb();
-            return GetResponse(null);
+            return GetResponseSender(null);
         }
     }
 }

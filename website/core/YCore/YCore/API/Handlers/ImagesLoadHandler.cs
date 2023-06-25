@@ -19,7 +19,7 @@ namespace YCore.API.Handlers
             this.imageData = imageData;
         }
 
-        public Response ProcessRequest()
+        public IResponseSender GetResponseSender()
         {
             var db = DatabaseInteractor.Instance();
             Image image = new()
@@ -32,9 +32,9 @@ namespace YCore.API.Handlers
             {
                 CoreException = new UnknownInnerException();
                 Logger.Log(LogSeverity.Info, nameof(ImagesLoadHandler), "Can't save image to disk.");
-                return GetResponse(null);
+                return GetResponseSender(null);
             }
-            return GetResponse(new YApiModel.Models.Image(image.Id, image.ImageName));
+            return GetResponseSender(new YApiModel.Models.Image(image.Id, image.ImageName));
         }
     }
 }
