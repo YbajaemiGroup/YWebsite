@@ -38,6 +38,7 @@ namespace YCore.API
                 "images.get" => new ImagesGetHandlerFactory(context, configuration.ImagesLocation, configuration.StaffImagesLocation),
                 "group.fill" => new GroupFillHandlerFactory(context),
                 "players.add" => new PlayersAddHandlerFactory(context),
+                "players.get" => new PlayersGetHandlerFactory(context),
                 _ => throw new ArgumentOutOfRangeException(nameof(method))
             };
         }
