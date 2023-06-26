@@ -1,0 +1,22 @@
+
+
+.rwd-table {
+  background: #ffffff;
+  color: #121212;
+  border-radius: .4em;
+    
+}
+
+th,
+    td,
+    tr {
+        font-family: 'Unbounded Medium';
+        border: solid;
+        border-radius: .4em;
+        padding: .5em;
+    }
+.border
+{
+    border-style:ridge;
+    box-shadow: 10px 10px 20px rgba(0,0,0,.3);
+}

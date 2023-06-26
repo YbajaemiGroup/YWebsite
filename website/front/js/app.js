@@ -4,7 +4,7 @@ const gradients = [
     "linear-gradient(to right top, #3494E6, #EC6EAD)",
     "linear-gradient(to right top, #DCE35B, #45B649)",
     "linear-gradient(to right top, #c0c0aa, #1cefff)",
-    "linear-gradient(to right top, #DBE6F6, #C5796D)"
+    "linear-gradient(to right top, #00F260, #0575E6)"
 ];
 
 const options = {

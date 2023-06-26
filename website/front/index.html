@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/nav.css">
+    <link rel="stylesheet" href="css/table.css">
     <title>YBAJAEMI Cyber-Sports</title>
     
     <link rel="preconnect" href="https://fonts.gstatic.com/s/unbounded/v6/Yq6F-LOTXCb04q32xlpat-6uR42XTqtG6__244rNgQ.woff2" as="font">
@@ -18,7 +19,10 @@
 <body>
     <header>
         <nav>
-            <h1>Logo</h1>
+            <ul>
+                <li><img src="Logo.png" alt="Logo"><h1>YBAJAEMI</h1></li>
+            </ul>
+            
             <ul>
                 <li><a data-page="home" href="#" onclick="scrollToTop()" class="menuText">Главная</a></li>
                 <li><a data-page="groupStage" href="#groupStage" class="menuText">Групповой этап</a></li>
@@ -32,18 +36,182 @@
     
     <main>
         <section data-index="0" class="home" id="home">
-            <p class="mainText bText rcentered">YBAJAEMI</p>
-            <p class="mainText mText rcentered">Cyber-Sports</p>
+            <div class="full-1">
+                <p class="mainText bText rcentered">YBAJAEMI</p>
+            
+                <p class="menuText mText rcentered">Cyber-Sports</p>
+            
+                <h1>Tournament</h1>
+            </div>
         </section>
         <section data-index="1" class="groupStage" id="groupStage">
             <h1 class="menuText">Групповой этап</h1>
+            <div class="sizingGroups">
+                <div class="groupA groupStage-1" id="groupA">
+                    <h1 class="menuText">Группа А</h1>
+                    <table class="rwd-table border">
+                      <tr>
+                        <th>Игрок</th>
+                        <th>Побед</th>
+                        <th>Поражений</th>
+                        <th>Счет</th>
+                      </tr>
+                      <tr>
+                        <td data-th="Player">Игрок 1</td>
+                        <td data-th="Win">0</td>
+                        <td data-th="Lose">0</td>
+                        <td data-th="Score">0</td>
+                      </tr>
+                      <tr>
+                        <td data-th="Player">Игрок 2</td>
+                        <td data-th="Win">0</td>
+                        <td data-th="Lose">0</td>
+                        <td data-th="Score">0</td>
+                      </tr>
+                      <tr>
+                        <td data-th="Player">Игрок 3</td>
+                        <td data-th="Win">0</td>
+                        <td data-th="Lose">0</td>
+                        <td data-th="Score">0</td>
+                      </tr>
+                      <tr>
+                        <td data-th="Player">Игрок 4</td>
+                        <td data-th="Win">0</td>
+                        <td data-th="Lose">0</td>
+                        <td data-th="Score">0</td>
+                      </tr>
+                    </table>
+                </div>
+
+                <div class="groupB groupStage-1" id="groupB">
+                    <h1 class="menuText">Группа Б</h1>
+                    <table class="rwd-table border">
+                      <tr>
+                        <th>Игрок</th>
+                        <th>Побед</th>
+                        <th>Поражений</th>
+                        <th>Счет</th>
+                      </tr>
+                      <tr>
+                        <td data-th="Player">Игрок 1</td>
+                        <td data-th="Win">0</td>
+                        <td data-th="Lose">0</td>
+                        <td data-th="Score">0</td>
+                      </tr>
+                      <tr>
+                        <td data-th="Player">Игрок 2</td>
+                        <td data-th="Win">0</td>
+                        <td data-th="Lose">0</td>
+                        <td data-th="Score">0</td>
+                      </tr>
+                      <tr>
+                        <td data-th="Player">Игрок 3</td>
+                        <td data-th="Win">0</td>
+                        <td data-th="Lose">0</td>
+                        <td data-th="Score">0</td>
+                      </tr>
+                      <tr>
+                        <td data-th="Player">Игрок 4</td>
+                        <td data-th="Win">0</td>
+                        <td data-th="Lose">0</td>
+                        <td data-th="Score">0</td>
+                      </tr>
+                    </table>
+                </div>
+
+                <div class="groupC groupStage-1" id="groupC">
+                    <h1 class="menuText">Группа В</h1>
+                    <table class="rwd-table border">
+                      <tr>
+                        <th>Игрок</th>
+                        <th>Побед</th>
+                        <th>Поражений</th>
+                        <th>Счет</th>
+                      </tr>
+                      <tr>
+                        <td data-th="Player">Игрок 1</td>
+                        <td data-th="Win">0</td>
+                        <td data-th="Lose">0</td>
+                        <td data-th="Score">0</td>
+                      </tr>
+                      <tr>
+                        <td data-th="Player">Игрок 2</td>
+                        <td data-th="Win">0</td>
+                        <td data-th="Lose">0</td>
+                        <td data-th="Score">0</td>
+                      </tr>
+                      <tr>
+                        <td data-th="Player">Игрок 3</td>
+                        <td data-th="Win">0</td>
+                        <td data-th="Lose">0</td>
+                        <td data-th="Score">0</td>
+                      </tr>
+                      <tr>
+                        <td data-th="Player">Игрок 4</td>
+                        <td data-th="Win">0</td>
+                        <td data-th="Lose">0</td>
+                        <td data-th="Score">0</td>
+                      </tr>
+                    </table>
+                </div>
+
+                <div class="groupD groupStage-1" id="groupD">
+                    <h1 class="menuText">Группа Г</h1>
+                    <table class="rwd-table border">
+                      <tr>
+                        <th>Игрок</th>
+                        <th>Побед</th>
+                        <th>Поражений</th>
+                        <th>Счет</th>
+                      </tr>
+                      <tr>
+                        <td data-th="Player">Игрок 1</td>
+                        <td data-th="Win">0</td>
+                        <td data-th="Lose">0</td>
+                        <td data-th="Score">0</td>
+                      </tr>
+                      <tr>
+                        <td data-th="Player">Игрок 2</td>
+                        <td data-th="Win">0</td>
+                        <td data-th="Lose">0</td>
+                        <td data-th="Score">0</td>
+                      </tr>
+                      <tr>
+                        <td data-th="Player">Игрок 3</td>
+                        <td data-th="Win">0</td>
+                        <td data-th="Lose">0</td>
+                        <td data-th="Score">0</td>
+                      </tr>
+                      <tr>
+                        <td data-th="Player">Игрок 4</td>
+                        <td data-th="Win">0</td>
+                        <td data-th="Lose">0</td>
+                        <td data-th="Score">0</td>
+                      </tr>
+                    </table>
+                </div>
+            </div>
         </section>
         <section data-index="2" class="playOff" id="playOff">
             <h1 class="menuText">Плей-офф</h1>
         </section>
+        <section id="between-2"></section>
         <section data-index="3" class="players" id="players">
             <h1 class="menuText">Игроки</h1>
         </section>
+        <section class="contacts" id="contacts">
+            <div class="content">
+                <h1 class="title">Контакты
+                  <div class="aurora">
+                    <div class="aurora__item"></div>
+                    <div class="aurora__item"></div>
+                    <div class="aurora__item"></div>
+                    <div class="aurora__item"></div>
+                  </div>
+                </h1>    
+            </div>
+        </section>
+
     </main>
 
     
