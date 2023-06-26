@@ -123,6 +123,13 @@ public class DatabaseInteractor : IDatabaseInteractor
         return Context.Players.Update(player).Entity;
     }
 
+    public async void DeletePlayer(Player player)
+    {
+        Logger.Log(LogSeverity.Debug, nameof(DatabaseInteractor), "Player deleted.");
+        Context.Players.Remove(player);
+        await CommitAsync();
+    }
+
     public async Task<Link> InsertLink(Link link)
     {
         var l = await Context.Links.AddAsync(link);

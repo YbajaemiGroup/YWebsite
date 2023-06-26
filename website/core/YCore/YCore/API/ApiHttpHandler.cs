@@ -39,6 +39,7 @@ namespace YCore.API
                 "group.fill" => new GroupFillHandlerFactory(context),
                 "players.add" => new PlayersAddHandlerFactory(context),
                 "players.get" => new PlayersGetHandlerFactory(context),
+                "players.delete" => new PlayersDeleteHandlerFactory(context),
                 _ => throw new ArgumentOutOfRangeException(nameof(method))
             };
         }
