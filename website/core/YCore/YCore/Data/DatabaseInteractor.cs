@@ -184,6 +184,12 @@ public class DatabaseInteractor : IDatabaseInteractor
         return Context.Images.First(i => i.Id == id);
     }
 
+    public Image GetImage(string name)
+    {
+        Logger.Log(LogSeverity.Debug, nameof(DatabaseInteractor), "Image selected by name.");
+        return Context.Images.First(i => i.ImageName == name);
+    }
+
     public List<Image> GetStaffImages()
     {
         Logger.Log(LogSeverity.Debug, nameof(DatabaseInteractor), "Staff images selected from database.");

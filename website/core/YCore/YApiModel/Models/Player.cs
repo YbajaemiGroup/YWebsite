@@ -9,7 +9,7 @@ public class Player
     [JsonPropertyName("nickname")]
     public string NickName { get; set; }
     [JsonPropertyName("image_name")]
-    public string ImageName { get; set; }
+    public string? ImageName { get; set; }
     [JsonPropertyName("description")]
     public string Description { get; set; }
     [JsonPropertyName("group_number")]
@@ -22,8 +22,8 @@ public class Player
     public int? Points { get; set; }
 
     public Player(string nickName,
-                  string imageName,
                   string description,
+                  string? imageName = null,
                   int? id = null,
                   int? groupNumber = null,
                   int? won = null,
