@@ -36,6 +36,7 @@ namespace YCore.API
                 "links.delete" => new LinksDeleteHandlerFactory(context),
                 "images.load" => new ImagesLoadHandlerFactory(context, configuration.ImagesLocation),
                 "images.get" => new ImagesGetHandlerFactory(context, configuration.ImagesLocation, configuration.StaffImagesLocation),
+                "group.fill" => new GroupFillHandlerFactory(context),
                 _ => throw new ArgumentOutOfRangeException(nameof(method))
             };
         }
