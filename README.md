@@ -1,5 +1,6 @@
 # YWebsite
-This is website for ybajaemi clan
+
+Тематический сайт для турнира YBAJAEMI 
 
 Вся документация расположена в обменнике Mortar.
 
