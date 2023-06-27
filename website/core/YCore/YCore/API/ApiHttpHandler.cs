@@ -37,6 +37,7 @@ namespace YCore.API
                 "images.load" => new ImagesLoadHandlerFactory(context, configuration.ImagesLocation),
                 "images.get" => new ImagesGetHandlerFactory(context, configuration.ImagesLocation, configuration.StaffImagesLocation),
                 "group.fill" => new GroupFillHandlerFactory(context),
+                "group.games.get" => new GroupGamesGetHandlerFactory(),
                 "players.add" => new PlayersAddHandlerFactory(context),
                 "players.get" => new PlayersGetHandlerFactory(context),
                 "players.delete" => new PlayersDeleteHandlerFactory(context),
