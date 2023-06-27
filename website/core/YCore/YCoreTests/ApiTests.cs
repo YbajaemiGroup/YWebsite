@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
+using System.Text.Json;
 using YApiModel.Models;
 using YCore.API.Handlers;
 using YCore.Data;
@@ -8,7 +9,6 @@ namespace YCoreTests
 {
     public class ApiTests
     {
-
         [Fact]
         public async void BracketSetUpdatesHandlerTest()
         {

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Net;
+using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace YApiModel
 {
@@ -15,6 +12,11 @@ namespace YApiModel
         public Request(object data)
         {
             Data = data;
+        }
+
+        public override string? ToString()
+        {
+            return JsonSerializer.Serialize(this);
         }
     }
 }
