@@ -8,7 +8,6 @@ namespace YCore.Data.OS
 {
     internal static class SecurityUtilities
     {
-#warning тут мб надо будет еще что-нибудь дописать
         /// <summary>
         /// True if ok
         /// </summary>

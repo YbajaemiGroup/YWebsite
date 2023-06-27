@@ -12,8 +12,8 @@ namespace YCore.Crypto
         public static string GetHash(string key)
         {
             byte[] input = Encoding.ASCII.GetBytes(key);
-            byte[] hash = MD5.HashData(input);
-            return Convert.ToBase64String(hash);
+            byte[] hash = SHA256.HashData(input);
+            return Convert.ToHexString(hash);
         }
     }
 }
