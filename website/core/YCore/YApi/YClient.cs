@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using System.Xml.Serialization;
 using YApiModel;
 using YApiModel.Models;
 
@@ -18,14 +19,38 @@ public class YClient
         requestSender = new(URL);
     }
 
+    /// <summary>
+    /// Throws exception if server returned error.
+    /// </summary>
+    /// <param name="response"></param>
+    /// <exception cref="YException"></exception>
+    private void CheckException(Response response)
+    {
+        if (response.Exception != null)
+        {
+            throw response.Exception;
+        }
+    }
+
+    private T GetResponseData<T>(Response response)
+    {
+        if (response.ResponseData == null)
+        {
+            throw new NullReferenceException("ResponseData was null.");
+        }
+        var data = JsonSerializer.Deserialize<T>((JsonDocument)response.ResponseData);
+        if (data == null)
+        {
+            throw new NullReferenceException("Deserialized object was null.");
+        }
+        return data;
+    }
+
     public async Task<List<Round>> GetBracketAsync()
     {
         var response = await requestSender.SendRequestAsync("bracket.updates.get");
-        if (response.Exception != null)
-            throw response.Exception;
-        if (response.ResponseData == null)
-            throw new NullReferenceException();
-        return JsonSerializer.Deserialize<List<Round>>((JsonDocument)response.ResponseData) ?? throw new NullReferenceException();
+        CheckException(response);
+        return GetResponseData<List<Round>>(response);
     }
 
     public async Task SetBracketAsync(List<Round> bracket)
@@ -33,8 +58,7 @@ public class YClient
         var parameters = new HttpParameters();
         parameters.Add("token", Token);
         var response = await requestSender.SendRequestAsync("bracket.updates.set", parameters, new(bracket));
-        if (response.Exception != null)
-            throw response.Exception;
+        CheckException(response);
     }
 
     public async Task GroupFillAsync(List<GroupFillData> groups)
@@ -42,8 +66,7 @@ public class YClient
         var parameters = new HttpParameters();
         parameters.Add("token", Token);
         var response = await requestSender.SendRequestAsync("group.fill", parameters, new(groups));
-        if (response.Exception != null)
-            throw response.Exception;
+        CheckException(response);
     }
 
     public async Task GroupGetGames()
@@ -51,8 +74,7 @@ public class YClient
         var parameters = new HttpParameters();
         parameters.Add("token", Token);
         var response = await requestSender.SendRequestAsync("group.games.get", parameters);
-        if (response.Exception != null)
-            throw response.Exception;
+        CheckException(response);
     }
 
     public async Task<List<Link>> GetLinksAsync(int playerId)
@@ -60,21 +82,15 @@ public class YClient
         var parameters = new HttpParameters();
         parameters.Add("player_id", playerId);
         var response = await requestSender.SendRequestAsync("links.get", parameters);
-        if (response.Exception != null)
-            throw response.Exception;
-        if (response.ResponseData == null)
-            throw new NullReferenceException();
-        return JsonSerializer.Deserialize<List<Link>>((JsonDocument)response.ResponseData) ?? throw new NullReferenceException();
+        CheckException(response);
+        return GetResponseData<List<Link>>(response);
     }
 
     public async Task<List<Link>> GetLinksAsync()
     {
         var response = await requestSender.SendRequestAsync("links.get");
-        if (response.Exception != null)
-            throw response.Exception;
-        if (response.ResponseData == null)
-            throw new NullReferenceException();
-        return JsonSerializer.Deserialize<List<Link>>((JsonDocument)response.ResponseData) ?? throw new NullReferenceException();
+        CheckException(response);
+        return GetResponseData<List<Link>>(response);
     }
 
     public async Task<List<Link>> AddLinksAsync(List<Link> links)
@@ -82,10 +98,68 @@ public class YClient
         var parameters = new HttpParameters();
         parameters.Add("token", Token);
         var response = await requestSender.SendRequestAsync("link.add", parameters, new(links));
-        if (response.Exception != null)
-            throw response.Exception;
-        if (response.ResponseData == null)
-            throw new NullReferenceException();
-        return JsonSerializer.Deserialize<List<Link>>((JsonDocument)response.ResponseData) ?? throw new NullReferenceException();
+        CheckException(response);
+        return GetResponseData<List<Link>>(response);
+    }
+
+    public async Task DeleteLinksAsync(int linkId)
+    {
+        var parameters = new HttpParameters();
+        parameters.Add("token", Token);
+        parameters.Add("link_id", linkId);
+        var response = await requestSender.SendRequestAsync("links.delete", parameters);
+        CheckException(response);
+    }
+
+    /// <summary>
+    /// Add or update players in database. Adds player if id is null. Overwise, update existing one.
+    /// </summary>
+    /// <param name="players">List of players need to add or update.</param>
+    /// <returns>List updated of players from database.</returns>
+    public async Task<List<Player>> PlayersAddOrUpdateAsync(List<Player> players, out List<Player>? notProcessedPlayers)
+    {
+        var parameters = new HttpParameters();
+        parameters.Add("token", Token);
+        var response = await requestSender.SendRequestAsync("players.add", parameters);
+        CheckException(response);
+        return GetResponseData<List<Player>>(response);
+    }
+
+    public async Task<List<Player>> PlayersGetAsync()
+    {
+        var parameters = new HttpParameters();
+        parameters.Add("token", Token);
+        var response = await requestSender.SendRequestAsync("players.get", parameters);
+        CheckException(response);
+        return GetResponseData<List<Player>>(response);
+    }
+
+    public async Task<Player> PlayerDelete(int playerId)
+    {
+        var parameters = new HttpParameters();
+        parameters.Add("token", Token);
+        parameters.Add("player_id", playerId);
+        var response = await requestSender.SendRequestAsync("players.delete", parameters);
+        CheckException(response);
+        return GetResponseData<Player>(response);
+    }
+
+    public async Task<byte[]> GetImage(string imageName, ImageType imageType)
+    {
+        string imageTypeName = imageType switch
+        {
+            ImageType.Resources => "resources",
+            ImageType.Players => "players",
+            _ => throw new ArgumentOutOfRangeException(nameof(imageType))
+        };
+        var parameters = new HttpParameters();
+        parameters.Add("image_name", imageName);
+        parameters.Add("image_type", imageTypeName);
+        return await requestSender.DownloadImageAsync("images.get", parameters);
+    }
+
+    public async Task<Image> LoadImageAsync(string imageName, byte[] imageBytes)
+    {
+        throw new NotImplementedException();
     }
 }

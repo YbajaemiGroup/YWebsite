@@ -17,7 +17,7 @@ namespace YApi
 
         public string GetUrlWithParameters(string method, HttpParameters httpParameters) => $"{_url}{method}?{httpParameters}";
 
-        public async Task<byte[]> LoadImageAsync(string method, HttpParameters parameters)
+        public async Task<byte[]> DownloadImageAsync(string method, HttpParameters parameters)
         {
             using var message = new HttpRequestMessage();
             message.RequestUri = new(parameters == null ? _url : GetUrlWithParameters(method, parameters));
@@ -57,5 +57,24 @@ namespace YApi
             }
             return response;
         }
+
+#warning доделать тут вместо request byte[], для загрузки изображений на сервер
+        //public async Task<Response> SendRequestAsync(string method, HttpParameters? parameters = null, Request? request = null)
+        //{
+        //    using var message = new HttpRequestMessage();
+        //    message.RequestUri = new(parameters == null ? _url : GetUrlWithParameters(method, parameters));
+        //    if (request != null)
+        //    {
+        //        message.Content = JsonContent.Create(request);
+        //    }
+        //    var responseMessage = await httpClient.SendAsync(message);
+        //    var responseString = await responseMessage.Content.ReadAsStringAsync();
+        //    var response = JsonSerializer.Deserialize<Response>(responseString);
+        //    if (response == null)
+        //    {
+        //        throw new NullReferenceException("Server somehow returned null.");
+        //    }
+        //    return response;
+        //}
     }
 }

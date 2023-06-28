@@ -39,4 +39,24 @@ public class Player
         Lose = lose;
         Points = points;
     }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is Player player)
+        {
+            bool equal = NickName == player.NickName &&
+               ImageName == player.ImageName &&
+               Description == player.Description &&
+               GroupNumber == player.GroupNumber &&
+               Won == player.Won &&
+               Lose == player.Lose &&
+               Points == player.Points;
+            if (player?.Id != null)
+            {
+                equal &= player.Id == Id;
+            }
+            return equal;
+        }
+        return false;
+    }
 }
