@@ -57,7 +57,7 @@ public class YClient
     {
         var parameters = new HttpParameters();
         parameters.Add("token", Token);
-        var response = await requestSender.SendRequestAsync("bracket.updates.set", parameters, new(bracket));
+        var response = await requestSender.SendRequestAsync("bracket.updates.set", parameters, new Request(bracket));
         CheckException(response);
     }
 
@@ -65,7 +65,7 @@ public class YClient
     {
         var parameters = new HttpParameters();
         parameters.Add("token", Token);
-        var response = await requestSender.SendRequestAsync("group.fill", parameters, new(groups));
+        var response = await requestSender.SendRequestAsync("group.fill", parameters, new Request(groups));
         CheckException(response);
     }
 
@@ -97,7 +97,7 @@ public class YClient
     {
         var parameters = new HttpParameters();
         parameters.Add("token", Token);
-        var response = await requestSender.SendRequestAsync("link.add", parameters, new(links));
+        var response = await requestSender.SendRequestAsync("link.add", parameters, new Request(links));
         CheckException(response);
         return GetResponseData<List<Link>>(response);
     }
@@ -116,11 +116,11 @@ public class YClient
     /// </summary>
     /// <param name="players">List of players need to add or update.</param>
     /// <returns>List updated of players from database.</returns>
-    public async Task<List<Player>> PlayersAddOrUpdateAsync(List<Player> players, out List<Player>? notProcessedPlayers)
+    public async Task<List<Player>> PlayersAddOrUpdateAsync(List<Player> players)
     {
         var parameters = new HttpParameters();
         parameters.Add("token", Token);
-        var response = await requestSender.SendRequestAsync("players.add", parameters);
+        var response = await requestSender.SendRequestAsync("players.add", parameters, new Request(players));
         CheckException(response);
         return GetResponseData<List<Player>>(response);
     }
@@ -160,6 +160,39 @@ public class YClient
 
     public async Task<Image> LoadImageAsync(string imageName, byte[] imageBytes)
     {
-        throw new NotImplementedException();
+        var parameters = new HttpParameters();
+        parameters.Add("token", Token);
+        parameters.Add("image_name", imageName);
+        var content = new MultipartFormDataContent();
+        var fileStreamContent = new StreamContent(new MemoryStream(imageBytes));
+        fileStreamContent.Headers.ContentType = new(imageName.Split('.')[1] switch
+        {
+            "jpeg" => "image/jpeg",
+            "jpg" => "image/jpeg",
+            "png" => "image/png",
+            _ => throw new ArgumentException(nameof(imageName), "Image should be .png .jpg of .jpeg")
+        });
+        content.Add(fileStreamContent, "file", imageName);
+        var response = await requestSender.SendRequestAsync("images.load", parameters, content);
+        CheckException(response);
+        return GetResponseData<Image>(response);
+    }
+
+    public async Task CreateToken(string tokenSource)
+    {
+        var parameters = new HttpParameters();
+        parameters.Add("token", Token);
+        parameters.Add("token_source", tokenSource);
+        var response = await requestSender.SendRequestAsync("token.create", parameters);
+        CheckException(response);
+    }
+
+    public async Task DeleteToken(string token)
+    {
+        var parameters = new HttpParameters();
+        parameters.Add("token", Token);
+        parameters.Add("d_token", token);
+        var response = await requestSender.SendRequestAsync("token.delete", parameters);
+        CheckException(response);
     }
 }

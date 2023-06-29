@@ -58,23 +58,19 @@ namespace YApi
             return response;
         }
 
-#warning доделать тут вместо request byte[], для загрузки изображений на сервер
-        //public async Task<Response> SendRequestAsync(string method, HttpParameters? parameters = null, Request? request = null)
-        //{
-        //    using var message = new HttpRequestMessage();
-        //    message.RequestUri = new(parameters == null ? _url : GetUrlWithParameters(method, parameters));
-        //    if (request != null)
-        //    {
-        //        message.Content = JsonContent.Create(request);
-        //    }
-        //    var responseMessage = await httpClient.SendAsync(message);
-        //    var responseString = await responseMessage.Content.ReadAsStringAsync();
-        //    var response = JsonSerializer.Deserialize<Response>(responseString);
-        //    if (response == null)
-        //    {
-        //        throw new NullReferenceException("Server somehow returned null.");
-        //    }
-        //    return response;
-        //}
+        public async Task<Response> SendRequestAsync(string method, HttpParameters? parameters, HttpContent content)
+        {
+            using var message = new HttpRequestMessage();
+            message.RequestUri = new(parameters == null ? _url : GetUrlWithParameters(method, parameters));
+            message.Content = content;
+            var responseMessage = await httpClient.SendAsync(message);
+            var responseString = await responseMessage.Content.ReadAsStringAsync();
+            var response = JsonSerializer.Deserialize<Response>(responseString);
+            if (response == null)
+            {
+                throw new NullReferenceException("Server somehow returned null.");
+            }
+            return response;
+        }
     }
 }
