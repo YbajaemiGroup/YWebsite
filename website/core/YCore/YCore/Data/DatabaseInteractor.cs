@@ -229,10 +229,16 @@ public class DatabaseInteractor : IDatabaseInteractor
             CommitAsync().Wait();
             return true;
         }
-        catch (ArgumentNullException)
+        catch (Exception e) when (e is InvalidOperationException or ArgumentNullException)
         {
             return false;
         }
+        catch (Exception e)
+        {
+            Logger.Log(LogSeverity.Warning, nameof(DatabaseInteractor), "Exception occured while token deleting.", e);
+            return false;
+        }
+
     }
 
     /// <summary>

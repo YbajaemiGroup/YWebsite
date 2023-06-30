@@ -19,7 +19,7 @@ namespace YCore.API.Handlers
         public IResponseSender GetResponseSender()
         {
             var imageData = imagesOperator.GetImage(imageName);
-            if (imageData == null)
+            if (imageData == null || !imageData.CanRead)
             {
                 return new JsonResponseSender(new Response()
                 {

@@ -2,7 +2,7 @@
 
 namespace YCore.Data.OS
 {
-    internal static class ConfigurationLoader
+    public static class ConfigurationLoader
     {
         public static Configuration Load(string path)
         {

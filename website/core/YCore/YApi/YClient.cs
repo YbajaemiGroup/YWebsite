@@ -7,7 +7,7 @@ namespace YApi;
 
 public class YClient
 {
-    private const string URL = "";
+    private const string URL = "http://localhost:8181/api/";
 
     public string Token { get; set; }
     public bool TokenLoaded { get => Token != null; }
@@ -23,12 +23,11 @@ public class YClient
     /// Throws exception if server returned error.
     /// </summary>
     /// <param name="response"></param>
-    /// <exception cref="YException"></exception>
     private void CheckException(Response response)
     {
         if (response.Exception != null)
         {
-            throw response.Exception;
+            throw new Exception(response.Exception.ToString());
         }
     }
 
@@ -38,7 +37,7 @@ public class YClient
         {
             throw new NullReferenceException("ResponseData was null.");
         }
-        var data = JsonSerializer.Deserialize<T>((JsonDocument)response.ResponseData);
+        var data = JsonSerializer.Deserialize<T>((JsonElement)response.ResponseData);
         if (data == null)
         {
             throw new NullReferenceException("Deserialized object was null.");
@@ -144,7 +143,7 @@ public class YClient
         return GetResponseData<Player>(response);
     }
 
-    public async Task<byte[]> GetImage(string imageName, ImageType imageType)
+    public async Task<Stream> GetImage(string imageName, ImageType imageType)
     {
         string imageTypeName = imageType switch
         {
@@ -173,7 +172,7 @@ public class YClient
             _ => throw new ArgumentException(nameof(imageName), "Image should be .png .jpg of .jpeg")
         });
         content.Add(fileStreamContent, "file", imageName);
-        var response = await requestSender.SendRequestAsync("images.load", parameters, content);
+        var response = await requestSender.SendRequestAsync("images.load", parameters, imageBytes);
         CheckException(response);
         return GetResponseData<Image>(response);
     }

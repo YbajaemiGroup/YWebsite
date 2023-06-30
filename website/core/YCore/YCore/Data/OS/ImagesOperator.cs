@@ -28,13 +28,18 @@ namespace YCore.Data.OS
             return ms.ToArray();
         }
 
-        public byte[]? GetImage(string imageName)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="imageName"></param>
+        /// <returns>stream that needs to be closed manualy</returns>
+        public Stream? GetImage(string imageName)
         {
             try
             {
                 string uri = $"{imagesLocation}/{imageName}";
-                using var file = File.OpenRead(uri);
-                return ReadAllBytes(file);
+                var file = File.OpenRead(uri);
+                return file;
             }
             catch (UnauthorizedAccessException e)
             {
@@ -51,7 +56,7 @@ namespace YCore.Data.OS
             return null;
         }
 
-        public bool SaveImage(string imageName, byte[] bytes)
+        public bool SaveImage(string imageName, Stream stream, long offset = 0)
         {
             if (!SecurityUtilities.ValidateImageName(imageName))
             {
@@ -60,9 +65,11 @@ namespace YCore.Data.OS
             try
             {
                 string uri = $"{imagesLocation}/{imageName}";
-                using var file = File.Create(uri, bytes.Length);
-                file.Write(bytes, 0, bytes.Length);
-                file.Flush();
+                using var fileStream = File.Create(uri);
+                stream.Position = offset;
+                stream.CopyTo(fileStream);
+                fileStream.Flush();
+                stream.Close();
                 return true;
             }
             catch (UnauthorizedAccessException e)

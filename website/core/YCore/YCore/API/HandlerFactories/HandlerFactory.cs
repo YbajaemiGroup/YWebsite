@@ -13,7 +13,7 @@ namespace YCore.API.HandlerFactories
         protected HandlerFactory(HttpListenerContext context)
         {
             this.context = context;
-            parameters = context.Request.RawUrl ?? string.Empty;
+            parameters = context.Request.RawUrl?.Split('?')[1] ?? string.Empty;
         }
 
         protected string GetParameter(string parameterName)

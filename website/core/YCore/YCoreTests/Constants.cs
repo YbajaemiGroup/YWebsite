@@ -9,5 +9,7 @@ namespace YCoreTests
     public static class Constants
     {
         public const string CONNECTION_STRING = "";
+        public const string IMAGES_LOCATION = "";
+        public const string IMAGES_LOCATION_STAFF = "";
     }
 }

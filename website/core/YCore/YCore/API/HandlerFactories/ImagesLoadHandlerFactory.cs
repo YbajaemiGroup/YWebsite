@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using Microsoft.EntityFrameworkCore.Diagnostics;
+using System.Net;
 using YCore.API.Handlers;
 
 namespace YCore.API.HandlerFactories
@@ -32,14 +33,15 @@ namespace YCore.API.HandlerFactories
             {
                 Logger.Log(LogSeverity.Warning, nameof(ImagesLoadHandlerFactory), "Unknown error occured while id parsing.", ex);
             }
-            using var imageBytesReader = new BinaryReader(context.Request.InputStream);
-            var imageBytes = imageBytesReader.ReadBytes(int.MaxValue);
-            if (imageBytes == null)
+            if (context.Request.ContentLength64 == 0)
             {
                 return new DataExpected();
             }
+            var ms = new MemoryStream();
+            context.Request.InputStream.CopyTo(ms);
+            var offset = ms.Length - context.Request.ContentLength64;
 
-            return new ImagesLoadHandler(imageName, imagesLocation, imageBytes);
+            return new ImagesLoadHandler(imageName, imagesLocation, ms, offset);
         }
     }
 }

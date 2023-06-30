@@ -17,7 +17,7 @@ namespace YApi
 
         public string GetUrlWithParameters(string method, HttpParameters httpParameters) => $"{_url}{method}?{httpParameters}";
 
-        public async Task<byte[]> DownloadImageAsync(string method, HttpParameters parameters)
+        public async Task<Stream> DownloadImageAsync(string method, HttpParameters parameters)
         {
             using var message = new HttpRequestMessage();
             message.RequestUri = new(parameters == null ? _url : GetUrlWithParameters(method, parameters));
@@ -29,9 +29,9 @@ namespace YApi
                 response = JsonSerializer.Deserialize<Response>(r) ?? throw new ArgumentNullException();
                 throw new Exception(response.Exception?.ToString());
             }
-            catch (Exception e) when (e is ArgumentNullException or JsonException or NotSupportedException) // да, это тупая конструкция
+            catch (Exception e) when (e is ArgumentNullException or JsonException or NotSupportedException)
             {
-                var imageBytes = await responseMessage.Content.ReadAsByteArrayAsync();
+                var imageBytes = await responseMessage.Content.ReadAsStreamAsync();
                 return imageBytes;
             }
             catch (Exception)
@@ -63,6 +63,21 @@ namespace YApi
             using var message = new HttpRequestMessage();
             message.RequestUri = new(parameters == null ? _url : GetUrlWithParameters(method, parameters));
             message.Content = content;
+            var responseMessage = await httpClient.SendAsync(message);
+            var responseString = await responseMessage.Content.ReadAsStringAsync();
+            var response = JsonSerializer.Deserialize<Response>(responseString);
+            if (response == null)
+            {
+                throw new NullReferenceException("Server somehow returned null.");
+            }
+            return response;
+        }
+
+        public async Task<Response> SendRequestAsync(string method, HttpParameters? parameters, byte[] body)
+        {
+            using var message = new HttpRequestMessage();
+            message.RequestUri = new(parameters == null ? _url : GetUrlWithParameters(method, parameters));
+            message.Content = new ByteArrayContent(body);
             var responseMessage = await httpClient.SendAsync(message);
             var responseString = await responseMessage.Content.ReadAsStringAsync();
             var response = JsonSerializer.Deserialize<Response>(responseString);

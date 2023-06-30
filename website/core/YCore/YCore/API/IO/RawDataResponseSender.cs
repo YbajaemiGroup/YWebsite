@@ -2,9 +2,9 @@
 {
     public class RawDataResponseSender : IResponseSender
     {
-        private readonly byte[] data;
+        private readonly Stream data;
 
-        public RawDataResponseSender(byte[] data)
+        public RawDataResponseSender(Stream data)
         {
             this.data = data;
         }
@@ -15,9 +15,11 @@
             {
                 throw new AccessViolationException();
             }
-            using var streamWriter = new BinaryWriter(outputStream);
-            streamWriter.Write(data);
-            streamWriter.Flush();
+            using var writer = new BinaryWriter(outputStream);
+            byte[] bytes = new byte[data.Length];
+            data.Read(bytes, 0, bytes.Length);
+            writer.Write(bytes);
+            outputStream.Flush();
         }
     }
 }

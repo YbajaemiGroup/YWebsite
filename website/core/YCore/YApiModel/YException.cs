@@ -2,12 +2,12 @@
 
 namespace YApiModel;
 
-public class YException : Exception
+public class YException
 {
     [JsonPropertyName("code")]
     public string Code { get; set; }
     [JsonPropertyName("message")]
-    public override string Message { get; }
+    public string Message { get; }
 
     [JsonIgnore]
     public bool Expected { get => Code.Split('x')[0] == "0"; }
@@ -20,5 +20,5 @@ public class YException : Exception
         Message = message;
     }
 
-    public override string ToString() => $"{base.ToString()}\nCode: {Code}\n{Message}";
+    public override string ToString() => $"Code: {Code}\n{Message}";
 }

@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Net;
+using YCore.Data;
 
 namespace YCore
 {
-    delegate void OnRequestReceivedHandler(HttpListenerContext context);
+    public delegate void OnRequestReceivedHandler(HttpListenerContext context);
 
-    internal class Core : IDisposable
+    public class Core : IDisposable
     {
         public HttpListener HttpListener { get; private set; }
 
@@ -17,10 +13,10 @@ namespace YCore
 
         private readonly CancellationTokenSource cancellationTokenSource;
 
-        public Core(string ipAddress, int port)
+        public Core(Configuration configuration)
         {
             HttpListener = new();
-            HttpListener.Prefixes.Add($"http://{ipAddress}:{port}/api/");
+            configuration.ListenAddresses.ForEach(HttpListener.Prefixes.Add);
             cancellationTokenSource = new();
         }
 
@@ -56,11 +52,16 @@ namespace YCore
 
         private void StartMainLoop()
         {
-            while (!cancellationTokenSource.IsCancellationRequested)
+            try
             {
-                var context = HttpListener.GetContext();
-                Logger.Log(LogSeverity.Debug, nameof(Core), "Context\n" + context.ToString());
-                RequestReceived?.Invoke(context);
+                while (!cancellationTokenSource.IsCancellationRequested)
+                {
+                    RequestReceived?.Invoke(HttpListener.GetContext());
+                }
+            }
+            catch (HttpListenerException)
+            {
+                throw;
             }
         }
     }

@@ -1,5 +1,4 @@
-﻿using YApiModel;
-using YCore.API.IO.Exceptions;
+﻿using YCore.API.IO.Exceptions;
 using YCore.Data;
 using YCore.Data.OS;
 using YDatabase.Models;
@@ -10,13 +9,15 @@ namespace YCore.API.Handlers
     {
         private readonly string imageName;
         private readonly ImagesOperator imagesOperator;
-        private readonly byte[] imageData;
+        private readonly Stream imageStream;
+        private readonly long offset;
 
-        public ImagesLoadHandler(string imageName, string imagesLocation, byte[] imageData)
+        public ImagesLoadHandler(string imageName, string imagesLocation, Stream imageStream, long offset)
         {
             this.imageName = imageName;
             imagesOperator = new(imagesLocation);
-            this.imageData = imageData;
+            this.imageStream = imageStream;
+            this.offset = offset;
         }
 
         public IResponseSender GetResponseSender()
@@ -28,7 +29,7 @@ namespace YCore.API.Handlers
                 IsStaff = false
             };
             image = db.InsertImage(image).Result;
-            if (imagesOperator.SaveImage(imageName, imageData))
+            if (!imagesOperator.SaveImage(imageName, imageStream, offset))
             {
                 CoreException = new UnknownInnerException();
                 Logger.Log(LogSeverity.Info, nameof(ImagesLoadHandler), "Can't save image to disk.");
