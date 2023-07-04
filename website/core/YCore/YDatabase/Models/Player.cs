@@ -28,4 +28,16 @@ public partial class Player
     public virtual Image? Image { get; set; }
 
     public virtual ICollection<Link> Links { get; set; } = new List<Link>();
+
+    public void Copy(Player player)
+    {
+        Id = player.Id;
+        Nickname = player.Nickname;
+        ImageId = player.ImageId;
+        Descr = player.Descr;
+        GroupNumber = player.GroupNumber;
+        Won = player.Won;
+        Lose = player.Lose;
+        Points = player.Points;
+    }
 }

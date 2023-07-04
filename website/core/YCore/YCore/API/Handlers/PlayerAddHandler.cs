@@ -1,4 +1,7 @@
-﻿using YCore.API.IO.Exceptions;
+﻿using Microsoft.EntityFrameworkCore;
+using Npgsql;
+using System.Data.Common;
+using YCore.API.IO.Exceptions;
 using YCore.Data;
 
 namespace YCore.API.Handlers
@@ -38,24 +41,9 @@ namespace YCore.API.Handlers
             }
             try
             {
-                var newPlayers = players.Where(p => p.Id == null).ToList();
                 var db = DatabaseInteractor.Instance();
-                var tasks = new List<Task<YDatabase.Models.Player>>();
-                foreach (var player in newPlayers)
-                {
-                    tasks.Add(db.InsertPlayer(new YDatabase.Models.Player()
-                    {
-                        Nickname = player.NickName,
-                        ImageId = GetImage(player.ImageName, db)?.Id,
-                        Descr = player.Description,
-                        GroupNumber = player.GroupNumber,
-                        Won = player.Won,
-                        Lose = player.Lose,
-                        Points = player.Points
-                    }));
-                }
-                var dbPlayers = db.GetPlayers();
                 var processedPlayers = new List<YDatabase.Models.Player>();
+                var dbPlayers = db.GetPlayers();
                 foreach (var player in players.Where(p => p.Id != null))
                 {
                     if (!dbPlayers.Any(p => p.Id == player.Id))
@@ -73,18 +61,42 @@ namespace YCore.API.Handlers
                         Points = player.Points
                     }));
                 }
-                processedPlayers.AddRange(tasks.Select(t => t.Result));
-                return GetResponseSender(processedPlayers.Select(p =>
-                    new YApiModel.Models.Player(
-                        nickName: p.Nickname,
-                        description: p.Descr,
-                        imageName: p.Image?.ImageName,
-                        id: p.Id,
-                        groupNumber: p.GroupNumber,
-                        won: p.Won,
-                        lose: p.Lose,
-                        points: p.Points
-                        )));
+                foreach (var player in players.Where(p => p.Id == null))
+                {
+                    processedPlayers.Add(db.InsertPlayer(new YDatabase.Models.Player()
+                    {
+                        Nickname = player.NickName,
+                        ImageId = GetImage(player.ImageName, db)?.Id,
+                        Descr = player.Description,
+                        GroupNumber = player.GroupNumber,
+                        Won = player.Won,
+                        Lose = player.Lose,
+                        Points = player.Points
+                    }).Result);
+                }
+                return GetResponseSender(processedPlayers
+                    .Select(p => new YApiModel.Models.Player(
+                        p.Nickname,
+                        p.Descr,
+                        p.Image?.ImageName,
+                        p.Id,
+                        p.GroupNumber,
+                        p.Won,
+                        p.Lose,
+                        p.Points)));
+            }
+            catch (AggregateException e)
+            {
+                var exception = e.InnerExceptions.FirstOrDefault(ex => ex.InnerException is PostgresException);
+                if (exception == null || exception?.InnerException is not PostgresException postgresException)
+                {
+                    Logger.Log(LogSeverity.Warning, nameof(PlayerAddHandler), "Error occured in player.add handler.", e);
+                    CoreException = new UnknownInnerException();
+                    return GetResponseSender(null);
+                }
+                Logger.Log(LogSeverity.Warning, nameof(PlayerAddHandler), "Entity update throws exception.");
+                CoreException = new DatabaseException(postgresException.SqlState ?? "No error code found", postgresException);
+                return GetResponseSender(null);
             }
             catch (Exception e)
             {

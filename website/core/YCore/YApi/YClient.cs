@@ -7,7 +7,7 @@ namespace YApi;
 
 public class YClient
 {
-    private const string URL = "http://localhost:8181/api/";
+    private const string URL = "http://localhost:12345/api/";
 
     public string Token { get; set; }
     public bool TokenLoaded { get => Token != null; }

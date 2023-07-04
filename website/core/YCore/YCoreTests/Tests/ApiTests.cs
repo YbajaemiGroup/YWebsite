@@ -1,4 +1,5 @@
 ﻿using YApi;
+using YApiModel.Models;
 using YCore.Data;
 
 namespace YCoreTests.Tests
@@ -43,6 +44,31 @@ namespace YCoreTests.Tests
         public void CreateTokenTest()
         {
             DatabaseInteractor.Instance().CreateToken("token");
+        }
+
+        [Fact]
+        public void PlayersCRUDTest()
+        {
+            var player = new Player(
+                "player's nickname",
+                "no description");
+            var dbPlayer = client.PlayersAddOrUpdateAsync(new() { player }).Result.First();
+            Assert.NotNull(dbPlayer.Id);
+            Assert.Equal(player.NickName, dbPlayer.NickName);
+            Assert.Equal(player.Description, dbPlayer.Description);
+            dbPlayer.Won = 100;
+            dbPlayer.Lose = 100;
+            dbPlayer.Description = "some kind of a new description";
+            dbPlayer = client.PlayersAddOrUpdateAsync(new() { dbPlayer }).Result.First();
+            Assert.NotNull(dbPlayer.Id);
+            Assert.Equal(player.NickName, dbPlayer.NickName);
+            Assert.Equal("some kind of a new description", dbPlayer.Description);
+            Assert.Equal(100, dbPlayer.Won);
+            Assert.Equal(100, dbPlayer.Lose);
+
+            Assert.Contains(client.PlayersGetAsync().Result, p => p.NickName == "player's nickname");
+            client.PlayerDelete(dbPlayer.Id ?? -1).Wait();
+            Assert.DoesNotContain(client.PlayersGetAsync().Result, p => p.NickName == "player's nickname");
         }
     }
 }

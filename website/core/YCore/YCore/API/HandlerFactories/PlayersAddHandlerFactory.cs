@@ -25,7 +25,7 @@ namespace YCore.API.HandlerFactories
             {
                 return new DataExpected();
             }
-            throw new NotImplementedException();
+            return new PlayerAddHandler(players);
         }
     }
 }

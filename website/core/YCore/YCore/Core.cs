@@ -61,7 +61,7 @@ namespace YCore
             }
             catch (HttpListenerException)
             {
-                throw;
+                Logger.Log(LogSeverity.Warning, nameof(Core), "Expected exception on closing sockets.");
             }
         }
     }

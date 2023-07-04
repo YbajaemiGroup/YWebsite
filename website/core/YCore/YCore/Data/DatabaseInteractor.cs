@@ -120,7 +120,10 @@ public class DatabaseInteractor : IDatabaseInteractor
     public Player UpdatePlayer(Player player)
     {
         Logger.Log(LogSeverity.Debug, nameof(DatabaseInteractor), "Player updated.");
-        return Context.Players.Update(player).Entity;
+        var dbPlayer = Context.Players.First(p => p.Id == player.Id);
+        dbPlayer.Copy(player);
+        CommitAsync().Wait();
+        return dbPlayer;
     }
 
     public async void DeletePlayer(Player player)
@@ -264,6 +267,7 @@ public class DatabaseInteractor : IDatabaseInteractor
         catch (Exception e)
         {
             Logger.Log(LogSeverity.Error, nameof(DatabaseInteractor), "Error occured while saving changes in database.", e);
+            throw;
         }
     }
 
