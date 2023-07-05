@@ -37,12 +37,26 @@ public class YClient
         {
             throw new NullReferenceException("ResponseData was null.");
         }
-        var data = JsonSerializer.Deserialize<T>((JsonElement)response.ResponseData);
-        if (data == null)
+        if (response.ResponseData is JsonDocument document)
         {
-            throw new NullReferenceException("Deserialized object was null.");
+            var data = JsonSerializer.Deserialize<T>(document);
+            if (data == null)
+            {
+                throw new NullReferenceException("Deserialized object was null.");
+            }
+            return data;
         }
-        return data;
+        else if (response.ResponseData is JsonElement element)
+        {
+            var data = JsonSerializer.Deserialize<T>(element);
+            if (data == null)
+            {
+                throw new NullReferenceException("Deserialized object was null.");
+            }
+            return data;
+        }
+
+        return default;
     }
 
     public async Task<List<Round>> GetBracketAsync()
@@ -96,7 +110,7 @@ public class YClient
     {
         var parameters = new HttpParameters();
         parameters.Add("token", Token);
-        var response = await requestSender.SendRequestAsync("link.add", parameters, new Request(links));
+        var response = await requestSender.SendRequestAsync("links.add", parameters, new Request(links));
         CheckException(response);
         return GetResponseData<List<Link>>(response);
     }

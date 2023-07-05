@@ -7,7 +7,7 @@ namespace YCore.Data;
 /// <summary>
 /// Need LoadConnectionString before creating Instance
 /// </summary>
-public class DatabaseInteractor : IDatabaseInteractor
+public class DatabaseInteractor
 {
     private static DatabaseInteractor? _instance;
 
@@ -153,12 +153,13 @@ public class DatabaseInteractor : IDatabaseInteractor
         return Context.Links.First(l => l.Player == playerId);
     }
 
-    public bool DeleteLink(int id)
+    public async Task<bool> DeleteLink(int id)
     {
         try
         {
             var link = GetLink(id);
             Context.Links.Remove(link);
+            await CommitAsync();
             Logger.Log(LogSeverity.Debug, nameof(DatabaseInteractor), "Link deleted from database.");
             return true;
         }

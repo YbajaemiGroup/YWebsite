@@ -70,5 +70,36 @@ namespace YCoreTests.Tests
             client.PlayerDelete(dbPlayer.Id ?? -1).Wait();
             Assert.DoesNotContain(client.PlayersGetAsync().Result, p => p.NickName == "player's nickname");
         }
+
+        [Fact]
+        public void LinksCRUDTest()
+        {
+            var link = new Link(
+                "somelink",
+                "someshee");
+            link = client.AddLinksAsync(new() { link }).Result.FirstOrDefault();
+            Assert.NotNull(link);
+            Assert.NotNull(link.Id);
+            Assert.Equal("somelink", link.LinkUrl);
+            Assert.Equal("someshee", link.Description);
+
+            var links = client.GetLinksAsync().Result;
+            Assert.Contains(links, l => l.Id == link.Id);
+            client.DeleteLinksAsync(link.Id ?? -1).Wait();
+            links = client.GetLinksAsync().Result;
+            Assert.DoesNotContain(links, l => l.Id == link.Id);
+
+            var player = client.PlayersGetAsync().Result.FirstOrDefault();
+            Assert.NotNull(player);
+            Assert.NotNull(player.Id);
+
+            link.PlayerId = player.Id;
+            link = client.AddLinksAsync(new() { link }).Result.FirstOrDefault();
+            Assert.NotNull(link);
+            Assert.NotNull(link.Id);
+            links = client.GetLinksAsync().Result;
+            Assert.Contains(links, l => l.Id == link.Id);
+            client.DeleteLinksAsync(link.Id ?? -1).Wait();
+        }
     }
 }

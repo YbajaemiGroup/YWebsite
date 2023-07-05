@@ -13,7 +13,14 @@ namespace YCore.API.HandlerFactories
         protected HandlerFactory(HttpListenerContext context)
         {
             this.context = context;
-            parameters = context.Request.RawUrl?.Split('?')[1] ?? string.Empty;
+            try
+            {
+                parameters = context.Request.RawUrl?.Split('?')[1] ?? string.Empty;
+            }
+            catch (IndexOutOfRangeException)
+            {
+                parameters = string.Empty;
+            }
         }
 
         protected string GetParameter(string parameterName)

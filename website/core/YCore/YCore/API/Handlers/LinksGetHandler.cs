@@ -1,4 +1,5 @@
-﻿using YCore.Data;
+﻿using YApiModel.Models;
+using YCore.Data;
 using YDatabase.Models;
 
 namespace YCore.API.Handlers
@@ -22,12 +23,12 @@ namespace YCore.API.Handlers
         public IResponseSender GetResponseSender()
         {
             var db = DatabaseInteractor.Instance();
-            List<Link> links = db.GetLinks();
+            List<YDatabase.Models.Link> links = db.GetLinks();
             if (playerIdSetted)
             {
                 links.RemoveAll(l => l.Player != playerId);
             }
-            return GetResponseSender(links);
+            return GetResponseSender(links.Select(l => new YApiModel.Models.Link(l.Link1, l.Descr, l.Id, playerId)));
         }
     }
 }

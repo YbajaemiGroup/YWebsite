@@ -11,7 +11,7 @@ namespace YApi
 
         public RequestSender(string url)
         {
-            _url = !url.EndsWith('/') ? url : url + "/";
+            _url = url.EndsWith('/') ? url : url + "/";
             httpClient = new HttpClient();
         }
 
@@ -43,7 +43,7 @@ namespace YApi
         public async Task<Response> SendRequestAsync(string method, HttpParameters? parameters = null, Request? request = null)
         {
             using var message = new HttpRequestMessage();
-            message.RequestUri = new(parameters == null ? _url : GetUrlWithParameters(method, parameters));
+            message.RequestUri = new(parameters == null ? _url + method : GetUrlWithParameters(method, parameters));
             if (request != null)
             {
                 message.Content = JsonContent.Create(request);

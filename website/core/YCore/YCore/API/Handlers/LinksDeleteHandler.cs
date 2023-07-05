@@ -1,4 +1,5 @@
 ﻿using YApiModel;
+using YCore.API.IO.Exceptions;
 using YCore.Data;
 
 namespace YCore.API.Handlers
@@ -15,7 +16,10 @@ namespace YCore.API.Handlers
         public IResponseSender GetResponseSender()
         {
             var db = DatabaseInteractor.Instance();
-            db.DeleteLink(linkId);
+            if (!db.DeleteLink(linkId).Result)
+            {
+                CoreException = new UnknownInnerException();
+            }
             return GetResponseSender(null);
         }
     }

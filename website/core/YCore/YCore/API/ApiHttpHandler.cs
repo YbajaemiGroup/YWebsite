@@ -52,7 +52,7 @@ namespace YCore.API
                 PLAYERS_ADD => new PlayersAddHandlerFactory(context),
                 PLAYERS_GET => new PlayersGetHandlerFactory(context),
                 PLAYERS_DELETE => new PlayersDeleteHandlerFactory(context),
-                _ => throw new ArgumentOutOfRangeException(nameof(method))
+                _ => throw new ArgumentOutOfRangeException(nameof(method), method, "Method not found.")
             };
         }
 
@@ -65,8 +65,9 @@ namespace YCore.API
                 handlerFactory = GetHandlerFactory(method, context);
                 Logger.Log(LogSeverity.Info, nameof(ApiHttpHandler), $"Api method {method} handled.");
             }
-            catch (ArgumentOutOfRangeException)
+            catch (ArgumentOutOfRangeException e)
             {
+                Logger.Log(LogSeverity.Debug, nameof(ApiHttpHandler), $"Method not found {e.ActualValue}.");
                 return;
             }
             IHandler handler = handlerFactory.GetHandler();

@@ -3,16 +3,25 @@ using YApi;
 using YApiModel.Models;
 
 var client = new YClient("token");
-var player = new Player(
-    "player's nickname",
-    "no description");
-var dbPlayer = client.PlayersAddOrUpdateAsync(new() { player }).Result.First();
-dbPlayer.Won = 100;
-dbPlayer.Lose = 100;
-dbPlayer.Description = "some kind of a new description";
-dbPlayer = client.PlayersAddOrUpdateAsync(new() { dbPlayer }).Result.First();
-Console.WriteLine(JsonSerializer.Serialize(dbPlayer));
+var link = new Link(
+    "somelink",
+    "someshee");
+link = client.AddLinksAsync(new() { link }).Result.FirstOrDefault();
 
-client.PlayerDelete(dbPlayer.Id ?? -1).Wait();
+var links = client.GetLinksAsync().Result;
+
+client.DeleteLinksAsync(link.Id ?? -1).Wait();
+links = client.GetLinksAsync().Result;
+
+
+var player = client.PlayersGetAsync().Result.FirstOrDefault();
+
+
+link.PlayerId = player.Id;
+link = client.AddLinksAsync(new() { link }).Result.FirstOrDefault();
+
+links = client.GetLinksAsync().Result;
+
+client.DeleteLinksAsync(link.Id ?? -1).Wait();
 
 Console.ReadLine();
