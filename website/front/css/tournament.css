@@ -57,7 +57,8 @@
     font-size: 14px;
     font-weight: bold;
     transition: color 0.3s ease;
-    color: #ccc;
+    font-family: 'Unbounded Medium';
+    color: #fff;
     text-decoration: none;
     box-sizing: border-box;
     background: rgba(255, 255, 255, 0.2);
