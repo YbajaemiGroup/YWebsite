@@ -6,7 +6,7 @@ using YCore.Data.OS;
 
 Console.WriteLine("Hello, World!");
 
-var configuration = ConfigurationLoader.Load("H:\\YBAJAEMI\\config.json");
+var configuration = ConfigurationLoader.Load("H:\\YBAJAEMI\\cons\\config.json");
 DatabaseInteractor.LoadConnectionString(configuration.DbConnectionString);
 var core = new Core(configuration);
 var apiHandler = new ApiHandler(configuration);
