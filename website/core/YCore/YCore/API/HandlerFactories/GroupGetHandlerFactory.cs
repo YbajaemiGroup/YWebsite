@@ -2,11 +2,11 @@
 
 namespace YCore.API.HandlerFactories
 {
-    public class GroupGamesGetHandlerFactory : IHandlerFactory
+    public class GroupGetHandlerFactory : IHandlerFactory
     {
         public IHandler GetHandler()
         {
-            return new GroupGamesGetHandler();
+            return new GroupGetHandler();
         }
     }
 }

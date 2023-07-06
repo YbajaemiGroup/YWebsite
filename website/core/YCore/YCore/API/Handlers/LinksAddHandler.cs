@@ -41,7 +41,7 @@ namespace YCore.API.Handlers
             //var results = tasks.Select(t => t.Result);
             return GetResponseSender(tasks.Select(link => new YApiModel.Models.Link(
                     link.Link1,
-                    link.Descr,
+                    link.Descr ?? string.Empty,
                     link.Id,
                     link.Player)));
         }

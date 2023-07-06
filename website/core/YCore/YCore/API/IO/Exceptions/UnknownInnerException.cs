@@ -9,10 +9,10 @@ namespace YCore.API.IO.Exceptions
     internal class UnknownInnerException : CoreException
     {
         public const int CODE = 4;
-        public const string MESSAGE = "Unknown inner error raised.";
+        public const string MESSAGE = "Unknown inner error raised. ";
 
-        public UnknownInnerException(Exception? exception = null) : 
-            base(false, CODE, MESSAGE, exception)
+        public UnknownInnerException(Exception? exception = null, string? message = null) : 
+            base(false, CODE, MESSAGE + message ?? string.Empty, exception)
         {
         }
     }

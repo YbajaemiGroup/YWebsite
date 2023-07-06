@@ -17,7 +17,7 @@ namespace YCore.API
         public const string IMAGES_LOAD = "images.load";
         public const string IMAGES_GET = "images.get";
         public const string GROUP_FILL = "group.fill";
-        public const string GROUP_GAMES_GET = "group.games.get";
+        public const string GROUP_GET = "group.get";
         public const string PLAYERS_ADD = "players.add";
         public const string PLAYERS_GET = "players.get";
         public const string PLAYERS_DELETE = "players.delete";
@@ -48,7 +48,7 @@ namespace YCore.API
                 IMAGES_LOAD => new ImagesLoadHandlerFactory(context, configuration.ImagesLocation),
                 IMAGES_GET => new ImagesGetHandlerFactory(context, configuration.ImagesLocation, configuration.StaffImagesLocation),
                 GROUP_FILL => new GroupFillHandlerFactory(context),
-                GROUP_GAMES_GET => new GroupGamesGetHandlerFactory(),
+                GROUP_GET => new GroupGetHandlerFactory(),
                 PLAYERS_ADD => new PlayersAddHandlerFactory(context),
                 PLAYERS_GET => new PlayersGetHandlerFactory(context),
                 PLAYERS_DELETE => new PlayersDeleteHandlerFactory(context),

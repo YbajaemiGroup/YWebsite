@@ -55,8 +55,7 @@ public class YClient
             }
             return data;
         }
-
-        return default;
+        throw new ArgumentException("Response data wasn't JsonDocument or JsonElement.", nameof(response));
     }
 
     public async Task<List<Round>> GetBracketAsync()
@@ -82,12 +81,13 @@ public class YClient
         CheckException(response);
     }
 
-    public async Task GroupGetGames()
+    public async Task<List<GroupGetData>> GroupGetGames()
     {
         var parameters = new HttpParameters();
         parameters.Add("token", Token);
-        var response = await requestSender.SendRequestAsync("group.games.get", parameters);
+        var response = await requestSender.SendRequestAsync("group.get", parameters);
         CheckException(response);
+        return GetResponseData<List<GroupGetData>>(response);
     }
 
     public async Task<List<Link>> GetLinksAsync(int playerId)

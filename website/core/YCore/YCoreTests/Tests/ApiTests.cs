@@ -1,6 +1,7 @@
 ﻿using YApi;
 using YApiModel.Models;
 using YCore.Data;
+using YDatabase.Models;
 
 namespace YCoreTests.Tests
 {
@@ -49,7 +50,7 @@ namespace YCoreTests.Tests
         [Fact]
         public void PlayersCRUDTest()
         {
-            var player = new Player(
+            var player = new YApiModel.Models.Player(
                 "player's nickname",
                 "no description");
             var dbPlayer = client.PlayersAddOrUpdateAsync(new() { player }).Result.First();
@@ -74,7 +75,7 @@ namespace YCoreTests.Tests
         [Fact]
         public void LinksCRUDTest()
         {
-            var link = new Link(
+            var link = new YApiModel.Models.Link(
                 "somelink",
                 "someshee");
             link = client.AddLinksAsync(new() { link }).Result.FirstOrDefault();
@@ -100,6 +101,75 @@ namespace YCoreTests.Tests
             links = client.GetLinksAsync().Result;
             Assert.Contains(links, l => l.Id == link.Id);
             client.DeleteLinksAsync(link.Id ?? -1).Wait();
+        }
+
+        [Fact]
+        public void GroupsGetFillTest()
+        {
+            var inputGroups = new List<GroupFillData>()
+            {
+                new()
+                {
+                    Group = 1,
+                    PlayerId = 1
+                },
+                new()
+                {
+                    Group = 1,
+                    PlayerId = 2
+                }
+            };
+            client.GroupFillAsync(inputGroups).Wait();
+            var players = client.PlayersGetAsync().Result;
+            var player1 = players.First(p => p.Id == 1);
+            var player2 = players.First(p => p.Id == 2);
+            Assert.Equal(1, player1.GroupNumber);
+            Assert.Equal(1, player2.GroupNumber);
+
+            Assert.Equal(player1.GroupNumber, player2.GroupNumber);
+            var group = client.GroupGetGames().Result.First(g => g.Group == player1.GroupNumber);
+            Assert.Contains(group.PlayerId, p => p == player1.Id);
+            Assert.Contains(group.PlayerId, p => p == player2.Id);
+        }
+
+        [Fact]
+        public void BracketTest()
+        {
+            var rounds = new List<Round>()
+            {
+                new()
+                {
+                    RoundNumber = 1,
+                    IsUpper = true,
+                    Games = new()
+                    {
+                        new()
+                        {
+                            Player1Id = 1,
+                            Player2Id = 2,
+                            WinnerId = null
+                        }
+                    }
+                },
+                new()
+                {
+                    RoundNumber = 2,
+                    IsUpper = true,
+                    Games = new()
+                    {
+                        new()
+                        {
+                            Player1Id = 1,
+                            Player2Id = 2,
+                            WinnerId = 1
+                        }
+                    }
+                }
+            };
+            client.SetBracketAsync(rounds).Wait();
+            var rounds1 = client.GetBracketAsync().Result;
+            Assert.NotNull(rounds1);
+            Assert.Equal(2, rounds1.Count);
         }
     }
 }

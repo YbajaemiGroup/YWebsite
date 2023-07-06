@@ -8,7 +8,7 @@ namespace YCore.API.Handlers
 {
     public class PlayerAddHandler : Handler, IHandler
     {
-        private List<YApiModel.Models.Player> players;
+        private readonly List<YApiModel.Models.Player> players;
 
         public PlayerAddHandler(List<YApiModel.Models.Player> players)
         {
@@ -50,6 +50,10 @@ namespace YCore.API.Handlers
                     {
                         continue;
                     }
+                    if (player.Id == null)
+                    {
+                        throw new NullReferenceException();
+                    }
                     processedPlayers.Add(db.UpdatePlayer(new YDatabase.Models.Player()
                     {
                         Id = player.Id.Value,
@@ -77,7 +81,7 @@ namespace YCore.API.Handlers
                 return GetResponseSender(processedPlayers
                     .Select(p => new YApiModel.Models.Player(
                         p.Nickname,
-                        p.Descr,
+                        p.Descr ?? string.Empty,
                         p.Image?.ImageName,
                         p.Id,
                         p.GroupNumber,

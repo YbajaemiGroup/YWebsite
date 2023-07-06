@@ -16,8 +16,8 @@ namespace YCore.API.Handlers
         public IResponseSender GetResponseSender()
         {
             var db = DatabaseInteractor.Instance();
-            int uid = db.GetLastGamesUpdationId();
-            var tasks = new List<Task<YDatabase.Models.Game>>();
+            int uid = db.GetLastGamesUpdationId() + 1;
+            var tasks = new List<YDatabase.Models.Game>();
             foreach (var round in bracket)
             {
                 foreach (var game in round.Games)
@@ -31,10 +31,10 @@ namespace YCore.API.Handlers
                         IsUpper = round.IsUpper,
                         IsGroup = false,
                         Winner = game.WinnerId
-                    }));
+                    }).Result);
                 }
             }
-            Task.WaitAll(tasks.ToArray());
+            //Task.WaitAll(tasks.ToArray());
             return GetResponseSender(null);
         }
     }

@@ -3,25 +3,38 @@ using YApi;
 using YApiModel.Models;
 
 var client = new YClient("token");
-var link = new Link(
-    "somelink",
-    "someshee");
-link = client.AddLinksAsync(new() { link }).Result.FirstOrDefault();
-
-var links = client.GetLinksAsync().Result;
-
-client.DeleteLinksAsync(link.Id ?? -1).Wait();
-links = client.GetLinksAsync().Result;
-
-
-var player = client.PlayersGetAsync().Result.FirstOrDefault();
-
-
-link.PlayerId = player.Id;
-link = client.AddLinksAsync(new() { link }).Result.FirstOrDefault();
-
-links = client.GetLinksAsync().Result;
-
-client.DeleteLinksAsync(link.Id ?? -1).Wait();
+var rounds = new List<Round>()
+            {
+                new()
+                {
+                    RoundNumber = 1,
+                    IsUpper = true,
+                    Games = new()
+                    {
+                        new()
+                        {
+                            Player1Id = 1,
+                            Player2Id = 2,
+                            WinnerId = null
+                        }
+                    }
+                },
+                new()
+                {
+                    RoundNumber = 2,
+                    IsUpper = true,
+                    Games = new()
+                    {
+                        new()
+                        {
+                            Player1Id = 1,
+                            Player2Id = 2,
+                            WinnerId = 1
+                        }
+                    }
+                }
+            };
+client.SetBracketAsync(rounds).Wait();
+var rounds1 = client.GetBracketAsync().Result;
 
 Console.ReadLine();
