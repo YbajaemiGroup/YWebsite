@@ -36,5 +36,6 @@ var rounds = new List<Round>()
             };
 client.SetBracketAsync(rounds).Wait();
 var rounds1 = client.GetBracketAsync().Result;
+Console.WriteLine(JsonSerializer.Serialize(rounds1));
 
 Console.ReadLine();

@@ -25,6 +25,7 @@ namespace YCoreTests
         public void Dispose()
         {
             Core.Stop();
+            GC.SuppressFinalize(this);
         }
     }
 
