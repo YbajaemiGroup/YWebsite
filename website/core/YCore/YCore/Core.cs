@@ -8,6 +8,7 @@ namespace YCore
     public class Core : IDisposable
     {
         public HttpListener HttpListener { get; private set; }
+        private Configuration configuration;
 
         public event OnRequestReceivedHandler? RequestReceived;
 
@@ -16,6 +17,7 @@ namespace YCore
         public Core(Configuration configuration)
         {
             HttpListener = new();
+            this.configuration = configuration;
             configuration.ApiListenAddresses.ForEach(HttpListener.Prefixes.Add);
             configuration.HttpListenAddresses.ForEach(HttpListener.Prefixes.Add);
             cancellationTokenSource = new();
@@ -63,6 +65,13 @@ namespace YCore
             catch (HttpListenerException)
             {
                 Logger.Log(LogSeverity.Warning, nameof(Core), "Expected exception on closing sockets.");
+                if (!HttpListener.IsListening)
+                {
+                    HttpListener = new HttpListener();
+                    configuration.ApiListenAddresses.ForEach(HttpListener.Prefixes.Add);
+                    configuration.HttpListenAddresses.ForEach(HttpListener.Prefixes.Add);
+                    Logger.Log(LogSeverity.Info, nameof(Core), "Listener recreated.");
+                }
             }
         }
     }
