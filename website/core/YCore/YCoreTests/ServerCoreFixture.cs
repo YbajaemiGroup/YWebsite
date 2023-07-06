@@ -17,7 +17,7 @@ namespace YCoreTests
             var configuration = ConfigurationLoader.Load("E:\\MyProgs\\ybajaemi\\config\\config.json");
             DatabaseInteractor.LoadConnectionString(configuration.DbConnectionString);
             Core = new Core(configuration);
-            var apiHandler = new ApiHttpHandler(configuration);
+            var apiHandler = new ApiHandler(configuration);
             Core.RequestReceived += apiHandler.ExecuteHandler;
             Core.Start();
         }

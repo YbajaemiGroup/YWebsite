@@ -8,7 +8,7 @@ namespace YCore.API.Handlers
     public class ImagesLoadHandler : Handler, IHandler
     {
         private readonly string imageName;
-        private readonly ImagesOperator imagesOperator;
+        private readonly FilesOperator imagesOperator;
         private readonly Stream imageStream;
         private readonly long offset;
 
@@ -29,7 +29,7 @@ namespace YCore.API.Handlers
                 IsStaff = false
             };
             image = db.InsertImage(image).Result;
-            if (!imagesOperator.SaveImage(imageName, imageStream, offset))
+            if (!imagesOperator.SaveFile(imageName, imageStream, offset))
             {
                 CoreException = new UnknownInnerException();
                 Logger.Log(LogSeverity.Info, nameof(ImagesLoadHandler), "Can't save image to disk.");

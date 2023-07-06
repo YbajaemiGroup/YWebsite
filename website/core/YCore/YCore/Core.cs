@@ -16,7 +16,8 @@ namespace YCore
         public Core(Configuration configuration)
         {
             HttpListener = new();
-            configuration.ListenAddresses.ForEach(HttpListener.Prefixes.Add);
+            configuration.ApiListenAddresses.ForEach(HttpListener.Prefixes.Add);
+            configuration.HttpListenAddresses.ForEach(HttpListener.Prefixes.Add);
             cancellationTokenSource = new();
         }
 

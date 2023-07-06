@@ -13,12 +13,10 @@ namespace YCore.Data.OS
         /// </summary>
         /// <param name="imageName"></param>
         /// <returns></returns>
-        public static bool ValidateImageName(string imageName)
+        public static bool ValidateFileName(string imageName)
         {
             return !(imageName.Contains('\\') ||
                 imageName.Contains("..") ||
-                imageName.Contains('/') ||
-                imageName.Contains('\'') ||
                 imageName.Contains('~') ||
                 imageName.Contains('!') ||
                 imageName.Contains('@') ||

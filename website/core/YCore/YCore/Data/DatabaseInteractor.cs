@@ -258,8 +258,19 @@ public class DatabaseInteractor
         return validated;
     }
 
-    public async Task CommitAsync()
+    public async Task CommitAsync(bool isdb = false)
     {
+        if (isdb)
+        {
+            try
+            {
+                await Context.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
         try
         {
             await Context.SaveChangesAsync();
@@ -276,11 +287,12 @@ public class DatabaseInteractor
     {
         await Context.Logs.AddAsync(new()
         {
-            DateTime = DateTime.UtcNow,
+            DateTime = DateTime.Now,
             Severety = logSeverity.ToString(),
             Source = source,
             Message = message,
             Exception = exception?.ToString()
         });
+        await CommitAsync(true);
     }
 }

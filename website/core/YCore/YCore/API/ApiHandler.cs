@@ -1,11 +1,10 @@
-﻿using System.Diagnostics;
-using System.Net;
+﻿using System.Net;
 using YCore.API.HandlerFactories;
 using YCore.Data;
 
 namespace YCore.API
 {
-    public class ApiHttpHandler
+    public class ApiHandler
     {
         public const string TOKEN_CREATE = "token.create";
         public const string TOKEN_DELETE = "token.delete";
@@ -22,9 +21,27 @@ namespace YCore.API
         public const string PLAYERS_GET = "players.get";
         public const string PLAYERS_DELETE = "players.delete";
 
+        public static List<string> METHODS { get; } = new()
+        {
+            TOKEN_CREATE,
+            TOKEN_DELETE,
+            BRACKET_UPDATES_GET,
+            BRACKET_UPDATES_SET,
+            LINKS_ADD,
+            LINKS_DELETE,
+            LINKS_GET,
+            IMAGES_GET,
+            IMAGES_LOAD,
+            GROUP_FILL,
+            GROUP_GET,
+            PLAYERS_ADD,
+            PLAYERS_GET,
+            PLAYERS_DELETE
+        };
+
         private readonly Configuration configuration;
 
-        public ApiHttpHandler(Configuration configuration)
+        public ApiHandler(Configuration configuration)
         {
             this.configuration = configuration;
         }
@@ -34,7 +51,7 @@ namespace YCore.API
             return url.Split("?")[0].Split("/")[^1];
         }
 
-        private IHandlerFactory GetHandlerFactory(string method, HttpListenerContext context)
+        private IHandlerFactory? GetHandlerFactory(string method, HttpListenerContext context)
         {
             return method switch
             {
@@ -52,24 +69,16 @@ namespace YCore.API
                 PLAYERS_ADD => new PlayersAddHandlerFactory(context),
                 PLAYERS_GET => new PlayersGetHandlerFactory(context),
                 PLAYERS_DELETE => new PlayersDeleteHandlerFactory(context),
-                _ => throw new ArgumentOutOfRangeException(nameof(method), method, "Method not found.")
+                _ => null
             };
         }
 
         public void ExecuteHandler(HttpListenerContext context)
         {
             string method = ExtractMethod(context.Request.RawUrl ?? string.Empty);
-            IHandlerFactory handlerFactory;
-            try
-            {
-                handlerFactory = GetHandlerFactory(method, context);
-                Logger.Log(LogSeverity.Info, nameof(ApiHttpHandler), $"Api method {method} handled.");
-            }
-            catch (ArgumentOutOfRangeException e)
-            {
-                Logger.Log(LogSeverity.Debug, nameof(ApiHttpHandler), $"Method not found {e.ActualValue}.");
+            IHandlerFactory? handlerFactory = GetHandlerFactory(method, context);
+            if (handlerFactory == null)
                 return;
-            }
             IHandler handler = handlerFactory.GetHandler();
             IResponseSender responseSender = handler.GetResponseSender();
             responseSender.Send(context.Response.OutputStream);
