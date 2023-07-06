@@ -1,21 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace YCore.Data.OS
+﻿namespace YCore.Data.OS
 {
-    public class ImagesOperator
+    public class FilesOperator
     {
-        private readonly string imagesLocation;
+        private readonly string filesLocation;
 
-        public ImagesOperator(string imagesLocation)
+        public FilesOperator(string filesLocation)
         {
-            this.imagesLocation = imagesLocation;
+            this.filesLocation = filesLocation;
         }
 
-        private byte[] ReadAllBytes(Stream reader)
+        private static byte[] ReadAllBytes(Stream reader)
         {
             const int bufferSize = 4096;
             using var ms = new MemoryStream();
@@ -31,40 +25,40 @@ namespace YCore.Data.OS
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="imageName"></param>
+        /// <param name="fileName"></param>
         /// <returns>stream that needs to be closed manualy</returns>
-        public Stream? GetImage(string imageName)
+        public Stream? GetFile(string fileName)
         {
             try
             {
-                string uri = $"{imagesLocation}/{imageName}";
+                string uri = $"{filesLocation}/{fileName}";
                 var file = File.OpenRead(uri);
                 return file;
             }
             catch (UnauthorizedAccessException e)
             {
-                Logger.Log(LogSeverity.Error, nameof(ImagesOperator), "Error occured on reading image.", e);
+                Logger.Log(LogSeverity.Error, nameof(FilesOperator), "Error occured on reading file.", e);
             }
             catch (DirectoryNotFoundException e)
             {
-                Logger.Log(LogSeverity.Error, nameof(ImagesOperator), "Error occured on reading image.", e);
+                Logger.Log(LogSeverity.Error, nameof(FilesOperator), "Error occured on reading file.", e);
             }
             catch (Exception e)
             {
-                Logger.Log(LogSeverity.Info, nameof(ImagesOperator), "Error occured on reading image.", e);
+                Logger.Log(LogSeverity.Info, nameof(FilesOperator), "Error occured on reading file.", e);
             }
             return null;
         }
 
-        public bool SaveImage(string imageName, Stream stream, long offset = 0)
+        public bool SaveFile(string fileName, Stream stream, long offset = 0)
         {
-            if (!SecurityUtilities.ValidateImageName(imageName))
+            if (!SecurityUtilities.ValidateFileName(fileName))
             {
                 return false;
             }
             try
             {
-                string uri = $"{imagesLocation}/{imageName}";
+                string uri = $"{filesLocation}/{fileName}";
                 using var fileStream = File.Create(uri);
                 stream.Position = offset;
                 stream.CopyTo(fileStream);
@@ -74,22 +68,22 @@ namespace YCore.Data.OS
             }
             catch (UnauthorizedAccessException e)
             {
-                Logger.Log(LogSeverity.Error, nameof(ImagesOperator), "Error occured on loading image.", e);
+                Logger.Log(LogSeverity.Error, nameof(FilesOperator), "Error occured on loading file.", e);
             }
             catch (DirectoryNotFoundException e)
             {
-                Logger.Log(LogSeverity.Error, nameof(ImagesOperator), "Error occured on loading image.", e);
+                Logger.Log(LogSeverity.Error, nameof(FilesOperator), "Error occured on loading file.", e);
             }
             catch (Exception e)
             {
-                Logger.Log(LogSeverity.Info, nameof(ImagesOperator), "Error occured on loading image.", e);
+                Logger.Log(LogSeverity.Info, nameof(FilesOperator), "Error occured on loading file.", e);
             }
             return false;
         }
 
-        public bool DeleteImage(string imageName)
+        public bool DeleteFile(string fileName)
         {
-            string uri = $"{imagesLocation}/{imageName}";
+            string uri = $"{filesLocation}/{fileName}";
             try
             {
                 File.Delete(uri);
@@ -97,7 +91,7 @@ namespace YCore.Data.OS
             }
             catch (Exception e)
             {
-                Logger.Log(LogSeverity.Info, nameof(ImagesOperator), "Error occured on deleting image.", e);
+                Logger.Log(LogSeverity.Info, nameof(FilesOperator), "Error occured on deleting file.", e);
                 return false;
             }
         }

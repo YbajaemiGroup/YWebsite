@@ -1,5 +1,4 @@
-﻿using YApiModel;
-using YApiModel.Models;
+﻿using YApiModel.Models;
 using YCore.Data;
 
 namespace YCore.API.Handlers
@@ -17,12 +16,12 @@ namespace YCore.API.Handlers
         {
             var db = DatabaseInteractor.Instance();
             int uid = db.GetLastGamesUpdationId() + 1;
-            var tasks = new List<YDatabase.Models.Game>();
+            var games = new List<YDatabase.Models.Game>();
             foreach (var round in bracket)
             {
                 foreach (var game in round.Games)
                 {
-                    tasks.Add(db.InsertGame(new()
+                    games.Add(db.InsertGame(new()
                     {
                         UpdationId = uid,
                         Player1 = game.Player1Id,
@@ -34,7 +33,6 @@ namespace YCore.API.Handlers
                     }).Result);
                 }
             }
-            //Task.WaitAll(tasks.ToArray());
             return GetResponseSender(null);
         }
     }

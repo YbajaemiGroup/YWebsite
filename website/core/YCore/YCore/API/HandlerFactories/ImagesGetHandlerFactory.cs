@@ -30,8 +30,8 @@ namespace YCore.API.HandlerFactories
             }
             return imageType switch
             {
-                "players" => new ImagesGetHandler(imageName, new ImagesOperator(imagesLocation)),
-                "resources" => new ImagesGetHandler(imageName, new ImagesOperator(staffImagesLocation)),
+                "players" => new ImagesGetHandler(imageName, new FilesOperator(imagesLocation)),
+                "resources" => new ImagesGetHandler(imageName, new FilesOperator(staffImagesLocation)),
                 _ => new InvalidParameter("image_type", "Invalid value of parameter. Expected players or resources."),
             };
         }
