@@ -1,0 +1,42 @@
+.player-card {
+    padding: 20px;
+    margin: 10px;
+    border: solid;
+    border-radius: 2em;
+    background-color: white;
+}
+.card-content {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    align-items: center;
+    justify-content: space-between;
+    font-family: 'Unbounded Medium';
+}
+.card-img-border {
+    border-radius: 150px;
+    width: 150px;
+    height: 150px;
+}
+.card-name {
+    padding-left: 20px;
+}
+.players-grid {
+    display: grid;
+    align-items: center;
+    /* это тоже самое, что grid-template-columns: 1fr 1fr 1fr 1fr; */
+    grid-template-columns: repeat(4, 1fr);
+    /* это тоже самое, что grid-template-rows: 300px 300px; */
+    grid-template-rows: repeat(4, 300px);
+}
+
+@media only screen and (max-width: 800px) { 
+    .players-grid {
+        display: grid;
+        align-items: center;
+        /* это тоже самое, что grid-template-columns: 1fr 1fr 1fr 1fr; */
+        grid-template-columns: repeat(2, 1fr);
+        /* это тоже самое, что grid-template-rows: 300px 300px; */
+        grid-template-rows: repeat(8, 300px);
+    }
+}
