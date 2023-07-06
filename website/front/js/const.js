@@ -1,0 +1,1 @@
+const link = 'http://localhost:12345/api/'
