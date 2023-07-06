@@ -27,33 +27,47 @@ html {
 
 #home {
     background: black;
+    max-height: 100vw;
 }
 #groupStage {
-    background: linear-gradient(#45B649, #DCE35B );
+    background: linear-gradient(#45B649, #45B649 );
 }
 #playOff {
-    background: linear-gradient(#34e89e, #0f3443);
+    /* background: linear-gradient(#34e89e, #0f3443); */
+    background: black;
 }
 
 #players {
-    background: linear-gradient( #00F260, #0575E6);
+    background: linear-gradient( #45B649, #45B649);
 }
 #contacts {
     background: #000000;
 }
+
+.players {
+
+  padding: 4rem 2rem;
+
+
+}
+
 .between-0 {
   background: linear-gradient( #000000, #45B649);
+  min-height: 75vh;
 }
 
 .between-1 {
-  background: linear-gradient( #DCE35B, #34e89e);
+  background: linear-gradient( #45B649, #000000);
+  min-height: 75vh;
 }
 
 .between-2 {
-  background: linear-gradient( #0f3443, #00F260);
+  background: linear-gradient( #000000, #45B649);
+  min-height: 75vh;
 }
 .between-3 {
-  background: linear-gradient( #0575E6 5%, #75E605 60%);
+  background: linear-gradient( #45B649 5%, #75E605 60%);
+  min-height: 75vh;
 }
 .svgparent {
   position: relative;
@@ -137,8 +151,12 @@ h1 {
   color:#ffffff;
 }
 
+.text-shadow-green {
+  text-shadow: 0px 0px 30px #73df06;
+}
+
 .text-shadow {
-  text-shadow: 0px 0px 30px #14fc0c;
+  text-shadow: 0px 0px 30px #3a3c38;
 }
 .fixed {
     position: fixed;
@@ -157,8 +175,9 @@ h1 {
 
 }
 .groupStage-1 {
-  background-image: url('/images/adges.jpg');
-
+  background-image: url('/images/adges11.jpg');
+  background-position: center;
+  background-size: cover;
   flex-direction: column;
   text-align: center;
   justify-content: center;
@@ -169,11 +188,10 @@ h1 {
   /* background: black; */
   border-color: #c2edf1;
   border-radius: 50px;
-  height: 30vh;
 }
 .grpBlur {
   position: relative;
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(4px);
   width: 100%;
   height: 100%;
   border-radius: 50px;
@@ -316,7 +334,7 @@ h1 {
   width: 60vw;
   height: 60vw;
   background-color: var(--clr-12);
-  border-radius: 37% 29% 27% 27% / 28% 25% 41% 37%;
+  border-radius: 37% 29% 27%  / 28% 25% 41% ;
   filter: blur(var(--blur));
   mix-blend-mode: overlay;
 }
@@ -338,7 +356,7 @@ h1 {
 }
 
 .aurora__item2:nth-of-type(3) {
-  background-color: var(--clr-13);
+  background-color: var(--clr-12);
   left: 0;
   bottom: 0;
   animation: aurora-border 6s ease-in-out infinite,

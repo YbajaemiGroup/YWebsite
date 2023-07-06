@@ -1,10 +1,10 @@
 const sections = document.querySelectorAll("section");
 const bubble = document.querySelector(".bubble");
 const gradients = [
-    "linear-gradient(to right top, #9af801, #5F01F8)",
-    "linear-gradient(to right top, #DCE35B, #45B649)",
-    "linear-gradient(to right top, #c0c0aa, #1cefff)",
-    "linear-gradient(to right top, #00F260, #0575E6)"
+    "linear-gradient(to right top, #9af801, #5F01F8) 1",
+    "linear-gradient(to right top, #DCE35B, #45B649) 1",
+    "linear-gradient(to right top, #c0c0aa, #1cefff) 1",
+    "linear-gradient(to right top, #00F260, #0575E6) 1"
 ];
 
 const options = {
@@ -17,7 +17,7 @@ function navCheck(entries) {
     entries.forEach(entry => {
         const className = entry.target.className;
         const activeAnchor = document.querySelector(`[data-page=${className}]`);
-        const gradientIndex = entry.target.getAttribute('data-index');
+        // const gradientIndex = entry.target.getAttribute('data-index');
         const coords = activeAnchor.getBoundingClientRect();
         const directions = {
             height: coords.height,
@@ -30,7 +30,8 @@ function navCheck(entries) {
             bubble.style.setProperty('top', `${directions.top}px`);
             bubble.style.setProperty('width', `${directions.width}px`);
             bubble.style.setProperty('height', `${directions.height}px`);
-            bubble.style.background = gradients[gradientIndex];
+            // bubble.style.borderImage = gradients[gradientIndex];
+
         }
     });
 }
