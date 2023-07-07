@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YDatabase", "YDatabase\YDat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YApiModel", "YApiModel\YApiModel.csproj", "{495FD8A3-2D06-478D-AF9C-A126442467A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Temporary", "Temporary\Temporary.csproj", "{B0AED4C3-B315-4D71-9E31-F02BD7C9EABB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Temporary", "Temporary\Temporary.csproj", "{B0AED4C3-B315-4D71-9E31-F02BD7C9EABB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YConsole", "YConsole\YConsole.csproj", "{A24F0E51-6F17-4864-8739-461C2F9BC6D4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{B0AED4C3-B315-4D71-9E31-F02BD7C9EABB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B0AED4C3-B315-4D71-9E31-F02BD7C9EABB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B0AED4C3-B315-4D71-9E31-F02BD7C9EABB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A24F0E51-6F17-4864-8739-461C2F9BC6D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A24F0E51-6F17-4864-8739-461C2F9BC6D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A24F0E51-6F17-4864-8739-461C2F9BC6D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A24F0E51-6F17-4864-8739-461C2F9BC6D4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

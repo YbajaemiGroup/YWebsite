@@ -17,7 +17,7 @@ namespace YCoreTests
         [Fact]
         public void CreatingConnfigTest()
         {
-            var config = new Configuration("dbconstr", "imagesLoc", "staffImages", new List<string>() { "str1", "str2" });
+            var config = new Configuration("dbconstr", "imagesLoc", "staffImages", "frontendLocation", new List<string>() { "str1", "str2" }, new List<string>() { "str1", "str2" });
             string json = JsonSerializer.Serialize(config);
             FileStream fileStream = File.Create("E:\\MyProgs\\ybajaemi\\config\\config.json");
             using StreamWriter writer = new(fileStream);
