@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\YApiModel\YApiModel.csproj" />
+    <ProjectReference Include="..\..\website\core\YCore\YApiModel\YApiModel.csproj" />
   </ItemGroup>
 
 </Project>
