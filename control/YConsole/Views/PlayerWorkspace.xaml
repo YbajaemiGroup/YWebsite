@@ -30,8 +30,8 @@
         <ListView Grid.Column="0" ItemsSource="{Binding Players}" SelectedItem="{Binding ChosenPlayer}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Id}">id</GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=NickName}">nickname</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Id}" Width="100">id</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=NickName}" Width="320">nickname</GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>

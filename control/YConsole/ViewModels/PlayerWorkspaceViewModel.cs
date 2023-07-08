@@ -6,9 +6,11 @@ using System.Linq;
 using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using YApi;
 using YApiModel.Models;
+using YConsole.ViewModels.Dialogs;
 
 namespace YConsole.ViewModels
 {
@@ -28,6 +30,7 @@ namespace YConsole.ViewModels
             set
             {
                 chosenPlayer = value;
+                _saved = true;
                 Id = chosenPlayer?.Id?.ToString() ?? DEFAULT_VALUE;
                 Nickname = chosenPlayer?.NickName ?? DEFAULT_VALUE;
                 ImageName = chosenPlayer?.ImageName ?? DEFAULT_VALUE;
@@ -51,6 +54,7 @@ namespace YConsole.ViewModels
                     if (value != ChosenPlayer?.Id.ToString())
                     {
                         _saved = false;
+                        OnPropertyChanged(nameof(Status));
                     }
                 }
                 id = value;
@@ -70,6 +74,7 @@ namespace YConsole.ViewModels
                     if (value != ChosenPlayer?.NickName)
                     {
                         _saved = false;
+                        OnPropertyChanged(nameof(Status));
                     }
                 }
                 nickname = value; 
@@ -89,6 +94,7 @@ namespace YConsole.ViewModels
                     if (value != ChosenPlayer?.ImageName)
                     {
                         _saved = false;
+                        OnPropertyChanged(nameof(Status));
                     }
                 }
                 imageName = value;
@@ -108,6 +114,7 @@ namespace YConsole.ViewModels
                     if (value != ChosenPlayer?.Description)
                     {
                         _saved = false;
+                        OnPropertyChanged(nameof(Status));
                     }
                 }
                 description = value;
@@ -213,13 +220,15 @@ namespace YConsole.ViewModels
 
         #endregion
 
-        private YApiInteractor apiInteractor;
+        private readonly YApiInteractor _apiInteractor;
         private bool _saved = true;
+        private readonly IDialogService _dialogService;
 
-        public PlayerWorkspaceViewModel(YApiInteractor apiInteractor)
+        public PlayerWorkspaceViewModel(YApiInteractor apiInteractor, IDialogService dialogService)
         {
-            this.apiInteractor = apiInteractor;
+            this._apiInteractor = apiInteractor;
             _ = Task.Run(async () => Players = new(await apiInteractor.GetAllPlayersAsync()));
+            _dialogService = dialogService;
             SaveButton = new(OnSaveButtonClick);
             DeleteButton = new(OnDeleteButtonClick);
             CreateButton = new(OnCreateButtonClick);
@@ -228,23 +237,44 @@ namespace YConsole.ViewModels
 
         #region Command handlers
 
-        private void OnSaveButtonClick(object? ignorable)
+        private async void OnSaveButtonClick(object? ignorable)
         {
-
+            if (_saved)
+                return;
+            Players = new(await _apiInteractor.UpdatePlayersAsync(Players.ToList()));
+            _saved = true;
         }
 
-        private void OnDeleteButtonClick(object? ignorable)
+        private async void OnDeleteButtonClick(object? ignorable)
         {
-
+            bool delete = false;
+            _dialogService.ShowDialog<DeleteConfirmationViewModel>(result => delete = result);
+            if (!delete)
+            {
+                return;
+            }
+            else
+            {
+                if (ChosenPlayer?.Id == null)
+                {
+                    MessageBox.Show("Выберите игрока");
+                    return;
+                }
+                await _apiInteractor.DeletePlayer(ChosenPlayer.Id.Value);
+                ChosenPlayer = null;
+            }
+            throw new NotImplementedException();
         }
 
         private void OnCreateButtonClick(object? ignorable)
         {
+            throw new NotImplementedException();
 
         }
 
         private void OnChangeImageButtonClick(object? ignorable)
         {
+            throw new NotImplementedException();
 
         }
 

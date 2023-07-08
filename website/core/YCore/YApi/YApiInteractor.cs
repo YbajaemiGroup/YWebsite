@@ -25,5 +25,15 @@ namespace YApi
         {
             return await _client.PlayersGetAsync();
         }
+
+        public async Task<List<Player>> UpdatePlayersAsync(List<Player> players)
+        {
+            return await _client.PlayersAddOrUpdateAsync(players);
+        }
+
+        public async Task DeletePlayer(int playerId)
+        {
+            await _client.PlayerDelete(playerId);
+        }
     }
 }

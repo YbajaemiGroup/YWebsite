@@ -1,6 +1,8 @@
 ﻿using YApi;
 using YConsole.Model;
 using YConsole.ViewModels;
+using YConsole.ViewModels.Dialogs;
+using YConsole.Views.Dialogs;
 
 namespace YConsole;
 
@@ -13,8 +15,10 @@ public class Locator
 
     public Locator()
     {
+        DialogService.RegisterDialog<DeleteConfirmationDialog, DeleteConfirmationViewModel>();
         ApiInteractor = new(ConfigInteractor.GetToken());
         MainViewModel = new MainViewModel();
-        PlayerWorkspaceViewModel = new PlayerWorkspaceViewModel(ApiInteractor);
+
+        PlayerWorkspaceViewModel = new PlayerWorkspaceViewModel(ApiInteractor, new DialogService());
     }
 }

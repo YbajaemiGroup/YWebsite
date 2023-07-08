@@ -26,9 +26,9 @@
 
         #region Command handlers
 
-        private void OnPlayersWorkspaceCommandClick(object? locator)
+        private void OnPlayersWorkspaceCommandClick(object? playerWorkspace)
         {
-            Workspace = ((Locator?)locator)?.PlayerWorkspaceViewModel ?? throw new System.Exception("Can't load locator.");
+            Workspace = playerWorkspace as ViewModelBase ?? throw new System.Exception("Can't load player workspace.");
         }
 
         #endregion
