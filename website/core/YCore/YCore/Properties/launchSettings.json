@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "YCore": {
+      "commandName": "Project",
+      "commandLineArgs": "\"H:\\YBAJAEMI\\cons\\config.json\""
+    }
+  }
+}
