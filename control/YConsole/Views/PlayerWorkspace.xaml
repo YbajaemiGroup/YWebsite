@@ -27,8 +27,13 @@
             <ColumnDefinition Width="420*"/>
             <ColumnDefinition Width="1380*"/>
         </Grid.ColumnDefinitions>
-        <ListView Grid.Column="0">
-            
+        <ListView Grid.Column="0" ItemsSource="{Binding Players}" SelectedItem="{Binding ChosenPlayer}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Id}">id</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=NickName}">nickname</GridViewColumn>
+                </GridView>
+            </ListView.View>
         </ListView>
         <Grid Grid.Column="1" Background="White">
             <TextBlock Text="Ник:" Margin="45,40,0,0" Style="{StaticResource ParameterLabel}"></TextBlock>

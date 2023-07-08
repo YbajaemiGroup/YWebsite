@@ -23,7 +23,7 @@
                 <MenuItem.Header>
                     <TextBlock Text="Файл" Style="{StaticResource MenuItemHeaderStyle}"/>
                 </MenuItem.Header>
-                <MenuItem Command="{Binding OpenPlayersWorkspaceCommand}">
+                <MenuItem Command="{Binding OpenPlayersWorkspaceCommand}" CommandParameter="{StaticResource Locator}">
                     <MenuItem.Header>
                         <TextBlock Text="Игроки" Style="{StaticResource MenuItemHeaderStyle}"/>
                     </MenuItem.Header>

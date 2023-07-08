@@ -8,11 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Model\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\website\core\YCore\YApiModel\YApiModel.csproj" />
+    <ProjectReference Include="..\..\website\core\YCore\YApi\YApi.csproj" />
   </ItemGroup>
 
 </Project>

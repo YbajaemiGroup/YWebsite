@@ -7,6 +7,7 @@ using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using YApi;
 using YApiModel.Models;
 
 namespace YConsole.ViewModels
@@ -14,6 +15,7 @@ namespace YConsole.ViewModels
     public class PlayerWorkspaceViewModel : ViewModelBase
     {
         private const string DEFAULT_VALUE = "??";
+
         #region Bindings
 
         public ObservableCollection<Player> Players { get; set; } = new();
@@ -211,10 +213,13 @@ namespace YConsole.ViewModels
 
         #endregion
 
+        private YApiInteractor apiInteractor;
         private bool _saved = true;
 
-        public PlayerWorkspaceViewModel()
+        public PlayerWorkspaceViewModel(YApiInteractor apiInteractor)
         {
+            this.apiInteractor = apiInteractor;
+            _ = Task.Run(async () => Players = new(await apiInteractor.GetAllPlayersAsync()));
             SaveButton = new(OnSaveButtonClick);
             DeleteButton = new(OnDeleteButtonClick);
             CreateButton = new(OnCreateButtonClick);
