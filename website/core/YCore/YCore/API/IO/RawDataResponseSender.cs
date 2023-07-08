@@ -20,6 +20,7 @@
             data.Read(bytes, 0, bytes.Length);
             writer.Write(bytes);
             outputStream.Flush();
+            data.Close();
         }
     }
 }
