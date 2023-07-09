@@ -13,8 +13,6 @@
     <link rel="stylesheet" href="css/tournament.css">
     <title>YBAJAEMI Cyber-Sports</title>
     
-    <link rel="preconnect" href="https://fonts.gstatic.com/s/unbounded/v6/Yq6F-LOTXCb04q32xlpat-6uR42XTqtG6__244rNgQ.woff2" as="font">
-    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="">
     <script src="/js/button.js"></script>
     <script src="/js/textMagicHome.js"></script>
     <script src="/js/players.js"></script>
@@ -25,7 +23,7 @@
     <header>
         <nav>
             <ul>
-                <li><img src="Logo.png" alt="Logo"><h1>YBAJAEMI</h1></li>
+                <li><img src="/images/Logo.png" alt="Logo"><h1>YBAJAEMI</h1></li>
             </ul>
             
             <ul>
@@ -80,25 +78,25 @@
                         <th>Поражений</th>
                         <th>Счет</th>
                       </tr>
-                      <tr>
+                      <tr id="group-1-player-1">
                         <td data-th="Player">Игрок 1</td>
-                        <td data-th="Win">+surf</td>
-                        <td data-th="Lose">+kz</td>
+                        <td data-th="Win">0</td>
+                        <td data-th="Lose">0</td>
                         <td data-th="Score">0</td>
                       </tr>
-                      <tr>
+                      <tr id="group-1-player-2">
                         <td data-th="Player">Игрок 2</td>
                         <td data-th="Win">0</td>
                         <td data-th="Lose">0</td>
                         <td data-th="Score">0</td>
                       </tr>
-                      <tr>
+                      <tr id="group-1-player-3">
                         <td data-th="Player">Игрок 3</td>
                         <td data-th="Win">0</td>
                         <td data-th="Lose">0</td>
                         <td data-th="Score">0</td>
                       </tr>
-                      <tr>
+                      <tr id="group-1-player-4">
                         <td data-th="Player">Игрок 4</td>
                         <td data-th="Win">0</td>
                         <td data-th="Lose">0</td>
@@ -121,25 +119,25 @@
                         <th>Поражений</th>
                         <th>Счет</th>
                       </tr>
-                      <tr>
+                      <tr id="group-2-player-1">
                         <td data-th="Player">Игрок 1</td>
                         <td data-th="Win">0</td>
                         <td data-th="Lose">0</td>
                         <td data-th="Score">0</td>
                       </tr>
-                      <tr>
+                      <tr id="group-2-player-2">
                         <td data-th="Player">Игрок 2</td>
                         <td data-th="Win">0</td>
                         <td data-th="Lose">0</td>
                         <td data-th="Score">0</td>
                       </tr>
-                      <tr>
+                      <tr id="group-2-player-3">
                         <td data-th="Player">Игрок 3</td>
                         <td data-th="Win">0</td>
                         <td data-th="Lose">0</td>
                         <td data-th="Score">0</td>
                       </tr>
-                      <tr>
+                      <tr id="group-2-player-4">
                         <td data-th="Player">Игрок 4</td>
                         <td data-th="Win">0</td>
                         <td data-th="Lose">0</td>
@@ -161,25 +159,25 @@
                         <th>Поражений</th>
                         <th>Счет</th>
                       </tr>
-                      <tr>
+                      <tr id="group-3-player-1">
                         <td data-th="Player">Игрок 1</td>
                         <td data-th="Win">0</td>
                         <td data-th="Lose">0</td>
                         <td data-th="Score">0</td>
                       </tr>
-                      <tr>
+                      <tr id="group-3-player-2">
                         <td data-th="Player">Игрок 2</td>
                         <td data-th="Win">0</td>
                         <td data-th="Lose">0</td>
                         <td data-th="Score">0</td>
                       </tr>
-                      <tr>
+                      <tr id="group-3-player-3">
                         <td data-th="Player">Игрок 3</td>
                         <td data-th="Win">0</td>
                         <td data-th="Lose">0</td>
                         <td data-th="Score">0</td>
                       </tr>
-                      <tr>
+                      <tr id="group-3-player-4">
                         <td data-th="Player">Игрок 4</td>
                         <td data-th="Win">0</td>
                         <td data-th="Lose">0</td>
@@ -202,25 +200,25 @@
                         <th>Поражений</th>
                         <th>Счет</th>
                       </tr>
-                      <tr>
+                      <tr id="group-4-player-1">
                         <td data-th="Player">Игрок 1</td>
                         <td data-th="Win">0</td>
                         <td data-th="Lose">0</td>
                         <td data-th="Score">0</td>
                       </tr>
-                      <tr>
+                      <tr id="group-4-player-2">
                         <td data-th="Player">Игрок 2</td>
                         <td data-th="Win">0</td>
                         <td data-th="Lose">0</td>
                         <td data-th="Score">0</td>
                       </tr>
-                      <tr>
+                      <tr id="group-4-player-3">
                         <td data-th="Player">Игрок 3</td>
                         <td data-th="Win">0</td>
                         <td data-th="Lose">0</td>
                         <td data-th="Score">0</td>
                       </tr>
-                      <tr>
+                      <tr id="group-4-player-4">
                         <td data-th="Player">Игрок 4</td>
                         <td data-th="Win">0</td>
                         <td data-th="Lose">0</td>
@@ -274,6 +272,68 @@
                     <a class="tournament__match__team" id="round1-pos-7" href="#players">TBA</a>
                     <a class="tournament__match__team" id="round1-pos-8" href="#players">TBA</a>
                   </div>
+                </div>
+                <!-- tournament__round 1/4 -->
+                <div class="tournament__round tournament__round--first-round">
+                  <div class="tournament__match">
+                    <a class="tournament__match__team" id="round2-pos-1" href="#players"></a>
+                    <a class="tournament__match__team" id="round2-pos-2" href="#players"></a>
+                  </div>
+                  <div class="tournament__match">
+                    <a class="tournament__match__team" id="round2-pos-3" href="#players"></a>
+                    <a class="tournament__match__team" id="round2-pos-4" href="#players"></a>
+                  </div>
+                </div>
+            
+                <!-- tournament__round 1/2 -->
+                <div class="tournament__round">
+                  <div class="tournament__match">
+                    <a class="tournament__match__team" id="round3-pos-1" href="#players"></a>
+                    <a class="tournament__match__team" id="round3-pos-2" href="#players"></a>
+                  </div>
+                </div>
+            
+                <!-- tournament__round final -->
+                <div class="tournament__round tournament__round--final">
+                  <div class="tournament__match_n">
+                    <a class="tournament__match__team" id="round4-pos-1" href="#players"></a>
+                  </div>
+                </div>
+            
+                <!-- tournament__round winner -->
+                <div class="tournament__round tournament__round--winner">
+                  <div class="tournament__match">
+                    <div class="tournament__match__team_empty"></div>
+                  </div>
+                </div>
+                <div class="tournament__round tournament__round--winner">
+                  <div class="tournament__match_so">
+                    <div class="tournament__match__team_empty"></div>
+                  </div>
+                </div>
+                
+              </div>
+
+
+              <div class="tournament__grid">
+                <div class="tournament__round tournament__round--final" >
+                  <div class="tournament__match_n">
+                    <a class="tournament__match__team" id="round6-pos-1" href="#players">Короче в рот я эту сетку выебал, ниче исправлять не буду</a>
+                  </div>
+                </div>
+                <div class="tournament__round tournament__round--winner" >
+                  <div class="tournament__match_s">
+                    <div class="tournament__match__team_empty"></div>
+                  </div>
+                </div>
+                
+              </div>
+              
+
+
+              <div class="tournament__grid">
+                <!-- tournament__round 1/8 -->
+                <div class="tournament__round tournament__round--first-round">
                   <div class="tournament__match">
                     <a class="tournament__match__team" id="round1-pos-9" href="#players">TBA</a>
                     <a class="tournament__match__team" id="round1-pos-10" href="#players">TBA</a>
@@ -291,54 +351,57 @@
                     <a class="tournament__match__team" id="round1-pos-16" href="#players">TBA</a>
                   </div>
                 </div>
-            
+                <!-- tournament__round 1/4 -->
                 <div class="tournament__round tournament__round--first-round">
                   <div class="tournament__match">
-                    <a class="tournament__match__team" id="round2-pos-1" href="#players"></a>
-                    <a class="tournament__match__team" id="round2-pos-2" href="#players"></a>
-                  </div>
-                  <div class="tournament__match">
-                    <a class="tournament__match__team" id="round2-pos-3" href="#players"></a>
-                    <a class="tournament__match__team" id="round2-pos-4" href="#players"></a>
-                  </div>
-                  <div class="tournament__match">
                     <a class="tournament__match__team" id="round2-pos-5" href="#players"></a>
-                    <a class="tournament__match__team" id="round2-pos-6" href="#players"></a>
+                    <a class="tournament__match__team whitebox" id="round2-pos-6" href="#players"></a>
                   </div>
                   <div class="tournament__match">
                     <a class="tournament__match__team" id="round2-pos-7" href="#players"></a>
-                    <a class="tournament__match__team" id="round2-pos-8" href="#players"></a>
+                    <a class="tournament__match__team whitebox" id="round2-pos-8" href="#players"></a>
+                  </div>
+                  <div class="tournament__match">
+                    <a class="tournament__match__team" id="round2-pos-9" href="#players"></a>
+                    <a class="tournament__match__team whitebox" id="round2-pos-10" href="#players"></a>
+                  </div>
+                  <div class="tournament__match">
+                    <a class="tournament__match__team" id="round2-pos-11" href="#players"></a>
+                    <a class="tournament__match__team whitebox" id="round2-pos-12" href="#players"></a>
                   </div>
                 </div>
             
                 <!-- tournament__round 1/2 -->
                 <div class="tournament__round">
-                  <div class="tournament__match">
-                    <a class="tournament__match__team" id="round3-pos-1" href="#players"></a>
-                    <a class="tournament__match__team" id="round3-pos-2" href="#players"></a>
-                  </div>
-                  <div class="tournament__match">
+                  <div class="tournament__match tournament__match_under">
                     <a class="tournament__match__team" id="round3-pos-3" href="#players"></a>
-                    <a class="tournament__match__team" id="round3-pos-4" href="#players"></a>
+                    <a class="tournament__match__team whitebox" id="round3-pos-4" href="#players"></a>
+                    <a class="tournament__match__team" id="round3-pos-5" href="#players"></a>
+                    <a class="tournament__match__team whitebox" id="round3-pos-6" href="#players"></a>
                   </div>
                 </div>
             
                 <!-- tournament__round final -->
-                <div class="tournament__round tournament__round--final">
+                <div class="tournament__round tournament__round">
                   <div class="tournament__match">
-                    <a class="tournament__match__team" id="round4-pos-1" href="#players"></a>
                     <a class="tournament__match__team" id="round4-pos-2" href="#players"></a>
+                    <a class="tournament__match__team whitebox" id="round4-pos-3" href="#players"></a>
                   </div>
                 </div>
-            
-                <!-- tournament__round winner -->
+
+                <div class="tournament__round tournament__round--first-round">
+                  <div class="tournament__match_n">
+                    <a class="tournament__match__team" id="round5-pos-1" href="#players">TBA</a>
+                  </div>
+                  
+                </div>
                 <div class="tournament__round tournament__round--winner">
-                  <div class="tournament__match">
-                    <a class="tournament__match__team" id="round5-pos-1" href="#players"></a>
+                  <div class="tournament__match_sn">
+                    <div class="tournament__match__team_empty"></div>
                   </div>
                 </div>
-              </div>
-            
+                
+
             </div>
         </section>
         <section class="between-2 svgparent">

@@ -1,6 +1,6 @@
 .tournament {
     position: relative;
-    width: 75%;
+    width: 90vw;
     min-height: 300px;
     padding: 30px 0 0;
   }
@@ -13,6 +13,11 @@
     min-height: 400px;
   }
   
+  .tournament__round_aba {
+    position: relative;
+    right: 0px;
+  }
+
   .tournament__round {
     position: relative;
     flex: 1 0;
@@ -30,6 +35,34 @@
     align-items: center;
     min-height: 100px;
   }
+
+  .tournament__match_s {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    flex: 1 0;
+    justify-content: center;
+    min-height: 100px;
+  }
+  .tournament__match_sn {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    flex: 1 0;
+    justify-content: center;
+    min-height: 100px;
+  }
+  .tournament__match_so {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    flex: 1 0;
+    justify-content: center;
+    min-height: 100px;
+  }
   .tournament__match:first-child {
     margin: 0 !important;
   }
@@ -45,9 +78,64 @@
     position: absolute;
     right: 0;
     width: 2px;
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(100, 100, 100, 0.201);
     top: 25%;
     bottom: 25%;
+  }
+  .tournament__match_latest:after {
+    content: "";
+    position: absolute;
+    right: 0;
+    width: 2px;
+    background: rgba(100, 100, 100, 0.201);
+    top: 25%;
+    bottom: 25%;
+  }
+
+  .tournament__match_under:after {
+    content: "";
+    position: absolute;
+    right: 0;
+    width: 2px;
+    background: rgba(100, 100, 100, 0.201);
+    top: 12.5%;
+    bottom: 12.5%;
+  }
+  .tournament__match_s:after {
+    content: "";
+    position: absolute;
+    right: 0;
+    width: 2px;
+    background: rgba(100, 100, 100, 0.201);
+    top: 0%;
+    bottom: 0%;
+  }
+  .tournament__match_so:after {
+    content: "";
+    position: absolute;
+    right: 0;
+    width: 2px;
+    background: rgba(100, 100, 100, 0.201);
+    top: 50%;
+    bottom: 0%;
+  }
+  .tournament__match_sn:after {
+    content: "";
+    position: absolute;
+    right: 0;
+    width: 2px;
+    background: rgba(100, 100, 100, 0.201);
+    top: 0%;
+    bottom: 50%;
+  }
+  .tournament__match_n {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    flex: 1 0;
+    align-items: center;
+    min-height: 100px;
   }
   .tournament__round--winner .tournament__match:after, .tournament__round--end-point .tournament__match:after {
     display: none;
@@ -71,6 +159,33 @@
     margin: auto;
     border-radius: 5px;
   }
+  .tournament__match__team_winner {
+    font-size: 14px;
+    font-weight: bold;
+    transition: color 0.3s ease;
+    font-family: 'Unbounded Medium';
+    color: #fff;
+    text-decoration: none;
+    background: rgba(255, 255, 255, 0.2);
+    width: 10vw;
+    height: 32px;
+    line-height: 32px;
+    margin: auto;
+    border-radius: 5px;
+  }
+  .tournament__match__team_empty {
+    color: #fff;
+    text-decoration: none;
+    background: rgba(100, 100, 100, 0.2);
+    display: block;
+    position: relative;
+    width: 100px;
+    height: 2px;
+    line-height: 2px;
+    padding: 0 36px 0 36px;
+    margin: auto;
+    border-radius: 5px;
+  }
   .tournament__match__team:focus, .tournament__match__team:hover {
     color: #fff;
   }
@@ -81,9 +196,30 @@
     width: 999px;
     height: 2px;
     margin-top: -1px;
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(100, 100, 100, 0.2);
+  }
+  .right_line:before, .right_line:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 999px;
+    height: 2px;
+    margin-top: -1px;
+    background: rgba(100, 100, 100, 0.2);
+  }
+  .tournament__match__team_empty:before, .tournament__match__team_empty:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 999px;
+    height: 2px;
+    margin-top: -1px;
+    background: rgba(100, 100, 100, 0.2);
   }
   .tournament__match__team:after {
+    left: 100%;
+  }
+  .tournament__match__team_empty:after {
     left: 100%;
   }
   .tournament__round:last-child .tournament__match__team:after, .tournament__round--end-point .tournament__match__team:after {
@@ -92,6 +228,12 @@
   .tournament__match__team:before {
     right: 100%;
   }
+  .tournament__match__team_empty:before {
+    right: 100%;
+  }
   .tournament__round:first-child .tournament__match__team:before {
     display: none;
+  }
+  .whitebox {
+    background-color: #469e0c;
   }
