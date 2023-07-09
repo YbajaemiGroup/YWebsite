@@ -1,4 +1,5 @@
-﻿using YCore.Crypto;
+﻿using Microsoft.EntityFrameworkCore;
+using YCore.Crypto;
 using YDatabase;
 using YDatabase.Models;
 
@@ -106,7 +107,10 @@ public class DatabaseInteractor
     public List<Player> GetPlayers()
     {
         Logger.Log(LogSeverity.Debug, nameof(DatabaseInteractor), "All players selected from database.");
-        return Context.Players.ToList();
+        return Context.Players
+            .AsQueryable()
+            .Include(p => p.Image)
+            .ToList();
     }
 
     public async Task<Player> InsertPlayer(Player player)
@@ -144,13 +148,19 @@ public class DatabaseInteractor
     public Link GetLink(int id)
     {
         Logger.Log(LogSeverity.Debug, nameof(DatabaseInteractor), "Link selected from database.");
-        return Context.Links.First(l => l.Id == id);
+        return Context.Links
+            .AsQueryable()
+            .Include(l => l.PlayerNavigation)
+            .First(l => l.Id == id);
     }
 
     public Link GetLinkByPlayerId(int playerId)
     {
         Logger.Log(LogSeverity.Debug, nameof(DatabaseInteractor), "Link selected from database by playerId.");
-        return Context.Links.First(l => l.Player == playerId);
+        return Context.Links
+            .AsQueryable()
+            .Include(l => l.PlayerNavigation)
+            .First(l => l.Player == playerId);
     }
 
     public async Task<bool> DeleteLink(int id)
@@ -172,13 +182,19 @@ public class DatabaseInteractor
     public List<Link> GetLinks()
     {
         Logger.Log(LogSeverity.Debug, nameof(DatabaseInteractor), "All links selected from database.");
-        return Context.Links.ToList();
+        return Context.Links
+            .AsQueryable()
+            .Include(l => l.PlayerNavigation)
+            .ToList();
     }
 
     public List<Link> GetPlayerLinks(int playerId)
     {
         Logger.Log(LogSeverity.Debug, nameof(DatabaseInteractor), "Link selected from database by playerId");
-        return Context.Links.Where(l => l.Player == playerId).ToList();
+        return Context.Links
+            .AsQueryable()
+            .Include(l => l.PlayerNavigation)
+            .Where(l => l.Player == playerId).ToList();
     }
 
     public async Task<Image> InsertImage(Image image)
@@ -198,7 +214,10 @@ public class DatabaseInteractor
     public Image GetImage(string name)
     {
         Logger.Log(LogSeverity.Debug, nameof(DatabaseInteractor), "Image selected by name.");
-        return Context.Images.First(i => i.ImageName == name);
+        return Context.Images
+            .AsQueryable()
+            .Include(i => i.Players)
+            .First(i => i.ImageName == name);
     }
 
     public List<Image> GetStaffImages()
@@ -211,7 +230,10 @@ public class DatabaseInteractor
     {
         Logger.Log(LogSeverity.Debug, nameof(DatabaseInteractor), "Image selected from database by playerId.");
         var player = GetPlayer(playerId);
-        return Context.Images.First(i => i.Id == player.ImageId);
+        return Context.Images
+            .AsQueryable()
+            .Include(i => i.Players)
+            .First(i => i.Id == player.ImageId);
     }
 
     public async void CreateToken(string key)
