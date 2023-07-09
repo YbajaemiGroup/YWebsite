@@ -25,6 +25,13 @@
     display: flex;
     flex-direction: column;
   }
+  .butt__round {
+    position: relative;
+    flex: 1 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
   
   .tournament__match {
     position: relative;
@@ -159,6 +166,26 @@
     margin: auto;
     border-radius: 5px;
   }
+
+  .whitebox {
+    font-size: 14px;
+    font-weight: bold;
+    transition: color 0.3s ease;
+    font-family: 'Unbounded Medium';
+    color: #fff;
+    text-decoration: none;
+    box-sizing: border-box;
+    background: rgba(255, 255, 255, 0.2);
+    display: block;
+    position: relative;
+    width: auto;
+    height: 32px;
+    line-height: 32px;
+    padding: 0 36px 0 36px;
+    margin: auto;
+    border-radius: 5px;
+  }
+
   .tournament__match__team_winner {
     font-size: 14px;
     font-weight: bold;
@@ -216,9 +243,22 @@
     margin-top: -1px;
     background: rgba(100, 100, 100, 0.2);
   }
+
+  .whitebox:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 999px;
+    height: 2px;
+    margin-top: -1px;
+    background: rgba(100, 100, 100, 0.2);
+  }
+
   .tournament__match__team:after {
     left: 100%;
   }
+
+ 
   .tournament__match__team_empty:after {
     left: 100%;
   }
@@ -236,4 +276,8 @@
   }
   .whitebox {
     background-color: #469e0c;
+  }
+
+  .whitebox:after {
+    left: 100%;
   }
