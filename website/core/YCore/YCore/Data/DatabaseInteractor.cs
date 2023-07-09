@@ -82,6 +82,20 @@ public class DatabaseInteractor
         return Context.Games.Update(game).Entity;
     }
 
+    public async Task DeleteGame(Game game)
+    {
+        Logger.Log(LogSeverity.Debug, nameof(DatabaseInteractor), "Game deleted.");
+        Context.Games.Remove(game);
+        await CommitAsync();
+    }
+
+    public async Task DeleteGames(IEnumerable<Game> games)
+    {
+        Logger.Log(LogSeverity.Debug, nameof(DatabaseInteractor), "Games deleted.");
+        Context.Games.RemoveRange(games);
+        await CommitAsync();
+    }
+
     public List<Game> GetGroupGames()
     {
         Logger.Log(LogSeverity.Debug, nameof(DatabaseInteractor), "Group games selected.");
@@ -101,7 +115,12 @@ public class DatabaseInteractor
     public Player GetPlayer(int id)
     {
         Logger.Log(LogSeverity.Debug, nameof(DatabaseInteractor), "Player selected from database.");
-        return Context.Players.First(p => p.Id == id);
+        return Context.Players
+            .AsQueryable()
+            .Include(p => p.GamePlayer1Navigations)
+            .Include(p => p.GamePlayer2Navigations)
+            .Include(p => p.Image)
+            .First(p => p.Id == id);
     }
 
     public List<Player> GetPlayers()
@@ -109,6 +128,8 @@ public class DatabaseInteractor
         Logger.Log(LogSeverity.Debug, nameof(DatabaseInteractor), "All players selected from database.");
         return Context.Players
             .AsQueryable()
+            .Include(p => p.GamePlayer1Navigations)
+            .Include(p => p.GamePlayer2Navigations)
             .Include(p => p.Image)
             .ToList();
     }
