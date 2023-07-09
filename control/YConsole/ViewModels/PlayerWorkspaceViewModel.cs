@@ -263,6 +263,7 @@ namespace YConsole.ViewModels
                 await _apiInteractor.DeletePlayer(ChosenPlayer.Id.Value);
                 ChosenPlayer = null;
             }
+# тут папдает удалялка ибо ссылается на таблицу games
             throw new NotImplementedException();
         }
 
