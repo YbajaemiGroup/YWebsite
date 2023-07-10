@@ -4,6 +4,8 @@ namespace YApiModel.Models;
 
 public class Game
 {
+    [JsonPropertyName("row")]
+    public int Row { get; set; }
     [JsonPropertyName("player1")]
     public int Player1Id { get; set; }
     [JsonPropertyName("player2")]
