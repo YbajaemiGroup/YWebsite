@@ -1,14 +1,8 @@
-﻿using Accessibility;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel.Design.Serialization;
 using System.Linq;
-using System.Net.NetworkInformation;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using YApi;
 using YApiModel.Models;
 using YConsole.ViewModels.Dialogs;
@@ -45,7 +39,7 @@ namespace YConsole.ViewModels
 
         public int Id
         {
-            get { return ChosenPlayer?.Id ?? 0; }
+            get => ChosenPlayer?.Id ?? 0;
             set
             {
                 if (_saved)
@@ -68,7 +62,7 @@ namespace YConsole.ViewModels
 
         public string Nickname
         {
-            get { return ChosenPlayer?.NickName ?? "??"; }
+            get => ChosenPlayer?.NickName ?? "??";
             set
             {
                 if (_saved)
@@ -84,14 +78,14 @@ namespace YConsole.ViewModels
                     MessageBox.Show("Выберите игрока.");
                     return;
                 }
-                ChosenPlayer.NickName = value; 
+                ChosenPlayer.NickName = value;
                 OnPropertyChanged(nameof(Nickname));
             }
         }
 
         public string ImageName
         {
-            get { return ChosenPlayer?.ImageName ?? "??"; }
+            get => ChosenPlayer?.ImageName ?? "??";
             set
             {
                 if (_saved)
@@ -114,7 +108,7 @@ namespace YConsole.ViewModels
 
         public string Description
         {
-            get { return ChosenPlayer?.Description ?? "??"; }
+            get => ChosenPlayer?.Description ?? "??";
             set
             {
                 if (_saved)
@@ -137,7 +131,7 @@ namespace YConsole.ViewModels
 
         public int GroupNumber
         {
-            get { return ChosenPlayer?.GroupNumber ?? 0; }
+            get => ChosenPlayer?.GroupNumber ?? 0;
             set
             {
                 if (_saved)
@@ -159,7 +153,7 @@ namespace YConsole.ViewModels
 
         public int Won
         {
-            get { return ChosenPlayer?.Won ?? 0; }
+            get => ChosenPlayer?.Won ?? 0;
             set
             {
                 if (_saved)
@@ -181,7 +175,7 @@ namespace YConsole.ViewModels
 
         public int Lose
         {
-            get { return ChosenPlayer?.Lose ?? 0; }
+            get => ChosenPlayer?.Lose ?? 0;
             set
             {
                 if (_saved)
@@ -203,7 +197,7 @@ namespace YConsole.ViewModels
 
         public int Points
         {
-            get { return ChosenPlayer?.Points ?? 0; }
+            get => ChosenPlayer?.Points ?? 0;
             set
             {
                 if (_saved)
