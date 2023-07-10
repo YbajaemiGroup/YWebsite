@@ -62,9 +62,9 @@ namespace YCore
                     RequestReceived?.Invoke(HttpListener.GetContext());
                 }
             }
-            catch (HttpListenerException)
+            catch (HttpListenerException e)
             {
-                Logger.Log(LogSeverity.Warning, nameof(Core), "Expected exception on closing sockets.");
+                Logger.Log(LogSeverity.Warning, nameof(Core), "Expected exception on closing sockets.", e);
                 if (!HttpListener.IsListening)
                 {
                     HttpListener = new HttpListener();

@@ -50,6 +50,27 @@ html {
 
 
 }
+.card-img-container {
+  margin-top: auto;
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+
+}
+.pic-button {
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 2px;
+  border-radius: .5em;
+  transition: 0.2s;
+  box-shadow: inset 0 0 0 3px #ffffff;
+}
+.pic-button:hover {
+	background: rgba(65, 149, 53, 0.2);
+  transition: 0.2s;
+	box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.2);
+}
 
 .between-0 {
   background: linear-gradient( #000000, #45B649);

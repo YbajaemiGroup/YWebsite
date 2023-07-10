@@ -10,6 +10,8 @@ public partial class Game
 
     public int? UpdationId { get; set; }
 
+    public int Row { get; set; }
+
     public int Player1 { get; set; }
 
     public int Player2 { get; set; }

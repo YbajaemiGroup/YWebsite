@@ -24,6 +24,7 @@ namespace YCore.API.Handlers
                     games.Add(db.InsertGame(new()
                     {
                         UpdationId = uid,
+                        Row = game.Row,
                         Player1 = game.Player1Id,
                         Player2 = game.Player2Id,
                         Round = round.RoundNumber,
