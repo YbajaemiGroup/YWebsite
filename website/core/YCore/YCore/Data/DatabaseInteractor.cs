@@ -247,6 +247,12 @@ public class DatabaseInteractor
         return Context.Images.Where(i => i.IsStaff).ToList();
     }
 
+    public List<Image> GetPlayersImages()
+    {
+        Logger.Log(LogSeverity.Debug, nameof(DatabaseInteractor), "Player's images selected from database.");
+        return Context.Images.Where(i => !i.IsStaff).ToList();
+    }
+
     public Image GetImageByPlayerId(int playerId)
     {
         Logger.Log(LogSeverity.Debug, nameof(DatabaseInteractor), "Image selected from database by playerId.");
