@@ -38,6 +38,7 @@ namespace YCore.API.Handlers
                         {
                             new()
                             {
+                                Row = game.Row,
                                 Player1Id = game.Player1,
                                 Player2Id = game.Player2,
                                 WinnerId = game.Winner
@@ -50,6 +51,7 @@ namespace YCore.API.Handlers
                     responseData.First(r => r.RoundNumber == game.Round)
                         .Games.Add(new()
                         {
+                            Row = game.Row,
                             Player1Id = game.Player1,
                             Player2Id = game.Player2,
                             WinnerId = game.Winner
