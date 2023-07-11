@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics.Metrics;
 using YApiModel.Models;
 
 namespace YApi
@@ -43,6 +39,29 @@ namespace YApi
             dbImage.CopyTo(localImage);
             localImage.Flush();
             dbImage.Flush();
+        }
+
+        public async Task DownloadImageAsync(string imageName, string imagesDirectory)
+        {
+            using var dbImage = await _client.GetImage(imageName, YApiModel.ImageType.Players);
+            using var localImage = File.OpenWrite($"{imagesDirectory}\\{imageName}");
+            await dbImage.CopyToAsync(localImage);
+            await localImage.FlushAsync();
+            await dbImage.FlushAsync();
+        }
+
+        public async Task DownloadAllImagesAsync(string imageDirectory)
+        {
+            var players = await _client.PlayersGetAsync();
+            var downloadingImages = new List<Task>();
+            foreach (var image in players.Select(p => p.ImageName))
+            {
+                if (image != null)
+                {
+                    downloadingImages.Add(DownloadImageAsync(image, imageDirectory));
+                }
+            }
+            Task.WaitAll(downloadingImages.ToArray());
         }
     }
 }

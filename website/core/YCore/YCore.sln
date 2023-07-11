@@ -21,6 +21,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YConsole", "..\..\..\contro
 		{C27BF41F-9702-4A64-A09D-55A1D9B4EB9A} = {C27BF41F-9702-4A64-A09D-55A1D9B4EB9A}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YConsoleTests", "..\..\..\control\YConsoleTests\YConsoleTests.csproj", "{4C078AE3-4FB8-495E-B575-B23CFF6120E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YApiTests", "YApiTests\YApiTests.csproj", "{D2044FF3-E82E-459F-9E70-698A424DAC9B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +59,14 @@ Global
 		{DFB44D89-E696-4236-8297-210E6297DCBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DFB44D89-E696-4236-8297-210E6297DCBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DFB44D89-E696-4236-8297-210E6297DCBF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C078AE3-4FB8-495E-B575-B23CFF6120E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C078AE3-4FB8-495E-B575-B23CFF6120E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C078AE3-4FB8-495E-B575-B23CFF6120E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C078AE3-4FB8-495E-B575-B23CFF6120E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2044FF3-E82E-459F-9E70-698A424DAC9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2044FF3-E82E-459F-9E70-698A424DAC9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2044FF3-E82E-459F-9E70-698A424DAC9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2044FF3-E82E-459F-9E70-698A424DAC9B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

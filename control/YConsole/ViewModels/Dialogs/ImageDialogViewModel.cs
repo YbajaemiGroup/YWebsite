@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Windows.Documents;
 using YApi;
 using YConsole.Model;
 
@@ -7,11 +6,6 @@ namespace YConsole.ViewModels.Dialogs
 {
     public class ImageDialogViewModel : ViewModelBase
     {
-        public class DbImage
-        {
-
-        }
-
         public ObservableCollection<string> DatabaseImagesPaths { get; set; } = new();
         public string? SelectedImageSource { get; set; }
 
@@ -23,5 +17,7 @@ namespace YConsole.ViewModels.Dialogs
             _apiInteractor = apiInteractor;
             _imageSource = ConfigInteractor.GetImagesLocation();
         }
+
+
     }
 }
