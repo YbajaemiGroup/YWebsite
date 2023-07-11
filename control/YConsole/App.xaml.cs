@@ -50,6 +50,7 @@ namespace YConsole
         private static void RegisterDialogServices()
         {
             DialogService.RegisterDialog<DeleteConfirmationDialog, DeleteConfirmationViewModel>();
+            DialogService.RegisterDialog<ImageSelectingDialog, ImageDialogViewModel>();
         }
     }
 }

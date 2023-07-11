@@ -35,5 +35,14 @@ namespace YApi
         {
             await _client.PlayerDelete(playerId);
         }
+
+        public void DownloadImage(string imageName, string imagesDirectory)
+        {
+            using var dbImage = _client.GetImage(imageName, YApiModel.ImageType.Players).Result;
+            using var localImage = File.OpenWrite($"{imagesDirectory}\\{imageName}");
+            dbImage.CopyTo(localImage);
+            localImage.Flush();
+            dbImage.Flush();
+        }
     }
 }

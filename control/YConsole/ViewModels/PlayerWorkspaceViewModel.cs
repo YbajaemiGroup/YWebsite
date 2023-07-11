@@ -229,6 +229,13 @@ namespace YConsole.ViewModels
 
         public RelayCommand ChangeImageButton { get; private set; }
 
+        public RelayCommand IncreaseWinsButton { get; private set; }
+        public RelayCommand DecreaseWinsButton { get; private set; }
+        public RelayCommand IncreaseLosesButton { get; private set; }
+        public RelayCommand DecreaseLosesButton { get; private set; }
+        public RelayCommand IncreasePointsButton { get; private set; }
+        public RelayCommand DecreasePointsButton { get; private set; }
+
         #endregion
 
         private readonly YApiInteractor _apiInteractor;
@@ -244,6 +251,12 @@ namespace YConsole.ViewModels
             DeleteButton = new(OnDeleteButtonClick);
             CreateButton = new(OnCreateButtonClick);
             ChangeImageButton = new(OnChangeImageButtonClick);
+            IncreaseWinsButton = new(OnIncreaseWinsButtonClick);
+            DecreaseWinsButton = new(OnDecreaseWinsButtonClick);
+            IncreaseLosesButton = new(OnIncreaseLosesButtonClick);
+            DecreaseLosesButton = new(OnDecreaseLosesButtonClick);
+            IncreasePointsButton = new(OnIncreasePointsButtonClick);
+            DecreasePointsButton = new(OnDecreasePointsButtonClick);
         }
 
         #region Command handlers
@@ -252,8 +265,16 @@ namespace YConsole.ViewModels
         {
             if (_saved)
                 return;
-            Players = new(await _apiInteractor.UpdatePlayersAsync(Players.ToList()));
-            _saved = true;
+            try
+            {
+                Players = new(await _apiInteractor.UpdatePlayersAsync(Players.ToList()));
+                _saved = true;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+                return;
+            }
         }
 
         private async void OnDeleteButtonClick(object? ignorable)
@@ -276,13 +297,55 @@ namespace YConsole.ViewModels
 
         private void OnCreateButtonClick(object? ignorable)
         {
-            throw new NotImplementedException();
-
+            var newPlayer = new Player("Новый игрок", "Описание");
+            Players.Add(newPlayer);
+            ChosenPlayer = newPlayer;
+            _saved = false;
         }
 
         private void OnChangeImageButtonClick(object? ignorable)
         {
             throw new NotImplementedException();
+        }
+
+        private void OnIncreaseWinsButtonClick(object? ignorable)
+        {
+            Won++;
+            Points++;
+        }
+
+        private void OnDecreaseWinsButtonClick(object? ignorable)
+        {
+            if (Won <= 0)
+                return;
+            Won--;
+            Points--;
+        }
+
+        private void OnIncreaseLosesButtonClick(object? ignorable)
+        {
+            Lose++;
+            Points++;
+        }
+
+        private void OnDecreaseLosesButtonClick(object? ignorable)
+        {
+            if (Lose <= 0)
+                return;
+            Lose--;
+            Points--;
+        }
+
+        private void OnIncreasePointsButtonClick(object? ignorable)
+        {
+            Points++;
+        }
+
+        private void OnDecreasePointsButtonClick(object? ignorable)
+        {
+            if (Points <= 0)
+                return;
+            Points--;
         }
 
         #endregion

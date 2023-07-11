@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,15 @@ namespace YConsole.Views.Dialogs
         public DialogWindow()
         {
             InitializeComponent();
+        }
+
+        private void ChosePicture(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Image files (*.png;*.jpeg)|*.png;*.jpeg|All files (*.*)|*.*";
+            if (openFileDialog.ShowDialog() != true)
+                return;
+            //txtEditor.Text = File.ReadAllText(openFileDialog.FileName);
         }
     }
 }
