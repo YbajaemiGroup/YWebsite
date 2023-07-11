@@ -1,0 +1,14 @@
+﻿<Window x:Class="YConsole.Views.Dialogs.SaveCheckingDialogWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:YConsole.Views.Dialogs"
+        mc:Ignorable="d"
+        Title="SaveCheckingDialogWindow" Height="200" Width="420">
+    <Grid>
+        <TextBlock Text="Сохранить изменения?" Margin="147,45,147,119"></TextBlock>
+        <Button Content="Сохранить" Style="{StaticResource DefaultButtonStyle}" Height="30" Margin="10,124,0,0" Width="185"></Button>
+        <Button Content="Не сохранять" Style="{StaticResource DefaultButtonStyle}" Height="30" Margin="225,124,0,0" Width="185"></Button>
+    </Grid>
+</Window>

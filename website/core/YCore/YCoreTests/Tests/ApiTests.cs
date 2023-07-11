@@ -140,11 +140,12 @@ namespace YCoreTests.Tests
                 new()
                 {
                     RoundNumber = 1,
-                    IsUpper = true,
                     Games = new()
                     {
                         new()
                         {
+                            
+                            IsUpper = true,
                             Player1Id = 1,
                             Player2Id = 2,
                             WinnerId = null
@@ -154,11 +155,11 @@ namespace YCoreTests.Tests
                 new()
                 {
                     RoundNumber = 2,
-                    IsUpper = true,
                     Games = new()
                     {
                         new()
                         {
+                            IsUpper = true,
                             Player1Id = 1,
                             Player2Id = 2,
                             WinnerId = 1
