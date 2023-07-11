@@ -1,0 +1,84 @@
+﻿<UserControl x:Class="YConsole.Views.PlayerWorkspace"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" 
+             DataContext="{Binding PlayerWorkspaceViewModel, Mode=OneWay, Source={StaticResource Locator}}"
+             d:DesignHeight="775" d:DesignWidth="1800">
+    <UserControl.Resources>
+        <Style x:Key="ParameterLabel" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="Height" Value="15" />
+            <Setter Property="Width" Value="100" />
+        </Style>
+        <Style x:Key="EncreaseDecreaseButton" TargetType="Button">
+            <Setter Property="Height" Value="20" />
+            <Setter Property="Width" Value="20" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+        </Style>
+        <Style x:Key="ParameterValue" TargetType="TextBox">
+            <Setter Property="Height" Value="20" />
+            <Setter Property="Width" Value="250" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="420*"/>
+            <ColumnDefinition Width="1380*"/>
+        </Grid.ColumnDefinitions>
+        <ListView Grid.Column="0" ItemsSource="{Binding Players}" SelectedItem="{Binding ChosenPlayer}"
+                  ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Id}" Width="100">id</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=NickName}" Width="320">nickname</GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Grid Grid.Column="1" Background="White">
+            <TextBlock Text="Ник:" Margin="45,40,0,0" Style="{StaticResource ParameterLabel}"></TextBlock>
+            <TextBlock Text="Фото:" Margin="45,70,0,0" Style="{StaticResource ParameterLabel}"></TextBlock>
+
+            <Image Height="120" Width="120" Margin="45,100,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+            <Button Content="Изменить" Margin="45,235,0,0" Style="{StaticResource DefaultButtonStyle}" />
+
+            <TextBlock Text="Описание:" Margin="45,280,0,0" Style="{StaticResource ParameterLabel}"></TextBlock>
+            
+            <TextBlock Text="Группа:" Margin="45,400,0,0" Style="{StaticResource ParameterLabel}"></TextBlock>
+            <TextBlock Text="Побед:" Margin="45,430,0,0" Style="{StaticResource ParameterLabel}"></TextBlock>
+            <Button Margin="460,430,0,0" x:Name="IncreaseWins" Style="{StaticResource EncreaseDecreaseButton}" Content="+" Command="{Binding IncreaseWinsButton}" />
+            <Button Margin="490,430,0,0" x:Name="DecreaseWins" Style="{StaticResource EncreaseDecreaseButton}" Content="-" Command="{Binding DecreaseWinsButton}" />
+            <TextBlock Text="Поражений:" Margin="45,460,0,0" Style="{StaticResource ParameterLabel}"></TextBlock>
+            <Button Margin="460,460,0,0" x:Name="IncreaseLoses" Style="{StaticResource EncreaseDecreaseButton}" Content="+" Command="{Binding IncreaseLosesButton}" />
+            <Button Margin="490,460,0,0" x:Name="DecreaseLoses" Style="{StaticResource EncreaseDecreaseButton}" Content="-" Command="{Binding DecreaseLosesButton}" />
+            <TextBlock Text="Счет:" Margin="45,490,0,0" Style="{StaticResource ParameterLabel}"></TextBlock>
+            <Button Margin="460,490,0,0" x:Name="IncreasePoints" Style="{StaticResource EncreaseDecreaseButton}" Content="+" Command="{Binding IncreasePointsButton}" />
+            <Button Margin="490,490,0,0" x:Name="DecreasePoints" Style="{StaticResource EncreaseDecreaseButton}" Content="-" Command="{Binding DecreasePointsButton}" />
+
+            <TextBox x:Name="NicknameTextBox" Margin="175,40,0,0" Style="{StaticResource ParameterValue}" Text="{Binding Nickname}"></TextBox>
+            <TextBlock Margin="175,70,0,0" Style="{StaticResource ParameterLabel}" Text="{Binding ImageName}"></TextBlock>
+            <TextBox x:Name="DescriptionTextBox" Margin="45,310,0,0" Height="70" Style="{StaticResource ParameterValue}" Text="{Binding Description}" Width="380"></TextBox>
+            <TextBox x:Name="GroupTextBox" Margin="175,400,0,0" Style="{StaticResource ParameterValue}" Text="{Binding GroupNumber}"></TextBox>
+            <TextBox x:Name="WinTextBox" Margin="175,430,0,0" Style="{StaticResource ParameterValue}" Text="{Binding Won}"></TextBox>
+            <TextBox x:Name="LoseTextBox" Margin="175,460,0,0" Style="{StaticResource ParameterValue}" Text="{Binding Lose}"></TextBox>
+            <TextBox x:Name="ScoreTextBox" Margin="175,490,0,0" Style="{StaticResource ParameterValue}" Text="{Binding Points}"></TextBox>
+
+            <TextBlock Text="Количество игроков:" Width="150" Height="15" Margin="650,40,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"></TextBlock>
+            <TextBlock Text="Статус:" Width="150" Height="15" Margin="650,70,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"></TextBlock>
+
+            <TextBlock x:Name="PlayersCountTextBox" Width="150" Height="15" Margin="788,40,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Text="{Binding Players.Count}"></TextBlock>
+            <TextBlock x:Name="StatusTextBox" Width="150" Height="15" Margin="713,70,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Text="{Binding Status}"></TextBlock>
+
+            <Button Content="Создать" Margin="650,683,0,0" Style="{StaticResource DefaultButtonStyle}" Command="{Binding CreateButton}" />
+            <Button Content="Удалить" Margin="850,683,0,0" Style="{StaticResource DefaultButtonStyle}" Command="{Binding DeleteButton}" />
+            <Button Content="Сохранить" Margin="1050,683,0,0" Style="{StaticResource DefaultButtonStyle}" Command="{Binding SaveButton}" />
+        </Grid>
+    </Grid>
+</UserControl>

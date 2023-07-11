@@ -28,7 +28,7 @@ namespace YCore.API.Handlers
                         Player1 = game.Player1Id,
                         Player2 = game.Player2Id,
                         Round = round.RoundNumber,
-                        IsUpper = round.IsUpper,
+                        IsUpper = game.IsUpper,
                         IsGroup = false,
                         Winner = game.WinnerId
                     }).Result);

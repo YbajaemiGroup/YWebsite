@@ -25,6 +25,7 @@ namespace YCore.API.Handlers
                 p.Won,
                 p.Lose,
                 p.Points);
+            db.DeleteGames(p.GamePlayer1Navigations.Concat(p.GamePlayer2Navigations)).Wait();
             db.DeletePlayer(p);
             return GetResponseSender(player);
         }

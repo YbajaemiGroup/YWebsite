@@ -4,6 +4,7 @@ using YApi;
 using YApiModel.Models;
 
 var client = new YClient("token");
+<<<<<<< HEAD
 //var rounds = new List<Round>()
 //            {
 //                new()
@@ -40,5 +41,9 @@ var client = new YClient("token");
 var bracket = client.GetBracketAsync().Result;
 
 Console.WriteLine(JsonSerializer.Serialize(bracket));
+=======
+
+client.PlayerDelete(1).Wait();
+>>>>>>> console
 
 Console.ReadLine();

@@ -33,12 +33,12 @@ namespace YCore.API.Handlers
                     responseData.Add(new Round()
                     {
                         RoundNumber = game.Round.Value,
-                        IsUpper = game.IsUpper.Value,
                         Games = new()
                         {
                             new()
                             {
                                 Row = game.Row,
+                                IsUpper = game.IsUpper.Value,
                                 Player1Id = game.Player1,
                                 Player2Id = game.Player2,
                                 WinnerId = game.Winner
@@ -48,10 +48,18 @@ namespace YCore.API.Handlers
                 }
                 else
                 {
+                    if (game.IsUpper == null)
+                    {
+                        CoreException = new UnknownInnerException();
+                        Logger.Log(LogSeverity.Error, nameof(BracketGetUpdatesHandler), "Error raised.",
+                            new ArgumentNullException(nameof(game.IsUpper), "Каковотохуя null, хотя GetPlayOffGames должно отсеять это все."));
+                        break;
+                    }
                     responseData.First(r => r.RoundNumber == game.Round)
                         .Games.Add(new()
                         {
                             Row = game.Row,
+                            IsUpper = game.IsUpper.Value,
                             Player1Id = game.Player1,
                             Player2Id = game.Player2,
                             WinnerId = game.Winner
