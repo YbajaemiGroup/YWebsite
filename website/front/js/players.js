@@ -26,7 +26,9 @@ document.addEventListener('DOMContentLoaded', () => {
             xhrImages.send();
             textHeader.textContent = playerArray['data'][i]['nickname'];
             textDesc.textContent = playerArray['data'][i]['description'];
-            console.log (xhrImages.responseURL)
+
+            console.log(playerArray['data'][i]['image_name']);
+            console.log (xhrImages.responseURL);
             if (xhrImages.responseURL == null || xhrImages.responseURL == undefined) {
                 imgPlayer.src = 'http://via.placeholder.com/150x150';
             }
