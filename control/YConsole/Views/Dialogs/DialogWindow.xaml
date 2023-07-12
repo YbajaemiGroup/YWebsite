@@ -5,5 +5,5 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:YConsole.ViewModels.Dialogs"
         mc:Ignorable="d"
-        Title="Диалоговое окно" Height="200" Width="420">
+        Title="Диалоговое окно" SizeToContent="WidthAndHeight" Height="200" Width="420">
 </Window>

@@ -21,7 +21,7 @@ namespace YApi
         {
             using var message = new HttpRequestMessage();
             message.RequestUri = new(parameters == null ? _url : GetUrlWithParameters(method, parameters));
-            var responseMessage = await httpClient.SendAsync(message);
+            var responseMessage = httpClient.Send(message);
             Response response = null!;
             try
             {
@@ -48,7 +48,7 @@ namespace YApi
             {
                 message.Content = JsonContent.Create(request);
             }
-            var responseMessage = await httpClient.SendAsync(message);
+            var responseMessage = httpClient.Send(message);
             var responseString = await responseMessage.Content.ReadAsStringAsync();
             var response = JsonSerializer.Deserialize<Response>(responseString);
             if (response == null)

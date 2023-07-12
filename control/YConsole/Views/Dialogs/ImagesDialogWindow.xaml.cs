@@ -10,19 +10,23 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace YConsole.Views.Dialogs
 {
     /// <summary>
-    /// Логика взаимодействия для ImageSelectingDialog.xaml
+    /// Логика взаимодействия для ImagesDialogWindow.xaml
     /// </summary>
-    public partial class ImageSelectingDialog : UserControl
+    public partial class ImagesDialogWindow : Window
     {
-        public ImageSelectingDialog()
+        public ImagesDialogWindow()
         {
             InitializeComponent();
+        }
+
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

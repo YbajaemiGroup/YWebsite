@@ -21,19 +21,23 @@ namespace YConsole
                     services.AddSingleton(new YApiInteractor(ConfigInteractor.GetToken()));
 
                     services.AddSingleton<IDialogService, DialogService>();
+                    services.AddSingleton<IWindowService, WindowService>(serviceProvider => new WindowService(serviceProvider));
 
                     services.AddSingleton<MainWindow>();
                     services.AddSingleton<PlayerWorkspace>();
+                    services.AddSingleton<ImagesDialogWindow>();
 
                     services.AddSingleton<Locator>();
 
                     services.AddSingleton<MainViewModel>();
                     services.AddSingleton<PlayerWorkspaceViewModel>();
+                    services.AddSingleton<ImageDialogViewModel>();
                 }).Build();
 
         protected override void OnStartup(StartupEventArgs e)
         {
             _Host.Start();
+            RegisterWindowServices();
             RegisterDialogServices();
             MainWindow = _Host.Services.GetRequiredService<MainWindow>();
             MainWindow.Show();
@@ -50,7 +54,12 @@ namespace YConsole
         private static void RegisterDialogServices()
         {
             DialogService.RegisterDialog<DeleteConfirmationDialog, DeleteConfirmationViewModel>();
-            DialogService.RegisterDialog<ImageSelectingDialog, ImageDialogViewModel>();
+            //DialogService.RegisterDialog<ImageSelectingDialog, ImageDialogViewModel>();
+        }
+
+        private static void RegisterWindowServices()
+        {
+            WindowService.RegisterView<ImageDialogViewModel, ImagesDialogWindow>();
         }
     }
 }

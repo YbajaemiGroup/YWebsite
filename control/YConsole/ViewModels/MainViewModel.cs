@@ -2,6 +2,8 @@
 {
     public class MainViewModel : ViewModelBase
     {
+        private readonly PlayerWorkspaceViewModel _playerWorkspaceViewModel;
+
         private ViewModelBase? workspace;
         public ViewModelBase? Workspace
         {
@@ -13,9 +15,10 @@
             }
         }
 
-        public MainViewModel()
+        public MainViewModel(PlayerWorkspaceViewModel playerWorkspaceViewModel)
         {
             OpenPlayersWorkspaceCommand = new(OnPlayersWorkspaceCommandClick);
+            _playerWorkspaceViewModel = playerWorkspaceViewModel;
         }
 
         #region Command bindings
@@ -26,9 +29,10 @@
 
         #region Command handlers
 
-        private void OnPlayersWorkspaceCommandClick(object? playerWorkspace)
+        private void OnPlayersWorkspaceCommandClick(object? ignorable)
         {
-            Workspace = playerWorkspace as ViewModelBase ?? throw new System.Exception("Can't load player workspace.");
+            Workspace = _playerWorkspaceViewModel;
+            _ = _playerWorkspaceViewModel.LoadDataAsync();
         }
 
         #endregion

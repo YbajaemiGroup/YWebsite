@@ -24,14 +24,5 @@ namespace YConsole.Views.Dialogs
         {
             InitializeComponent();
         }
-
-        private void ChosePicture(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Image files (*.png;*.jpeg)|*.png;*.jpeg|All files (*.*)|*.*";
-            if (openFileDialog.ShowDialog() != true)
-                return;
-            //txtEditor.Text = File.ReadAllText(openFileDialog.FileName);
-        }
     }
 }

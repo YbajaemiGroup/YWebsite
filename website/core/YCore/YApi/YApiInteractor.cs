@@ -50,18 +50,32 @@ namespace YApi
             await dbImage.FlushAsync();
         }
 
-        public async Task DownloadAllImagesAsync(string imageDirectory)
+        public List<string> DownloadImages(string imageDirectory)
         {
-            var players = await _client.PlayersGetAsync();
-            var downloadingImages = new List<Task>();
+            var players = _client.PlayersGetAsync().Result;
+            var imagesNames = new List<string>();
             foreach (var image in players.Select(p => p.ImageName))
             {
                 if (image != null)
                 {
-                    downloadingImages.Add(DownloadImageAsync(image, imageDirectory));
+                    DownloadImage(image, imageDirectory);
+                    imagesNames.Add(image);
                 }
             }
-            Task.WaitAll(downloadingImages.ToArray());
+            return imagesNames;
+        }
+
+        public async IAsyncEnumerable<string> DownloadAllImagesAsync(string imageDirectory)
+        {
+            var players = await _client.PlayersGetAsync();
+            foreach (var image in players.Select(p => p.ImageName))
+            {
+                if (image != null)
+                {
+                    await DownloadImageAsync(image, imageDirectory);
+                    yield return image;
+                }
+            }
         }
     }
 }

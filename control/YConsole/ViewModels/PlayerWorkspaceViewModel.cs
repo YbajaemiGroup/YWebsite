@@ -1,21 +1,34 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Sockets;
 using System.Threading.Tasks;
 using System.Windows;
 using YApi;
 using YApiModel.Models;
 using YConsole.ViewModels.Dialogs;
+using YConsole.Views;
 
 namespace YConsole.ViewModels
 {
-    public class PlayerWorkspaceViewModel : ViewModelBase
+    public class PlayerWorkspaceViewModel : ViewModelBase, IDataLoadable
     {
         private const string DEFAULT_VALUE = "??";
 
         #region Bindings
 
-        public ObservableCollection<Player> Players { get; set; } = new();
+        private ObservableCollection<Player> players = new();
+
+        public ObservableCollection<Player> Players
+        {
+            get { return players; }
+            set
+            {
+                players = value;
+                OnPropertyChanged(nameof(Players));
+            }
+        }
 
         private Player? chosenPlayer;
 
@@ -240,12 +253,13 @@ namespace YConsole.ViewModels
 
         private readonly YApiInteractor _apiInteractor;
         private bool _saved = true;
+        private readonly IWindowService _windowService;
         private readonly IDialogService _dialogService;
 
-        public PlayerWorkspaceViewModel(YApiInteractor apiInteractor, IDialogService dialogService)
+        public PlayerWorkspaceViewModel(YApiInteractor apiInteractor, IWindowService windowService, IDialogService dialogService)
         {
             _apiInteractor = apiInteractor;
-            _ = Task.Run(async () => Players = new(await apiInteractor.GetAllPlayersAsync()));
+            _windowService = windowService;
             _dialogService = dialogService;
             SaveButton = new(OnSaveButtonClick);
             DeleteButton = new(OnDeleteButtonClick);
@@ -305,7 +319,9 @@ namespace YConsole.ViewModels
 
         private void OnChangeImageButtonClick(object? ignorable)
         {
-            throw new NotImplementedException();
+            ImageDialogViewModel imageDialogViewModel = new(_apiInteractor);
+            _ = imageDialogViewModel.LoadDataAsync();
+            _windowService.Show(imageDialogViewModel);
         }
 
         private void OnIncreaseWinsButtonClick(object? ignorable)
@@ -346,6 +362,32 @@ namespace YConsole.ViewModels
             if (Points <= 0)
                 return;
             Points--;
+        }
+
+        public void LoadData()
+        {
+            try
+            {
+                Players = new(_apiInteractor.GetAllPlayersAsync().Result);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Произошла ошибка при загрузке игроков.");
+                Players = new();
+            }
+        }
+
+        public async Task LoadDataAsync()
+        {
+            try
+            {
+                Players = new(await _apiInteractor.GetAllPlayersAsync());
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Произошла ошибка при загрузке игроков.");
+                Players = new();
+            }
         }
 
         #endregion
