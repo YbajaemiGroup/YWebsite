@@ -51,6 +51,7 @@ html {
 
 }
 .card-img-container {
+  height: fit-content;
   margin-top: auto;
   display: flex;
   flex: 1;

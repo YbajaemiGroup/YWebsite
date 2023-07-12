@@ -1,10 +1,11 @@
-
 document.addEventListener('DOMContentLoaded', () => {
     const link = 'http://localhost:12345/api/'
 
     var xhr = new XMLHttpRequest();
     var xhrLinks = new XMLHttpRequest();
     var xhrImages = new XMLHttpRequest();
+    var xhrBracket = new XMLHttpRequest();
+    var xhrPlayer = new XMLHttpRequest();
     xhr.open('GET', link + 'players.get', false);
     xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
     xhr.send();
@@ -14,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const cardTemplate = document.querySelector('#player-card');
         const cardPlace = document.querySelector('.players-grid');
 
-        for (let i = 0; i < playerArray['data'].length; i++) {
+        for (let i = 1; i < playerArray['data'].length; i++) {
             const cardClone = cardTemplate.content.cloneNode(true);
             const card = cardClone.querySelector('.player-card');
             const textHeader = card.querySelector('.card-text-header');
@@ -27,9 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
             textHeader.textContent = playerArray['data'][i]['nickname'];
             textDesc.textContent = playerArray['data'][i]['description'];
 
-            console.log(playerArray['data'][i]['image_name']);
-            console.log (xhrImages.responseURL);
-            if (xhrImages.responseURL == null || xhrImages.responseURL == undefined) {
+            if (xhrImages.responseText.includes('error')) {
                 imgPlayer.src = 'http://via.placeholder.com/150x150';
             }
             else {
@@ -70,45 +69,6 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         console.log('Error loading data..');
     }
-
-
-
-    // -------------------------------------------------------------
-
-
-    // const playerGroups = [
-    //     1,
-    //     2,
-    //     3,
-    //     4
-    //   ];
-      
-    //   for (let groupIndex = 0; groupIndex < playerGroups.length; groupIndex++) {
-    //     const group = playerGroups[groupIndex];
-    //     const groupId = groupIndex + 1;
-      
-    //     for (let i = 0; i < group.length && i < 4; i++) {
-    //       const groupPlayer = document.querySelector(`#group-${groupId}-player-${i+1}`);
-    //       const textPlayer = groupPlayer.querySelector('[data-th="Player"]');
-    //       const textWin = groupPlayer.querySelector("[data-th='Win']");
-    //       const textLose = groupPlayer.querySelector("[data-th='Lose']");
-    //       const textScore = groupPlayer.querySelector("[data-th='Score']");
-      
-    //       textPlayer.textContent = group[i]['nickname'];
-    //       textWin.textContent = group[i]['won'];
-    //       textLose.textContent = group[i]['lose'];
-    //       textScore.textContent = group[i]['points'];
-    //     }
-    //   }
-
-    
-    // --------------------------------------------------------------------------------
-
-
-
-
-
-
 
     var players1group = [];
     var players2group = [];
@@ -184,6 +144,58 @@ document.addEventListener('DOMContentLoaded', () => {
             textScore.textContent = players4group[i]['points'];
         }
     }
-    
 
+    xhrBracket.open('GET', link + 'bracket.updates.get', false);
+    xhrBracket.setRequestHeader('Access-Control-Allow-Origin', '*');
+    xhrBracket.send();
+    let brackets = JSON.parse(xhrBracket.responseText);
+    for (let i = 0; i < brackets['data'].length; i++) {
+        for (let j = 0; j < brackets['data'][i]['games'].length; j++) {
+            if (brackets['data'][i]['games'][j]['is_upper'] == true) {
+                let tournamentRound = document.querySelector('#round'+ (brackets['data'][i]['round_number']) +'-upper-' + (brackets['data'][i]['games'][j]['row']));
+                let textPlayer_1 = tournamentRound.querySelector('#player-pos-1');
+                let textPlayer_2 = tournamentRound.querySelector('#player-pos-2');
+                xhrPlayer.open('GET', link + 'players.get?player_id=' + brackets['data'][i]['games'][j]['player1'], false);
+                xhrPlayer.setRequestHeader('Access-Control-Allow-Origin', '*');
+                xhrPlayer.send();
+                let textOfPlayer = JSON.parse(xhrPlayer.responseText);
+
+                textPlayer_1.textContent = textOfPlayer['data']['nickname'];
+
+                xhrPlayer.open('GET', link + 'players.get?player_id=' + brackets['data'][i]['games'][j]['player2'], false);
+                xhrPlayer.setRequestHeader('Access-Control-Allow-Origin', '*');
+                xhrPlayer.send();
+                textOfPlayer = JSON.parse(xhrPlayer.responseText);
+
+                textPlayer_2.textContent = textOfPlayer['data']['nickname'];
+            }
+        }
+    }
+
+    for (let i = 0; i < brackets['data'].length; i++) { 
+        for (let j = 0; j < brackets['data'][i]['games'].length; j++) {
+            if (brackets['data'][i]['games'][j]['is_upper'] == false) {
+                let tournamentRound = document.querySelector('#round'+ (brackets['data'][i]['round_number']) +'-' + (brackets['data'][i]['games'][j]['row']));
+                let textPlayer_1 = tournamentRound.querySelector('#player-pos-1');
+                let textPlayer_2 = tournamentRound.querySelector('#player-pos-2');
+                if (brackets['data'][i]['games'][j]['player1'] != 0) {
+                    xhrPlayer.open('GET', link + 'players.get?player_id=' + brackets['data'][i]['games'][j]['player1'], false);
+                    xhrPlayer.setRequestHeader('Access-Control-Allow-Origin', '*');
+                    xhrPlayer.send();
+                    let textOfPlayer = JSON.parse(xhrPlayer.responseText);
+                    console.log(textOfPlayer['data']['nickname'] + ' round: ' + brackets['data'][i]['round_number'] + ' row: ' + brackets['data'][i]['games'][j]['row']);
+                    textPlayer_1.textContent = textOfPlayer['data']['nickname'];
+                }
+                
+                if (brackets['data'][i]['games'][j]['player2'] != 0) {
+                    xhrPlayer.open('GET', link + 'players.get?player_id=' + brackets['data'][i]['games'][j]['player2'], false);
+                    xhrPlayer.setRequestHeader('Access-Control-Allow-Origin', '*');
+                    xhrPlayer.send();
+                    textOfPlayer = JSON.parse(xhrPlayer.responseText);
+                    console.log(textOfPlayer['data']['nickname'] + ' round: ' + brackets['data'][i]['round_number'] + ' row: ' + brackets['data'][i]['games'][j]['row']);
+                    textPlayer_2.textContent = textOfPlayer['data']['nickname'];
+                }
+            }
+        }
+    }
 });
