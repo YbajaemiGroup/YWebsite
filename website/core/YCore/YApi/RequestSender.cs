@@ -63,6 +63,7 @@ namespace YApi
             using var message = new HttpRequestMessage();
             message.RequestUri = new(parameters == null ? _url : GetUrlWithParameters(method, parameters));
             message.Content = content;
+            
             var responseMessage = await httpClient.SendAsync(message);
             var responseString = await responseMessage.Content.ReadAsStringAsync();
             var response = JsonSerializer.Deserialize<Response>(responseString);

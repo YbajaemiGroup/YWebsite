@@ -10,14 +10,12 @@ namespace YCore.API.Handlers
         private readonly string imageName;
         private readonly FilesOperator imagesOperator;
         private readonly Stream imageStream;
-        private readonly long offset;
 
-        public ImagesLoadHandler(string imageName, string imagesLocation, Stream imageStream, long offset)
+        public ImagesLoadHandler(string imageName, string imagesLocation, Stream imageStream)
         {
             this.imageName = imageName;
             imagesOperator = new(imagesLocation);
             this.imageStream = imageStream;
-            this.offset = offset;
         }
 
         public IResponseSender GetResponseSender()
@@ -29,7 +27,7 @@ namespace YCore.API.Handlers
                 IsStaff = false
             };
             image = db.InsertImage(image).Result;
-            if (!imagesOperator.SaveFile(imageName, imageStream, offset))
+            if (!imagesOperator.SaveFile(imageName, imageStream))
             {
                 CoreException = new UnknownInnerException();
                 Logger.Log(LogSeverity.Info, nameof(ImagesLoadHandler), "Can't save image to disk.");

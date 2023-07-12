@@ -10,6 +10,5 @@ namespace YCore.API
     public interface IHandlerFactory
     {
         IHandler GetHandler();
-
     }
 }

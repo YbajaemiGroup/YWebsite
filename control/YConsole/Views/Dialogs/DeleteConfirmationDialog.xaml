@@ -6,8 +6,8 @@
              xmlns:local="clr-namespace:YConsole.Views.Dialogs"
              mc:Ignorable="d" 
              d:DesignHeight="200" d:DesignWidth="420">
-    <Grid>
-        <TextBlock Margin="10,45,10,70" TextAlignment="Center" Text="{Binding QuestionText}"></TextBlock>
+    <Grid Background="White">
+        <TextBlock Margin="10,45,10,70" TextWrapping="Wrap" TextAlignment="Center" Text="Вы действительно хотите удалить выбранную запись из базы данных? Все связанные данные будут также удалены."></TextBlock>
         <Button Content="Да" Style="{StaticResource DefaultButtonStyle}" Height="30" Margin="10,124,0,0" Width="185" Click="OnConfirmButtonClick"></Button>
         <Button Content="Нет" Style="{StaticResource DefaultButtonStyle}" Height="30" Margin="225,124,0,0" Width="185" Click="OnDeclineButtonClick"></Button>
     </Grid>

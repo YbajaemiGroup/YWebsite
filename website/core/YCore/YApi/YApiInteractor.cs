@@ -77,5 +77,25 @@ namespace YApi
                 }
             }
         }
+
+        public Image LoadImageToServer(string imageName, Stream stream)
+        {
+            ArgumentException.ThrowIfNullOrEmpty(imageName);
+            if (!stream.CanRead)
+            {
+                throw new ArgumentException("Can not read stream.", nameof(stream));
+            }
+            return _client.LoadImageAsync(imageName, stream).GetAwaiter().GetResult();
+        }
+
+        public Task<Image> LoadImageToServerAsync(string imageName, Stream stream)
+        {
+            ArgumentException.ThrowIfNullOrEmpty(imageName);
+            if (!stream.CanRead)
+            {
+                throw new ArgumentException("Can not read stream.", nameof(stream));
+            }
+            return _client.LoadImageAsync(imageName, stream);
+        }
     }
 }

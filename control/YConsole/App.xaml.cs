@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Win32;
 using System.Windows;
 using YApi;
 using YConsole.Model;
@@ -53,7 +54,8 @@ namespace YConsole
 
         private static void RegisterDialogServices()
         {
-            DialogService.RegisterDialog<DeleteConfirmationDialog, DeleteConfirmationViewModel>();
+            DialogService.RegisterDialog<DeleteConfirmationDialog, DeleteConfirmationDialogViewModel>();
+            DialogService.RegisterDialog<ReplaceImageDialog, ReplaceImageDialogViewModel>();
             //DialogService.RegisterDialog<ImageSelectingDialog, ImageDialogViewModel>();
         }
 

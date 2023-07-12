@@ -9,6 +9,7 @@ using YApi;
 using YApiModel.Models;
 using YConsole.ViewModels.Dialogs;
 using YConsole.Views;
+using YConsole.Views.Dialogs;
 
 namespace YConsole.ViewModels
 {
@@ -294,7 +295,7 @@ namespace YConsole.ViewModels
         private async void OnDeleteButtonClick(object? ignorable)
         {
             bool delete = false;
-            _dialogService.ShowDialog<DeleteConfirmationViewModel>(result => delete = result);
+            _dialogService.ShowDialog<DeleteConfirmationDialogViewModel>(result => delete = result);
             if (!delete)
             {
                 return;
@@ -319,7 +320,7 @@ namespace YConsole.ViewModels
 
         private void OnChangeImageButtonClick(object? ignorable)
         {
-            ImageDialogViewModel imageDialogViewModel = new(_apiInteractor);
+            ImageDialogViewModel imageDialogViewModel = new(_apiInteractor, _dialogService);
             _ = imageDialogViewModel.LoadDataAsync();
             _windowService.Show(imageDialogViewModel);
         }

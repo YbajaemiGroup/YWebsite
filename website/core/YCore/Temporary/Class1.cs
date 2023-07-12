@@ -8,6 +8,13 @@ namespace Temporary
 {
     internal class Class1
     {
+        private IInterface class2;
+
+        public Class1(IInterface class2)
+        {
+            this.class2 = class2;
+        }
+
         public async IAsyncEnumerable<int> GetIntsAsync()
         {
             Console.WriteLine("GetIntsAsync start");

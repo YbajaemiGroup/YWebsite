@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using YConsole.Views.Dialogs;
 
@@ -10,6 +11,8 @@ class DialogService : IDialogService
     private static readonly Dictionary<Type, Type> _mappings = new();
 
     public static void RegisterDialog<TView, TViewModel>()
+        where TView : FrameworkElement
+        where TViewModel : ViewModelBase
     {
         _mappings.Add(typeof(TViewModel), typeof(TView));
     }
@@ -44,6 +47,10 @@ class DialogService : IDialogService
     public void ShowDialog<TViewModel>(Action<bool> callback) where TViewModel : ViewModelBase
     {
         var viewType = _mappings[typeof(TViewModel)];
+        if (typeof(TViewModel).GetConstructors().Min(c => c.GetParameters().Length) > 0)
+        {
+            throw new ArgumentException("TViewModel has no default constructors.");
+        }
         if (Activator.CreateInstance(typeof(TViewModel)) is not ViewModelBase viewModel)
         {
             throw new ArgumentException("Can't cast TViewModel to ViewModelBase.", nameof(TViewModel));
