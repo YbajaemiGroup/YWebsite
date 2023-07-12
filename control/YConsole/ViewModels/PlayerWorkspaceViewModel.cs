@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Net.Http;
-using System.Net.Sockets;
 using System.Threading.Tasks;
 using System.Windows;
 using YApi;
 using YApiModel.Models;
 using YConsole.ViewModels.Dialogs;
 using YConsole.Views;
-using YConsole.Views.Dialogs;
 
 namespace YConsole.ViewModels
 {

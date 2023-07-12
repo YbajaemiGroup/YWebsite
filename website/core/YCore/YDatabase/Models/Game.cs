@@ -12,9 +12,9 @@ public partial class Game
 
     public int Row { get; set; }
 
-    public int Player1 { get; set; }
+    public int? Player1 { get; set; }
 
-    public int Player2 { get; set; }
+    public int? Player2 { get; set; }
 
     public int? Round { get; set; }
 
@@ -24,7 +24,7 @@ public partial class Game
 
     public int? Winner { get; set; }
 
-    public virtual Player Player1Navigation { get; set; } = null!;
+    public virtual Player? Player1Navigation { get; set; } = null!;
 
-    public virtual Player Player2Navigation { get; set; } = null!;
+    public virtual Player? Player2Navigation { get; set; } = null!;
 }
