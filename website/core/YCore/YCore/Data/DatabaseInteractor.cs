@@ -10,6 +10,7 @@ namespace YCore.Data;
 /// </summary>
 public class DatabaseInteractor
 {
+    private static object mutex = new();
     private static DatabaseInteractor? _instance;
 
     public static DatabaseInteractor Instance()
@@ -311,14 +312,18 @@ public class DatabaseInteractor
     {
         if (isdb)
         {
-            try
+            lock (mutex)
             {
-                await Context.SaveChangesAsync();
+                try
+                {
+                    Context.SaveChangesAsync().Wait();
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
             }
-            catch (Exception)
-            {
-                throw;
-            }
+            return;
         }
         try
         {
@@ -332,9 +337,9 @@ public class DatabaseInteractor
         }
     }
 
-    public async Task WrileLog(LogSeverity logSeverity, string source, string message, Exception? exception = null)
+    public Task WrileLogAsync(LogSeverity logSeverity, string source, string message, Exception? exception = null)
     {
-        await Context.Logs.AddAsync(new()
+        Context.Logs.Add(new()
         {
             DateTime = DateTime.Now,
             Severety = logSeverity.ToString(),
@@ -342,6 +347,6 @@ public class DatabaseInteractor
             Message = message,
             Exception = exception?.ToString()
         });
-        await CommitAsync(true);
+        return CommitAsync(true);
     }
 }

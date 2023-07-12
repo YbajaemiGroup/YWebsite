@@ -19,7 +19,7 @@ namespace YConsole.ViewModels.Dialogs
         }
 
         #region Bindings
-        
+
         private ObservableCollection<ImageListObject> databaseImagesPaths = new();
 
         public ObservableCollection<ImageListObject> DatabaseImagesPaths
