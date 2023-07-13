@@ -97,5 +97,17 @@ namespace YApi
             }
             return _client.LoadImageAsync(imageName, stream);
         }
+
+        public Task LoadTokenToServerAsync(string tokenSource)
+        {
+            ArgumentException.ThrowIfNullOrEmpty(tokenSource);
+            return _client.CreateToken(tokenSource);
+        }
+
+        public Task DeleteTokenFromServerAsync(string tokenSource)
+        {
+            ArgumentException.ThrowIfNullOrEmpty(tokenSource);
+            return _client.DeleteToken(tokenSource);
+        }
     }
 }

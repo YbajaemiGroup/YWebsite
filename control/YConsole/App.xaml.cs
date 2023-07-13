@@ -35,7 +35,8 @@ namespace YConsole
                     services.AddSingleton<MainViewModel>();
                     services.AddSingleton<PlayerWorkspaceViewModel>();
                     services.AddSingleton<ImageDialogViewModel>();
-                    services.AddSingleton<TokenViewModel>();
+                    services.AddSingleton<TokenCreateViewModel>();
+                    services.AddSingleton<TokenDeleteViewModel>();
                 }).Build();
 
         protected override void OnStartup(StartupEventArgs e)
@@ -65,6 +66,8 @@ namespace YConsole
         private static void RegisterWindowServices()
         {
             WindowService.RegisterView<ImageDialogViewModel, ImagesDialogWindow>();
+            WindowService.RegisterView<TokenCreateViewModel, CreateTokenWindow>();
+            WindowService.RegisterView<TokenDeleteViewModel, DeleteTokenWindow>();
         }
     }
 }

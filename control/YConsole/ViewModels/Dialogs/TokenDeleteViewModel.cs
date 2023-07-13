@@ -7,49 +7,49 @@ using YApi;
 
 namespace YConsole.ViewModels.Dialogs
 {
-    public class TokenViewModel : ViewModelBase
+    public class TokenDeleteViewModel : ViewModelBase
     {
+        private string? statusString;
+        public string? StatusString
+        {
+            get { return statusString; }
+            set
+            {
+                statusString = value;
+                OnPropertyChanged(nameof(StatusString));
+            }
+        }
 
         private string? tokenSource;
 
         public string? TokenSource
         {
             get { return tokenSource; }
-            set 
-            { 
+            set
+            {
                 tokenSource = value;
                 OnPropertyChanged(nameof(TokenSource));
             }
         }
 
-        public RelayCommand CreateToken { get; private set; }
         public RelayCommand DeleteToken { get; private set; }
 
         private readonly YApiInteractor _apiInteractor;
-        public TokenViewModel(YApiInteractor apiInteractor) 
+
+        public TokenDeleteViewModel(YApiInteractor apiInteractor)
         {
             _apiInteractor = apiInteractor;
-            CreateToken = new(OnCreateTokenClick);
             DeleteToken = new(OnDeleteTokenClick);
         }
 
-        private async void OnCreateTokenClick(object? ignorable) 
+        private void OnDeleteTokenClick(object? ignorable)
         {
             if (TokenSource == null)
             {
                 return;
             }
-            await _apiInteractor.LoadTokenToServerAsync(TokenSource);
+            StatusString = "Запрос был отправлен на сервер";
+            _ = _apiInteractor.DeleteTokenFromServerAsync(TokenSource);
         }
-
-        private async void OnDeleteTokenClick(object? ignorable)
-        {
-            if (TokenSource == null) 
-            { 
-                return; 
-            }
-            await _apiInteractor.DeleteTokenFromServerAsync(TokenSource);
-        }
-
     }
 }

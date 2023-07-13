@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:YConsole.Views.Dialogs"
         mc:Ignorable="d"
         Title="CreateTokenWindow" Height="300" Width="400"
-        DataContext="{Binding TokenViewModel, Mode=OneWay, Source={StaticResource Locator}}">
-    <Grid ShowGridLines="True">
+        DataContext="{Binding TokenCreateViewModel, Mode=OneWay, Source={StaticResource Locator}}">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
@@ -23,13 +23,22 @@
                HorizontalAlignment="Center"
                VerticalAlignment="Bottom" 
                Content="Токен"/>
-        <TextBox Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" Width="300px" Height="20px"/>
-        <Button Grid.Column="1" Grid.Row="2" 
+        <TextBox Text="{Binding TokenSource}" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" Width="300px" Height="20px"/>
+
+        <Label Grid.Column="0" Grid.Row="2"
+               Grid.ColumnSpan="3"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Top"
+               Content="{Binding StatusString}"></Label>
+
+        <Button Grid.Column="0" Grid.Row="2"
+                Grid.ColumnSpan="3"
                 Width="100px" Height="25px" 
                 HorizontalAlignment="Center" 
                 VerticalAlignment="Center" 
                 Style="{StaticResource DefaultButtonStyle}" 
-                Content="Создать"/>
+                Content="Создать"
+                Command="{Binding CreateToken}"/>
 
     </Grid>
     

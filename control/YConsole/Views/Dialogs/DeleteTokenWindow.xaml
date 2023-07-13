@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:YConsole.Views.Dialogs"
         mc:Ignorable="d"
         Title="DeleteTokenWindow" Height="300" Width="400"
-        DataContext="{Binding TokenViewModel, Mode=OneWay, Source={StaticResource Locator}}">
-    <Grid ShowGridLines="True">
+        DataContext="{Binding TokenDeleteViewModel, Mode=OneWay, Source={StaticResource Locator}}">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
@@ -24,13 +24,21 @@
                VerticalAlignment="Bottom" 
                Content="Токен"/>
         <TextBox Text="{Binding TokenSource}" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" Width="300px" Height="20px"/>
-        <Button Grid.Column="1" Grid.Row="2" 
+
+        <Label Grid.Column="0" Grid.Row="2"
+               Grid.ColumnSpan="3"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Top"
+               Content="{Binding StatusString}"></Label>
+
+        <Button Grid.Column="0" Grid.Row="2"
+                Grid.ColumnSpan="3"
                 Width="100px" Height="25px" 
                 HorizontalAlignment="Center" 
                 VerticalAlignment="Center" 
                 Style="{StaticResource DefaultButtonStyle}" 
                 Content="Удалить"
-                Command=""/>
+                Command="{Binding DeleteToken}"/>
 
     </Grid>
 </Window>
