@@ -82,7 +82,7 @@ public class YClient
         CheckException(response);
     }
 
-    public async Task<List<GroupGetData>> GroupGetGames()
+    public async Task<List<GroupGetData>> GroupGetGamesAsync()
     {
         var parameters = new HttpParameters();
         parameters.Add("token", Token);
@@ -177,7 +177,6 @@ public class YClient
         var parameters = new HttpParameters();
         parameters.Add("token", Token);
         parameters.Add("image_name", imageName);
-        //var content = new MultipartFormDataContent();
         var fileStreamContent = new StreamContent(new MemoryStream(imageBytes));
         fileStreamContent.Headers.ContentType = new(imageName.Split('.')[1] switch
         {
@@ -186,7 +185,6 @@ public class YClient
             "png" => "image/png",
             _ => throw new ArgumentException("Image should be .png .jpg of .jpeg", nameof(imageName))
         });
-        //content.Add(fileStreamContent, "file", imageName);
         var response = await requestSender.SendRequestAsync("images.load", parameters, fileStreamContent);
         CheckException(response);
         return GetResponseData<Image>(response);
