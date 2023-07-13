@@ -1,4 +1,4 @@
-﻿namespace YConsole;
+﻿namespace YConsole.Utillities;
 
 public interface IWindowService
 {

@@ -1,5 +1,10 @@
-﻿using System.Windows;
+﻿using System.Diagnostics;
+using System.Runtime.CompilerServices;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows;
 using YApi;
+using YConsole.Utillities;
 
 namespace YConsole.ViewModels.Dialogs;
 
@@ -32,23 +37,42 @@ public class TokenCreateViewModel : ViewModelBase
 
     #endregion
 
-    public RelayCommand CreateToken { get; private set; }
+    public RelayCommand CreateTokenButton { get; private set; }
 
     private readonly YApiInteractor _apiInteractor;
 
     public TokenCreateViewModel(YApiInteractor apiInteractor)
     {
         _apiInteractor = apiInteractor;
-        CreateToken = new(OnCreateTokenClick);
+        CreateTokenButton = new(OnCreateTokenButtonClick);
     }
 
-    private void OnCreateTokenClick(object? ignorable)
+    private void OnCreateTokenButtonClick(object? ignorable)
+    {
+        StatusString = "Отправка на сервер.";
+        _ = LoadToken();
+    }
+
+    private async Task LoadToken()
     {
         if (TokenSource == null)
         {
             return;
         }
-        MessageBox.Show("Запрос был отправлен на сервер");
-        _ = _apiInteractor.LoadTokenToServerAsync(TokenSource);
+        var res = _apiInteractor.LoadTokenToServerAsync(TokenSource);
+        await res;
+        if (res.IsCompletedSuccessfully)
+        {
+            StatusString = "Токен создан.";
+        }
+        else
+        {
+            StatusString = "Произошла ошибка.";
+        }
+        _ = Task.Run(() =>
+        {
+            Task.Delay(1500).Wait();
+            StatusString = null;
+        });
     }
 }

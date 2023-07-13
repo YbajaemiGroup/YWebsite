@@ -21,6 +21,7 @@
                HorizontalAlignment="Center"
                VerticalAlignment="Bottom" 
                Content="Токен" />
+        <TextBlock Margin="10" Text="{Binding StatusString}" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" TextWrapping="Wrap" />
         <TextBox Text="{Binding TokenSource}" VerticalAlignment="Center" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" Width="300px" Height="20px" />
         <Button Grid.Column="0" Grid.Row="2"
                 Grid.ColumnSpan="3"
@@ -29,6 +30,6 @@
                 VerticalAlignment="Center" 
                 Style="{StaticResource DefaultButtonStyle}" 
                 Content="Создать"
-                Command="{Binding CreateToken}" />
+                Command="{Binding CreateTokenButton}" />
     </Grid>
 </Window>

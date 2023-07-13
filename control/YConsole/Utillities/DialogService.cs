@@ -4,7 +4,7 @@ using System.Linq;
 using System.Windows;
 using YConsole.Views.Dialogs;
 
-namespace YConsole;
+namespace YConsole.Utillities;
 
 class DialogService : IDialogService
 {

@@ -3,6 +3,7 @@ using Microsoft.Extensions.Hosting;
 using System.Windows;
 using YApi;
 using YConsole.Model;
+using YConsole.Utillities;
 using YConsole.ViewModels;
 using YConsole.ViewModels.Dialogs;
 using YConsole.Views;

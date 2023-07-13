@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.Metrics;
+﻿using System.Diagnostics;
+using System.Diagnostics.Metrics;
 using YApiModel.Models;
 
 namespace YApi
@@ -101,13 +102,13 @@ namespace YApi
         public Task LoadTokenToServerAsync(string tokenSource)
         {
             ArgumentException.ThrowIfNullOrEmpty(tokenSource);
-            return _client.CreateToken(tokenSource);
+            return _client.CreateTokenAsync(tokenSource);
         }
 
         public Task DeleteTokenFromServerAsync(string tokenSource)
         {
             ArgumentException.ThrowIfNullOrEmpty(tokenSource);
-            return _client.DeleteToken(tokenSource);
+            return _client.DeleteTokenAsync(tokenSource);
         }
     }
 }

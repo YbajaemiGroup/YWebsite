@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Windows;
 
-namespace YConsole;
+namespace YConsole.Utillities;
 
 class WindowService : IWindowService
 {

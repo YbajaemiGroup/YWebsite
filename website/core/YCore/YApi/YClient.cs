@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.Text.Json;
 using System.Xml.Serialization;
 using YApiModel;
@@ -210,7 +211,7 @@ public class YClient
         return GetResponseData<Image>(response);
     }
 
-    public async Task CreateToken(string tokenSource)
+    public async Task CreateTokenAsync(string tokenSource)
     {
         var parameters = new HttpParameters();
         parameters.Add("token", Token);
@@ -219,7 +220,7 @@ public class YClient
         CheckException(response);
     }
 
-    public async Task DeleteToken(string token)
+    public async Task DeleteTokenAsync(string token)
     {
         var parameters = new HttpParameters();
         parameters.Add("token", Token);

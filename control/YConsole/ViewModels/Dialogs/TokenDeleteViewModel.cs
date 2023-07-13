@@ -1,4 +1,6 @@
-﻿using YApi;
+﻿using System.Threading.Tasks;
+using YApi;
+using YConsole.Utillities;
 
 namespace YConsole.ViewModels.Dialogs;
 
@@ -32,23 +34,42 @@ public class TokenDeleteViewModel : ViewModelBase
 
     #endregion
 
-    public RelayCommand DeleteToken { get; private set; }
+    public RelayCommand DeleteTokenButton { get; private set; }
 
     private readonly YApiInteractor _apiInteractor;
 
     public TokenDeleteViewModel(YApiInteractor apiInteractor)
     {
         _apiInteractor = apiInteractor;
-        DeleteToken = new(OnDeleteTokenClick);
+        DeleteTokenButton = new(OnDeleteTokenClick);
     }
 
     private void OnDeleteTokenClick(object? ignorable)
+    {
+        StatusString = "Отправка на сервер.";
+        _ = DeleteToken();
+    }
+
+    private async Task DeleteToken()
     {
         if (TokenSource == null)
         {
             return;
         }
-        StatusString = "Запрос был отправлен на сервер";
-        _ = _apiInteractor.DeleteTokenFromServerAsync(TokenSource);
+        var res = _apiInteractor.DeleteTokenFromServerAsync(TokenSource);
+        await res;
+        if (res.IsCompletedSuccessfully)
+        {
+            StatusString = "Токен удален.";
+        }
+        else
+        {
+            StatusString = "Произошла ошибка.";
+        }
+        _ = Task.Run(() =>
+        {
+            Task.Delay(1500).Wait();
+            StatusString = null;
+        });
     }
 }

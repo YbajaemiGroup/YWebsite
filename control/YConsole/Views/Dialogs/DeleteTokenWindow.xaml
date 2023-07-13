@@ -21,12 +21,8 @@
                HorizontalAlignment="Center"
                VerticalAlignment="Bottom" 
                Content="Токен" />
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" TextWrapping="Wrap" Text="{Binding StatusString}" />
         <TextBox Text="{Binding TokenSource}" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" Width="300px" Height="20px" />
-        <Label Grid.Column="0" Grid.Row="2"
-               Grid.ColumnSpan="3"
-               HorizontalAlignment="Center"
-               VerticalAlignment="Top"
-               Content="{Binding StatusString}" />
         <Button Grid.Column="0" Grid.Row="2"
                 Grid.ColumnSpan="3"
                 Width="100px" Height="25px" 
@@ -34,6 +30,6 @@
                 VerticalAlignment="Center" 
                 Style="{StaticResource DefaultButtonStyle}" 
                 Content="Удалить"
-                Command="{Binding DeleteToken}" />
+                Command="{Binding DeleteTokenButton}" />
     </Grid>
 </Window>

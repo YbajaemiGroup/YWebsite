@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using YApi;
 using YApiModel.Models;
+using YConsole.Utillities;
 using YConsole.ViewModels.Dialogs;
 using YConsole.Views.Dialogs;
 

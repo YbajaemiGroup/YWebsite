@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace YConsole;
+namespace YConsole.Utillities;
 
 public interface IDialogService
 {
