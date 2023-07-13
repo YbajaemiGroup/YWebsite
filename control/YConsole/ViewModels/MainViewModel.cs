@@ -1,5 +1,4 @@
 ﻿using YConsole.ViewModels.Dialogs;
-using YConsole.Views;
 
 namespace YConsole.ViewModels
 {

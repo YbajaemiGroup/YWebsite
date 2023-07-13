@@ -1,55 +1,54 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using YApi;
+﻿using YApi;
 
-namespace YConsole.ViewModels.Dialogs
+namespace YConsole.ViewModels.Dialogs;
+
+public class TokenDeleteViewModel : ViewModelBase
 {
-    public class TokenDeleteViewModel : ViewModelBase
+    #region Bindings
+
+    private string? statusString;
+
+    public string? StatusString
     {
-        private string? statusString;
-        public string? StatusString
+        get { return statusString; }
+        set
         {
-            get { return statusString; }
-            set
-            {
-                statusString = value;
-                OnPropertyChanged(nameof(StatusString));
-            }
+            statusString = value;
+            OnPropertyChanged(nameof(StatusString));
         }
+    }
 
-        private string? tokenSource;
+    private string? tokenSource;
 
-        public string? TokenSource
+    public string? TokenSource
+    {
+        get { return tokenSource; }
+        set
         {
-            get { return tokenSource; }
-            set
-            {
-                tokenSource = value;
-                OnPropertyChanged(nameof(TokenSource));
-            }
+            tokenSource = value;
+            OnPropertyChanged(nameof(TokenSource));
         }
+    }
 
-        public RelayCommand DeleteToken { get; private set; }
+    #endregion
 
-        private readonly YApiInteractor _apiInteractor;
+    public RelayCommand DeleteToken { get; private set; }
 
-        public TokenDeleteViewModel(YApiInteractor apiInteractor)
+    private readonly YApiInteractor _apiInteractor;
+
+    public TokenDeleteViewModel(YApiInteractor apiInteractor)
+    {
+        _apiInteractor = apiInteractor;
+        DeleteToken = new(OnDeleteTokenClick);
+    }
+
+    private void OnDeleteTokenClick(object? ignorable)
+    {
+        if (TokenSource == null)
         {
-            _apiInteractor = apiInteractor;
-            DeleteToken = new(OnDeleteTokenClick);
+            return;
         }
-
-        private void OnDeleteTokenClick(object? ignorable)
-        {
-            if (TokenSource == null)
-            {
-                return;
-            }
-            StatusString = "Запрос был отправлен на сервер";
-            _ = _apiInteractor.DeleteTokenFromServerAsync(TokenSource);
-        }
+        StatusString = "Запрос был отправлен на сервер";
+        _ = _apiInteractor.DeleteTokenFromServerAsync(TokenSource);
     }
 }

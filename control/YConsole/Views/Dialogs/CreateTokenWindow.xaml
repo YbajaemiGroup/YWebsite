@@ -1,36 +1,27 @@
 ﻿<Window x:Class="YConsole.Views.Dialogs.CreateTokenWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:YConsole.Views.Dialogs"
         mc:Ignorable="d"
-        Title="CreateTokenWindow" Height="300" Width="400"
+        Title="Создание токена" Height="200" Width="400"
         DataContext="{Binding TokenCreateViewModel, Mode=OneWay, Source={StaticResource Locator}}">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
-
         <Label Grid.Column="1" Grid.Row="0" 
                HorizontalAlignment="Center"
                VerticalAlignment="Bottom" 
-               Content="Токен"/>
-        <TextBox Text="{Binding TokenSource}" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" Width="300px" Height="20px"/>
-
-        <Label Grid.Column="0" Grid.Row="2"
-               Grid.ColumnSpan="3"
-               HorizontalAlignment="Center"
-               VerticalAlignment="Top"
-               Content="{Binding StatusString}"></Label>
-
+               Content="Токен" />
+        <TextBox Text="{Binding TokenSource}" VerticalAlignment="Center" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" Width="300px" Height="20px" />
         <Button Grid.Column="0" Grid.Row="2"
                 Grid.ColumnSpan="3"
                 Width="100px" Height="25px" 
@@ -38,8 +29,6 @@
                 VerticalAlignment="Center" 
                 Style="{StaticResource DefaultButtonStyle}" 
                 Content="Создать"
-                Command="{Binding CreateToken}"/>
-
+                Command="{Binding CreateToken}" />
     </Grid>
-    
 </Window>
