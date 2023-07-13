@@ -5,8 +5,13 @@ using System.Threading.Tasks;
 using System.Windows;
 using YApi;
 using YApiModel.Models;
+using YConsole.Utillities;
 using YConsole.ViewModels.Dialogs;
+<<<<<<< HEAD
 using YConsole.Views;
+=======
+using YConsole.Views.Dialogs;
+>>>>>>> issue#46
 
 namespace YConsole.ViewModels
 {

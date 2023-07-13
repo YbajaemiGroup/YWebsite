@@ -4,7 +4,7 @@ using System.Linq;
 using System.Windows;
 using YConsole.Views.Dialogs;
 
-namespace YConsole.ViewModels.Dialogs;
+namespace YConsole.Utillities;
 
 class DialogService : IDialogService
 {
@@ -16,7 +16,7 @@ class DialogService : IDialogService
     {
         _mappings.Add(typeof(TViewModel), typeof(TView));
     }
-     
+
     private static void ShowDialogInternal(Type viewType, ViewModelBase viewModel, Action<bool> callback)
     {
         DialogWindow _dialogWindow = new();

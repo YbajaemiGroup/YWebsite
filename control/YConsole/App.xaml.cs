@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Win32;
 using System.Windows;
 using YApi;
 using YConsole.Model;
+using YConsole.Utillities;
 using YConsole.ViewModels;
 using YConsole.ViewModels.Dialogs;
 using YConsole.Views;
@@ -26,13 +26,17 @@ namespace YConsole
 
                     services.AddSingleton<MainWindow>();
                     services.AddSingleton<PlayerWorkspace>();
-                    services.AddSingleton<ImagesDialogWindow>();
+                    services.AddTransient<ImagesDialogWindow>();
+                    services.AddTransient<CreateTokenWindow>();
+                    services.AddTransient<DeleteTokenWindow>();
 
                     services.AddSingleton<Locator>();
 
                     services.AddSingleton<MainViewModel>();
                     services.AddSingleton<PlayerWorkspaceViewModel>();
                     services.AddSingleton<ImageDialogViewModel>();
+                    services.AddSingleton<TokenCreateViewModel>();
+                    services.AddSingleton<TokenDeleteViewModel>();
                 }).Build();
 
         protected override void OnStartup(StartupEventArgs e)
@@ -56,12 +60,13 @@ namespace YConsole
         {
             DialogService.RegisterDialog<DeleteConfirmationDialog, DeleteConfirmationDialogViewModel>();
             DialogService.RegisterDialog<ReplaceImageDialog, ReplaceImageDialogViewModel>();
-            //DialogService.RegisterDialog<ImageSelectingDialog, ImageDialogViewModel>();
         }
 
         private static void RegisterWindowServices()
         {
             WindowService.RegisterView<ImageDialogViewModel, ImagesDialogWindow>();
+            WindowService.RegisterView<TokenCreateViewModel, CreateTokenWindow>();
+            WindowService.RegisterView<TokenDeleteViewModel, DeleteTokenWindow>();
         }
     }
 }

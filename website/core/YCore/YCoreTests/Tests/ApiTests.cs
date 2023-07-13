@@ -19,10 +19,10 @@ namespace YCoreTests.Tests
         public void TokenCreateAndDeleteTest()
         {
             string newToken = "new_token";
-            client.CreateToken(newToken).Wait();
+            client.CreateTokenAsync(newToken).Wait();
             var db = DatabaseInteractor.Instance();
             Assert.True(db.ValidateToken(newToken));
-            client.DeleteToken(newToken).Wait();
+            client.DeleteTokenAsync(newToken).Wait();
             Assert.False(db.ValidateToken(newToken));
         }
 

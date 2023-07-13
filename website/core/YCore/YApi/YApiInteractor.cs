@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.Metrics;
+﻿using System.Diagnostics;
+using System.Diagnostics.Metrics;
 using YApiModel.Models;
 
 namespace YApi
@@ -96,6 +97,18 @@ namespace YApi
                 throw new ArgumentException("Can not read stream.", nameof(stream));
             }
             return _client.LoadImageAsync(imageName, stream);
+        }
+
+        public Task LoadTokenToServerAsync(string tokenSource)
+        {
+            ArgumentException.ThrowIfNullOrEmpty(tokenSource);
+            return _client.CreateTokenAsync(tokenSource);
+        }
+
+        public Task DeleteTokenFromServerAsync(string tokenSource)
+        {
+            ArgumentException.ThrowIfNullOrEmpty(tokenSource);
+            return _client.DeleteTokenAsync(tokenSource);
         }
     }
 }

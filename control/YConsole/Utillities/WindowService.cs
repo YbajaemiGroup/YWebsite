@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Windows;
 
-namespace YConsole.Views;
+namespace YConsole.Utillities;
 
 class WindowService : IWindowService
 {
     private static readonly Dictionary<Type, Type> _mappings = new();
 
-    public static void RegisterView<TViewModel, TView>() 
+    public static void RegisterView<TViewModel, TView>()
         where TViewModel : ViewModelBase
         where TView : Window
     {

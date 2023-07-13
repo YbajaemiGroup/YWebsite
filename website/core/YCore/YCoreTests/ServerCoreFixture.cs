@@ -14,7 +14,7 @@ namespace YCoreTests
         public ServerCoreFixture()
         {
             Client = new("token");
-            var configuration = ConfigurationLoader.Load("E:\\MyProgs\\ybajaemi\\config\\config.json");
+            var configuration = ConfigurationLoader.Load("H:\\YBAJAEMI\\cons\\config.json");
             DatabaseInteractor.LoadConnectionString(configuration.DbConnectionString);
             Core = new Core(configuration);
             var apiHandler = new ApiHandler(configuration);

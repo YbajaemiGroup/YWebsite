@@ -1,4 +1,5 @@
-﻿using System.Net.Http.Json;
+﻿using System.Diagnostics;
+using System.Net.Http.Json;
 using System.Text.Json;
 using YApiModel;
 
@@ -48,7 +49,7 @@ namespace YApi
             {
                 message.Content = JsonContent.Create(request);
             }
-            var responseMessage = httpClient.Send(message);
+            var responseMessage = await httpClient.SendAsync(message);
             var responseString = await responseMessage.Content.ReadAsStringAsync();
             var response = JsonSerializer.Deserialize<Response>(responseString);
             if (response == null)

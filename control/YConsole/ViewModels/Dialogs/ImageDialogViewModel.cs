@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using YApi;
 using YConsole.Model;
+using YConsole.Utillities;
 
 namespace YConsole.ViewModels.Dialogs
 {
