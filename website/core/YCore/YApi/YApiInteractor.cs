@@ -51,6 +51,16 @@ namespace YApi
             await dbImage.FlushAsync();
         }
 
+        public async Task DownloadImageAsync(string imageName, Stream stream)
+        {
+            if (!stream.CanWrite)
+            {
+                throw new ArgumentException("Can't write to stream.", nameof(stream));
+            }
+            using var dbImage = await _client.GetImage(imageName, YApiModel.ImageType.Players);
+            await dbImage.CopyToAsync(stream);
+        }
+
         public List<string> DownloadImages(string imageDirectory)
         {
             var players = _client.PlayersGetAsync().Result;
