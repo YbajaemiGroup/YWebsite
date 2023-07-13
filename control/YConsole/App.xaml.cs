@@ -27,12 +27,15 @@ namespace YConsole
                     services.AddSingleton<MainWindow>();
                     services.AddSingleton<PlayerWorkspace>();
                     services.AddSingleton<ImagesDialogWindow>();
+                    services.AddSingleton<CreateTokenWindow>();
+                    services.AddSingleton<DeleteTokenWindow>();
 
                     services.AddSingleton<Locator>();
 
                     services.AddSingleton<MainViewModel>();
                     services.AddSingleton<PlayerWorkspaceViewModel>();
                     services.AddSingleton<ImageDialogViewModel>();
+                    services.AddSingleton<TokenViewModel>();
                 }).Build();
 
         protected override void OnStartup(StartupEventArgs e)
