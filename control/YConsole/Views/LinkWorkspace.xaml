@@ -40,12 +40,12 @@
                        Margin="20,0,0,0"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Center" 
-                       Content="{Binding PlayerName, StringFormat='Игрок: {0}'}" />
+                       Content="{Binding ChosenPlayer.NickName, StringFormat='Игрок: {0}'}" />
                 <Label Grid.Row="1" 
                        Margin="20,0,0,0"
                        HorizontalAlignment="Left" 
                        VerticalAlignment="Center"
-                       Content="{Binding PlayerID, StringFormat='ID игрока: {0}'}"  />
+                       Content="{Binding ChosenPlayer.Id, StringFormat='ID игрока: {0}'}"  />
             </Grid>
             <Button HorizontalAlignment="Left" 
                     VerticalAlignment="Center"
@@ -53,7 +53,7 @@
                     Height="30"
                     Width="200"
                     Style="{StaticResource DefaultButtonStyle}"
-                    Command="{Binding }"
+                    Command="{Binding CreateButton}"
                     Grid.Row="2" 
                     Content="Создать"
                     FontSize="16" />
@@ -63,12 +63,12 @@
                     Height="30"
                     Width="200"
                     Style="{StaticResource DefaultButtonStyle}"
-                    Command="{Binding }"
+                    Command="{Binding SaveButton}"
                     Grid.Row="2" 
                     Content="Сохранить"
                     FontSize="16" />
 
-            <ListBox Grid.Row="1" Name="linksList">
+            <ListBox Grid.Row="1" Name="linksList" ItemsSource="{Binding Links, Mode=OneWay}" SelectedItem="{Binding SelectedLink}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         
@@ -76,7 +76,7 @@
                         <StackPanel Orientation="Horizontal"
                                     VerticalAlignment="Center"
                                     Margin="10">
-                            <Border BorderBrush="Black" BorderThickness="2">
+                            <Border BorderBrush="Black" BorderThickness="1">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition />
@@ -103,12 +103,14 @@
                                              VerticalAlignment="Center"
                                              HorizontalAlignment="Left" 
                                              Width="200" Height="25"
-                                             FontSize="14" />
+                                             FontSize="14"
+                                             Text="{Binding LinkUrl}" />
                                     <TextBox Grid.Row="2" Grid.Column="1"
                                              VerticalAlignment="Center" 
                                              HorizontalAlignment="Left" 
                                              Width="200" Height="25" 
-                                             FontSize="14" />
+                                             FontSize="14" 
+                                             Text="{Binding Description}" />
 
                                 </Grid>
                             </Border>

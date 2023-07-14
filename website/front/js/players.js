@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const cardTemplate = document.querySelector('#player-card');
         const cardPlace = document.querySelector('.players-grid');
 
-        for (let i = 1; i < playerArray['data'].length; i++) {
+        for (let i = 0; i < playerArray['data'].length; i++) {
             const cardClone = cardTemplate.content.cloneNode(true);
             const card = cardClone.querySelector('.player-card');
             const textHeader = card.querySelector('.card-text-header');
@@ -149,25 +149,31 @@ document.addEventListener('DOMContentLoaded', () => {
     xhrBracket.setRequestHeader('Access-Control-Allow-Origin', '*');
     xhrBracket.send();
     let brackets = JSON.parse(xhrBracket.responseText);
+
     for (let i = 0; i < brackets['data'].length; i++) {
         for (let j = 0; j < brackets['data'][i]['games'].length; j++) {
             if (brackets['data'][i]['games'][j]['is_upper'] == true) {
                 let tournamentRound = document.querySelector('#round'+ (brackets['data'][i]['round_number']) +'-upper-' + (brackets['data'][i]['games'][j]['row']));
                 let textPlayer_1 = tournamentRound.querySelector('#player-pos-1');
                 let textPlayer_2 = tournamentRound.querySelector('#player-pos-2');
-                xhrPlayer.open('GET', link + 'players.get?player_id=' + brackets['data'][i]['games'][j]['player1'], false);
-                xhrPlayer.setRequestHeader('Access-Control-Allow-Origin', '*');
-                xhrPlayer.send();
-                let textOfPlayer = JSON.parse(xhrPlayer.responseText);
+                if (brackets['data'][i]['games'][j]['player1'] != null) {
+                    xhrPlayer.open('GET', link + 'players.get?player_id=' + brackets['data'][i]['games'][j]['player1'], false);
+                    xhrPlayer.setRequestHeader('Access-Control-Allow-Origin', '*');
+                    xhrPlayer.send();
+                    let textOfPlayer = JSON.parse(xhrPlayer.responseText);
 
-                textPlayer_1.textContent = textOfPlayer['data']['nickname'];
+                    textPlayer_1.textContent = textOfPlayer['data']['nickname'];
+                }
+                
+                if (brackets['data'][i]['games'][j]['player2'] != null) {
+                    xhrPlayer.open('GET', link + 'players.get?player_id=' + brackets['data'][i]['games'][j]['player2'], false);
+                    xhrPlayer.setRequestHeader('Access-Control-Allow-Origin', '*');
+                    xhrPlayer.send();
+                    textOfPlayer = JSON.parse(xhrPlayer.responseText);
 
-                xhrPlayer.open('GET', link + 'players.get?player_id=' + brackets['data'][i]['games'][j]['player2'], false);
-                xhrPlayer.setRequestHeader('Access-Control-Allow-Origin', '*');
-                xhrPlayer.send();
-                textOfPlayer = JSON.parse(xhrPlayer.responseText);
-
-                textPlayer_2.textContent = textOfPlayer['data']['nickname'];
+                    textPlayer_2.textContent = textOfPlayer['data']['nickname'];
+                }
+                
             }
         }
     }
@@ -178,23 +184,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 let tournamentRound = document.querySelector('#round'+ (brackets['data'][i]['round_number']) +'-' + (brackets['data'][i]['games'][j]['row']));
                 let textPlayer_1 = tournamentRound.querySelector('#player-pos-1');
                 let textPlayer_2 = tournamentRound.querySelector('#player-pos-2');
-                if (brackets['data'][i]['games'][j]['player1'] != 0) {
+                if (brackets['data'][i]['games'][j]['player1'] != null) {
                     xhrPlayer.open('GET', link + 'players.get?player_id=' + brackets['data'][i]['games'][j]['player1'], false);
                     xhrPlayer.setRequestHeader('Access-Control-Allow-Origin', '*');
                     xhrPlayer.send();
                     let textOfPlayer = JSON.parse(xhrPlayer.responseText);
-                    console.log(textOfPlayer['data']['nickname'] + ' round: ' + brackets['data'][i]['round_number'] + ' row: ' + brackets['data'][i]['games'][j]['row']);
+                    console.log(textOfPlayer['data']['nickname']);
                     textPlayer_1.textContent = textOfPlayer['data']['nickname'];
                 }
                 
-                if (brackets['data'][i]['games'][j]['player2'] != 0) {
+                if (brackets['data'][i]['games'][j]['player2'] != null) {
                     xhrPlayer.open('GET', link + 'players.get?player_id=' + brackets['data'][i]['games'][j]['player2'], false);
                     xhrPlayer.setRequestHeader('Access-Control-Allow-Origin', '*');
                     xhrPlayer.send();
                     textOfPlayer = JSON.parse(xhrPlayer.responseText);
-                    console.log(textOfPlayer['data']['nickname'] + ' round: ' + brackets['data'][i]['round_number'] + ' row: ' + brackets['data'][i]['games'][j]['row']);
+                    console.log(textOfPlayer['data']['nickname']);
                     textPlayer_2.textContent = textOfPlayer['data']['nickname'];
                 }
+                textPlayer_1 = '';
+                textPlayer_2 = '';
             }
         }
     }

@@ -12,6 +12,9 @@
         <DataTemplate DataType="{x:Type vm:PlayerWorkspaceViewModel}">
             <local:PlayerWorkspace />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:LinkWorkspaceViewModel}">
+            <local:LinkWorkspace />
+        </DataTemplate>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -38,7 +41,7 @@
                         <TextBlock Text="Плей-офф" Style="{StaticResource MenuItemHeaderStyle}"/>
                     </MenuItem.Header>
                 </MenuItem>
-                <MenuItem>
+                <MenuItem Command="{Binding OpenLinksWorkspaceCommand}">
                     <MenuItem.Header>
                         <TextBlock Text="Ссылки" Style="{StaticResource MenuItemHeaderStyle}"/>
                     </MenuItem.Header>

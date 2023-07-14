@@ -28,7 +28,7 @@ namespace YCore.API.Handlers
             {
                 links.RemoveAll(l => l.Player != playerId);
             }
-            return GetResponseSender(links.Select(l => new YApiModel.Models.Link(l.Link1, l.Descr ?? string.Empty, l?.Id, playerId)));
+            return GetResponseSender(links.Select(l => new YApiModel.Models.Link(l.Link1, l.Descr ?? string.Empty, l?.Id, l?.Player)));
         }
     }
 }

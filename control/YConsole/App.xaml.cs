@@ -34,6 +34,7 @@ namespace YConsole
 
                     services.AddSingleton<MainViewModel>();
                     services.AddSingleton<PlayerWorkspaceViewModel>();
+                    services.AddSingleton<LinkWorkspaceViewModel>();
                     services.AddSingleton<ImageDialogViewModel>();
                     services.AddSingleton<TokenCreateViewModel>();
                     services.AddSingleton<TokenDeleteViewModel>();
