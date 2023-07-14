@@ -68,7 +68,7 @@
                     Content="Сохранить"
                     FontSize="16" />
 
-            <ListBox Grid.Row="1" Name="linksList" ItemsSource="{Binding Links, Mode=OneWay}" SelectedItem="{Binding SelectedLink}">
+            <ListBox Grid.Row="1" Name="linksList" ItemsSource="{Binding LinksOfChosenPlayer, Mode=OneWay}" SelectedItem="{Binding SelectedLink}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         

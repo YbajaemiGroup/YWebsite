@@ -111,19 +111,19 @@ namespace YApi
             return _client.DeleteTokenAsync(tokenSource);
         }
 
-        public async Task<List<Link>> GetAllLinksAsync()
+        public Task<List<Link>> GetAllLinksAsync()
         {
-            return await _client.GetLinksAsync();
+            return _client.GetLinksAsync();
         }
 
-        public async Task<List<Link>> PostLinksAsync(List<Link> links)
+        public Task<List<Link>> PostLinksAsync(List<Link> links)
         {
-            return await _client.AddLinksAsync(links);
+            return _client.AddLinksAsync(links);
         }
 
-        public async Task DeleteLinkAsync(int linkId)
+        public Task DeleteLinkAsync(int linkId)
         {
-            await _client.DeleteLinksAsync(linkId);
+            return _client.DeleteLinksAsync(linkId);
         }
     }
 }
