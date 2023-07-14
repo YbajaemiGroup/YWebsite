@@ -190,7 +190,7 @@ namespace YConsole.ViewModels
 
             var chosenList = dbLinks.Where(l => l.PlayerId == ChosenPlayer.Id);
 
-            for (int i = 0; i < dbLinks.Count; i++)
+            /*for (int i = 0; i < dbLinks.Count; i++)
             {
                 if (dbLinks[i].Id == null)
                 {
@@ -201,18 +201,16 @@ namespace YConsole.ViewModels
                 {
                    await _apiInteractor.DeleteLinkAsync(dbLinks[i].Id ?? 0);
                 }
-            }
+            }*/
 
-            /*foreach (var link in dbLinks.Where(l => l.PlayerId == ChosenPlayer.Id)) 
+            foreach (var link in dbLinks.Where(l => l.PlayerId == ChosenPlayer.Id))
             {
                 if (link.Id == null)
                 {
                     continue;
                 }
                 await _apiInteractor.DeleteLinkAsync(link.Id ?? 0);
-
-                Console.WriteLine("Ссылка с ID: " + link.Id);
-            }*/
+            }
 
 
             _ = _apiInteractor.PostLinksAsync(chosenList.ToList());
