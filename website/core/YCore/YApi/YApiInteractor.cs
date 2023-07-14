@@ -4,13 +4,13 @@ using YApiModel.Models;
 
 namespace YApi
 {
-    public class YApiInteractor
+    public class YApiInteractor : IApiInteractor
     {
         private readonly YClient _client;
 
-        public YApiInteractor(string token)
+        public YApiInteractor(IConfigInteractor configInteractor)
         {
-            _client = new YClient(token);
+            _client = new YClient(configInteractor.GetToken());
         }
 
         public List<Player> GetAllPlayers()

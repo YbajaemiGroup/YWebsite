@@ -94,6 +94,18 @@ namespace YConsole.ViewModels
             }
         }
 
+        public string? SelectedImagePath
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(ImageName))
+                {
+                    return null;
+                }
+                throw new NotImplementedException();
+            }
+        }
+
         public string ImageName
         {
             get => ChosenPlayer?.ImageName ?? "??";
@@ -253,12 +265,17 @@ namespace YConsole.ViewModels
         private bool _saved = true;
         private readonly IWindowService _windowService;
         private readonly IDialogService _dialogService;
+        private readonly string _imagesPath;
 
-        public PlayerWorkspaceViewModel(YApiInteractor apiInteractor, IWindowService windowService, IDialogService dialogService)
+        public PlayerWorkspaceViewModel(YApiInteractor apiInteractor,
+                                        IWindowService windowService,
+                                        IDialogService dialogService,
+                                        IConfigInteractor configInteractor)
         {
             _apiInteractor = apiInteractor;
             _windowService = windowService;
             _dialogService = dialogService;
+            _imagesPath = configInteractor.GetImagesLocation();
             SaveButton = new(OnSaveButtonClick);
             DeleteButton = new(OnDeleteButtonClick);
             CreateButton = new(OnCreateButtonClick);

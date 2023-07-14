@@ -19,7 +19,8 @@ namespace YConsole
         public static readonly IHost _Host = Host.CreateDefaultBuilder()
                 .ConfigureServices(services =>
                 {
-                    services.AddSingleton(new YApiInteractor(ConfigInteractor.GetToken()));
+                    services.AddSingleton<IConfigInteractor, ConfigInteractor>();
+                    services.AddSingleton<IApiInteractor, YApiInteractor>();
 
                     services.AddSingleton<IDialogService, DialogService>();
                     services.AddSingleton<IWindowService, WindowService>(serviceProvider => new WindowService(serviceProvider));
