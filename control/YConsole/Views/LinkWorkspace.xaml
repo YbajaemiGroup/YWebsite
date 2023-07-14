@@ -13,7 +13,7 @@
             <ColumnDefinition Width="780*"/>
             <ColumnDefinition Width="600*"/>
         </Grid.ColumnDefinitions>
-
+        <Label Height="25" Width="300" Margin="20" Grid.Column="2" FontSize="14" Content="{Binding StatusString}" HorizontalAlignment="Right" VerticalAlignment="Bottom" />
         <ListView Grid.Column="0" ItemsSource="{Binding Players}" SelectedItem="{Binding ChosenPlayer}"
                   ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" d:ItemsSource="{d:SampleData ItemCount=5}">
             <ListView.View>
@@ -114,10 +114,16 @@
 
                                 </Grid>
                             </Border>
+                            
                         </StackPanel>
                         
                     </DataTemplate>
                 </ListBox.ItemTemplate>
+                <ListBox.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Command="{Binding DeleteDialogButton}" Header="Удалить"/>
+                    </ContextMenu>
+                </ListBox.ContextMenu>
             </ListBox>
             
         </Grid>

@@ -124,6 +124,7 @@ public class YClient
         parameters.Add("link_id", linkId);
         var response = await requestSender.SendRequestAsync("links.delete", parameters);
         CheckException(response);
+        Debug.WriteLine("Links Deleted");
     }
 
     /// <summary>

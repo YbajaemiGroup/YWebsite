@@ -123,7 +123,7 @@ namespace YApi
 
         public Task DeleteLinkAsync(int linkId)
         {
-            return _client.DeleteLinksAsync(linkId);
+            return _client.DeleteLinksAsync(linkId);   
         }
     }
 }

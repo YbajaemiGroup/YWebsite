@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -13,6 +14,18 @@ namespace YConsole.ViewModels
     public class LinkWorkspaceViewModel : ViewModelBase, IDataLoadable
     {
         #region Bindings
+
+        private string? statusString;
+
+        public string? StatusString
+        {
+            get { return statusString; }
+            set
+            {
+                statusString = value;
+                OnPropertyChanged(nameof(StatusString));
+            }
+        }
 
         private ObservableCollection<Player> players = new();
 
@@ -100,49 +113,51 @@ namespace YConsole.ViewModels
                 MessageBox.Show("Выберите игрока!");
                 return;
             }
-
-<<<<<<< HEAD
-            var chosenList = dbLinks.Where(l => l.PlayerId == ChosenPlayer.Id);
-
-            /*for (int i = 0; i < dbLinks.Count; i++)
-=======
             var linksDeleting = new List<Task>();
             foreach (var link in LinksOfChosenPlayer)
->>>>>>> 4f9e59af71c4ee1b113b4af05a220553f1ed1fe3
             {
                 if (link.Id.HasValue)
                 {
                     linksDeleting.Add(_apiInteractor.DeleteLinkAsync(link.Id.Value));
                 }
-<<<<<<< HEAD
-            }*/
-
-            foreach (var link in dbLinks.Where(l => l.PlayerId == ChosenPlayer.Id))
-            {
-                if (link.Id == null)
-                {
-                    continue;
-                }
-                await _apiInteractor.DeleteLinkAsync(link.Id ?? 0);
-            }
-
-
-            _ = _apiInteractor.PostLinksAsync(chosenList.ToList());
-
-            dbLinks = await _apiInteractor.GetAllLinksAsync();
-=======
             }
             await Task.WhenAll(linksDeleting);
 
             await _apiInteractor.PostLinksAsync(LinksOfChosenPlayer.ToList());
-
+            
             links = await _apiInteractor.GetAllLinksAsync();
->>>>>>> 4f9e59af71c4ee1b113b4af05a220553f1ed1fe3
+
+
+
+            _ = Task.Run(() =>
+            {
+                StatusString = "Успешное отправление на сервер!";
+                Task.Delay(2000).Wait();
+                StatusString = string.Empty;
+            });
+
+
         }
 
-        private void OnDeleteDialogButtonClick(object? ignorable) 
+        private async void OnDeleteDialogButtonClick(object? ignorable) 
         {  
-            throw new NotImplementedException(); 
+            if (selectedLink == null)
+            {
+                MessageBox.Show("Выберите ссылку!");
+                return;
+            }
+
+            if (selectedLink.Id != null)
+            {
+
+                await _apiInteractor.DeleteLinkAsync(selectedLink.Id.Value);
+                
+            }
+            Debug.WriteLine("Links ViewModel");
+            links.Remove(selectedLink);
+            
+            UpdateLinksOfChosenPlayer();
+            OnPropertyChanged(nameof(LinksOfChosenPlayer));
         }
 
         public void LoadData()
@@ -169,7 +184,7 @@ namespace YConsole.ViewModels
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Произошла ошибка при загрузке ссылок и игроков." + ex.ToString());
+                MessageBox.Show("Произошла ошибка при загрузке ссылок и игроков.");
                 Players = new();
             }
         }
