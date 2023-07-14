@@ -59,6 +59,7 @@ namespace YConsole.ViewModels
         {
             _windowService.Show<TokenCreateViewModel>();
         }
+
         private void OnTokenDeleteWorkspaceClick (object? ignorable)
         {
             _windowService.Show<TokenDeleteViewModel>();
