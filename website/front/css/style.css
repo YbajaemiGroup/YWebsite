@@ -220,6 +220,19 @@ h1 {
   padding: 40px;
 }
 
+.contacts-div {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.content-contacts {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
 .groupStage-1:nth-of-type(1) {
   background-image: url('/images/adges1.jpg');
 }
