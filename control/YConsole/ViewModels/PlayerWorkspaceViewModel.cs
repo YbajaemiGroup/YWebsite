@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -98,11 +99,12 @@ namespace YConsole.ViewModels
         {
             get
             {
-                if (string.IsNullOrEmpty(ImageName))
+                string fullName = $"{_imagesPath}\\{ImageName}";
+                if (string.IsNullOrEmpty(ImageName) || !File.Exists(fullName))
                 {
                     return null;
                 }
-                throw new NotImplementedException();
+                return fullName;
             }
         }
 
@@ -126,6 +128,7 @@ namespace YConsole.ViewModels
                 }
                 ChosenPlayer.ImageName = value;
                 OnPropertyChanged(nameof(ImageName));
+                OnPropertyChanged(nameof(SelectedImagePath));
             }
         }
 

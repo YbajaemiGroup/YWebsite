@@ -37,7 +37,7 @@
             <TextBlock Text="Ник:" Margin="45,40,0,0" Style="{StaticResource ParameterLabel}"></TextBlock>
             <TextBlock Text="Фото:" Margin="45,70,0,0" Style="{StaticResource ParameterLabel}"></TextBlock>
 
-            <Image Height="120" Width="120" Margin="45,100,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"  />
+            <Image Height="120" Width="120" Margin="45,100,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Source="{Binding SelectedImagePath, TargetNullValue={x:Null}}" />
             <Button Content="Изменить" Margin="45,235,0,0" Style="{StaticResource DefaultButtonStyle}" Command="{Binding ChangeImageButton}" />
 
             <TextBlock Text="Описание:" Margin="45,280,0,0" Style="{StaticResource ParameterLabel}"></TextBlock>

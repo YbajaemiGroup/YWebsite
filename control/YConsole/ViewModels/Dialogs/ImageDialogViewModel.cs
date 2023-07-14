@@ -53,29 +53,29 @@ namespace YConsole.ViewModels.Dialogs
 
         #endregion
 
-        public string ImageSource { get; set; }
+        public readonly string _imageSource;
         private readonly YApiInteractor _apiInteractor;
         private readonly IDialogService _dialogService;
         public event Action<string>? OnImageUpdated;
 
-        public ImageDialogViewModel(YApiInteractor apiInteractor, IDialogService dialogService)
+        public ImageDialogViewModel(YApiInteractor apiInteractor, IDialogService dialogService, IConfigInteractor configInteractor)
         {
             _apiInteractor = apiInteractor;
             _dialogService = dialogService;
-            ImageSource = ConfigInteractor.GetImagesLocation();
+            _imageSource = configInteractor.GetImagesLocation();
             AddButton = new(OnAddButtonClick);
             SaveCommand = new(OnSaveButtonClick);
         }
 
         public void LoadData()
         {
-            var images = _apiInteractor.DownloadImages(ImageSource);
+            var images = _apiInteractor.DownloadImages(_imageSource);
             foreach (var image in images)
             {
                 DatabaseImagesPaths.Add(new()
                 {
                     ImageName = image.Split('\\')[^1],
-                    ImagePath = $"{ImageSource}\\{image}"
+                    ImagePath = $"{_imageSource}\\{image}"
                 });
                 OnPropertyChanged(nameof(DatabaseImagesPaths));
             }
@@ -83,12 +83,12 @@ namespace YConsole.ViewModels.Dialogs
 
         public async Task LoadDataAsync()
         {
-            await foreach (var image in _apiInteractor.DownloadAllImagesAsync(ImageSource))
+            await foreach (var image in _apiInteractor.DownloadAllImagesAsync(_imageSource))
             {
                 DatabaseImagesPaths.Add(new()
                 {
                     ImageName = image.Split('\\')[^1],
-                    ImagePath = $"{ImageSource}\\{image}"
+                    ImagePath = $"{_imageSource}\\{image}"
                 });
                 OnPropertyChanged(nameof(DatabaseImagesPaths));
             }
@@ -104,9 +104,9 @@ namespace YConsole.ViewModels.Dialogs
                 return;
             }
             var fileName = openFileDialog.FileName.Split('\\')[^1];
-            if (File.Exists($"{ImageSource}\\{fileName}"))
+            if (File.Exists($"{_imageSource}\\{fileName}"))
             {
-                MessageBox.Show($"Файл {fileName} уже существует в папке {ImageSource}.");
+                MessageBox.Show($"Файл {fileName} уже существует в папке {_imageSource}.");
                 var dvm = new ReplaceImageDialogViewModel($"Заменить файл {fileName} в папке назначения?");
                 bool answer = false;
                 _dialogService.ShowDialog(dvm, res => answer = res);
@@ -114,7 +114,7 @@ namespace YConsole.ViewModels.Dialogs
                 {
                     return;
                 }
-                File.Delete($"{ImageSource}\\{fileName}");
+                File.Delete($"{_imageSource}\\{fileName}");
             }
             var image = File.OpenRead(openFileDialog.FileName);
             if (image == null)
@@ -125,7 +125,7 @@ namespace YConsole.ViewModels.Dialogs
             var loadingImageToServer = _apiInteractor.LoadImageToServerAsync(fileName, image);
             try
             {
-                File.Copy(openFileDialog.FileName, $"{ImageSource}\\{fileName}");
+                File.Copy(openFileDialog.FileName, $"{_imageSource}\\{fileName}");
             }
             catch (Exception)
             {
@@ -141,7 +141,7 @@ namespace YConsole.ViewModels.Dialogs
 
         private void OnSaveButtonClick(object? ignorable)
         {
-            throw new NotImplementedException();
+            
         }
 
         #endregion
