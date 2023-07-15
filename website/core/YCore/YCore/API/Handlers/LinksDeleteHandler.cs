@@ -16,7 +16,14 @@ namespace YCore.API.Handlers
         public IResponseSender GetResponseSender()
         {
             var db = DatabaseInteractor.Instance();
-            if (!db.DeleteLink(linkId).Result)
+            try
+            {
+                if (!db.DeleteLink(linkId).Result)
+                {
+                    CoreException = new UnknownInnerException();
+                }
+            }
+            catch (Exception)
             {
                 CoreException = new UnknownInnerException();
             }
