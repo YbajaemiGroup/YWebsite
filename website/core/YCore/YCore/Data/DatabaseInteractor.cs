@@ -149,6 +149,7 @@ public class DatabaseInteractor
         Logger.Log(LogSeverity.Debug, nameof(DatabaseInteractor), "Player updated.");
         var dbPlayer = Context.Players.First(p => p.Id == player.Id);
         dbPlayer.Copy(player);
+        Context.Players.Update(dbPlayer);
         CommitAsync().Wait();
         return dbPlayer;
     }
