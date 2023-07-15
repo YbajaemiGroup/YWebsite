@@ -1,7 +1,13 @@
-﻿namespace YConsole.ViewModels
+﻿using YConsole.Utillities;
+using YConsole.ViewModels.Dialogs;
+
+namespace YConsole.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
+        private readonly IWindowService _windowService;
+        private readonly PlayerWorkspaceViewModel _playerWorkspaceViewModel;
+
         private ViewModelBase? workspace;
         public ViewModelBase? Workspace
         {
@@ -13,22 +19,38 @@
             }
         }
 
-        public MainViewModel()
+        public MainViewModel(IWindowService windowService, PlayerWorkspaceViewModel playerWorkspaceViewModel)
         {
+            _windowService = windowService;
             OpenPlayersWorkspaceCommand = new(OnPlayersWorkspaceCommandClick);
+            _playerWorkspaceViewModel = playerWorkspaceViewModel;
+            OpenTokenCreateCommand = new(OnTokenCreateWorkspaceClick);
+            OpenTokenDeleteCommand = new(OnTokenDeleteWorkspaceClick);
         }
 
         #region Command bindings
 
         public RelayCommand OpenPlayersWorkspaceCommand { get; private set; }
+        public RelayCommand OpenTokenCreateCommand { get; private set; }
+        public RelayCommand OpenTokenDeleteCommand { get; private set; }
 
         #endregion
 
         #region Command handlers
 
-        private void OnPlayersWorkspaceCommandClick(object? playerWorkspace)
+        private void OnPlayersWorkspaceCommandClick(object? ignorable)
         {
-            Workspace = playerWorkspace as ViewModelBase ?? throw new System.Exception("Can't load player workspace.");
+            Workspace = _playerWorkspaceViewModel;
+            _ = _playerWorkspaceViewModel.LoadDataAsync();
+        }
+
+        private void OnTokenCreateWorkspaceClick (object? ignorable)
+        {
+            _windowService.Show<TokenCreateViewModel>();
+        }
+        private void OnTokenDeleteWorkspaceClick (object? ignorable)
+        {
+            _windowService.Show<TokenDeleteViewModel>();
         }
 
         #endregion

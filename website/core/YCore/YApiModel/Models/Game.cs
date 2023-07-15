@@ -9,9 +9,9 @@ public class Game
     [JsonPropertyName("is_upper")]
     public bool IsUpper { get; set; }
     [JsonPropertyName("player1")]
-    public int Player1Id { get; set; }
+    public int? Player1Id { get; set; }
     [JsonPropertyName("player2")]
-    public int Player2Id { get; set; }
+    public int? Player2Id { get; set; }
     [JsonPropertyName("winner")]
     public int? WinnerId { get; set; }
 }

@@ -65,13 +65,10 @@ namespace YCore
             catch (HttpListenerException e)
             {
                 Logger.Log(LogSeverity.Warning, nameof(Core), "Expected exception on closing sockets.", e);
-                if (!HttpListener.IsListening)
-                {
-                    HttpListener = new HttpListener();
-                    configuration.ApiListenAddresses.ForEach(HttpListener.Prefixes.Add);
-                    configuration.HttpListenAddresses.ForEach(HttpListener.Prefixes.Add);
-                    Logger.Log(LogSeverity.Info, nameof(Core), "Listener recreated.");
-                }
+                HttpListener = new HttpListener();
+                configuration.ApiListenAddresses.ForEach(HttpListener.Prefixes.Add);
+                configuration.HttpListenAddresses.ForEach(HttpListener.Prefixes.Add);
+                Logger.Log(LogSeverity.Info, nameof(Core), "Listener recreated.");
             }
         }
     }

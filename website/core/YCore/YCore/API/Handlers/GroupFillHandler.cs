@@ -41,7 +41,15 @@ namespace YCore.API.Handlers
             {
                 db.UpdatePlayer(player);
             }
-            return GetResponseSender(players);
+            return GetResponseSender(players.Select(p => new Player(
+                p.Nickname,
+                p.Descr,
+                p.Image?.ImageName,
+                p.Id,
+                p.GroupNumber,
+                p.Won,
+                p.Lose,
+                p.Points)));
         }
     }
 }

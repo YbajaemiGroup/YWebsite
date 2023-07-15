@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.Metrics;
+﻿using System.Diagnostics;
+using System.Diagnostics.Metrics;
 using YApiModel.Models;
 
 namespace YApi
@@ -50,18 +51,64 @@ namespace YApi
             await dbImage.FlushAsync();
         }
 
-        public async Task DownloadAllImagesAsync(string imageDirectory)
+        public List<string> DownloadImages(string imageDirectory)
         {
-            var players = await _client.PlayersGetAsync();
-            var downloadingImages = new List<Task>();
+            var players = _client.PlayersGetAsync().Result;
+            var imagesNames = new List<string>();
             foreach (var image in players.Select(p => p.ImageName))
             {
                 if (image != null)
                 {
-                    downloadingImages.Add(DownloadImageAsync(image, imageDirectory));
+                    DownloadImage(image, imageDirectory);
+                    imagesNames.Add(image);
                 }
             }
-            Task.WaitAll(downloadingImages.ToArray());
+            return imagesNames;
+        }
+
+        public async IAsyncEnumerable<string> DownloadAllImagesAsync(string imageDirectory)
+        {
+            var players = await _client.PlayersGetAsync();
+            foreach (var image in players.Select(p => p.ImageName))
+            {
+                if (image != null)
+                {
+                    await DownloadImageAsync(image, imageDirectory);
+                    yield return image;
+                }
+            }
+        }
+
+        public Image LoadImageToServer(string imageName, Stream stream)
+        {
+            ArgumentException.ThrowIfNullOrEmpty(imageName);
+            if (!stream.CanRead)
+            {
+                throw new ArgumentException("Can not read stream.", nameof(stream));
+            }
+            return _client.LoadImageAsync(imageName, stream).GetAwaiter().GetResult();
+        }
+
+        public Task<Image> LoadImageToServerAsync(string imageName, Stream stream)
+        {
+            ArgumentException.ThrowIfNullOrEmpty(imageName);
+            if (!stream.CanRead)
+            {
+                throw new ArgumentException("Can not read stream.", nameof(stream));
+            }
+            return _client.LoadImageAsync(imageName, stream);
+        }
+
+        public Task LoadTokenToServerAsync(string tokenSource)
+        {
+            ArgumentException.ThrowIfNullOrEmpty(tokenSource);
+            return _client.CreateTokenAsync(tokenSource);
+        }
+
+        public Task DeleteTokenFromServerAsync(string tokenSource)
+        {
+            ArgumentException.ThrowIfNullOrEmpty(tokenSource);
+            return _client.DeleteTokenAsync(tokenSource);
         }
     }
 }

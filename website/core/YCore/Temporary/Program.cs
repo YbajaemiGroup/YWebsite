@@ -1,49 +1,46 @@
-﻿using System.Data;
+﻿using System.Globalization;
 using System.Text.Json;
+using Temporary;
 using YApi;
 using YApiModel.Models;
 
 var client = new YClient("token");
-<<<<<<< HEAD
-//var rounds = new List<Round>()
-//            {
-//                new()
-//                {
-//                    RoundNumber = 1,
-//                    IsUpper = true,
-//                    Games = new()
-//                    {
-//                        new()
-//                        {
-//                            Row = 1,
-//                            Player1Id = 1,
-//                            Player2Id = 2,
-//                            WinnerId = null
-//                        }
-//                    }
-//                },
-//                new()
-//                {
-//                    RoundNumber = 2,
-//                    IsUpper = true,
-//                    Games = new()
-//                    {
-//                        new()
-//                        {
-//                            Row = 1,
-//                            Player1Id = 1,
-//                            Player2Id = 2,
-//                            WinnerId = 1
-//                        }
-//                    }
-//                }
-//            };
-var bracket = client.GetBracketAsync().Result;
 
-Console.WriteLine(JsonSerializer.Serialize(bracket));
-=======
+var inputGroups = new List<GroupFillData>()
+            {
+                new()
+                {
+                    Group = 1,
+                    PlayerId = 1
+                },
+                new()
+                {
+                    Group = 1,
+                    PlayerId = 2
+                }
+            };
 
-client.PlayerDelete(1).Wait();
->>>>>>> console
+Console.WriteLine(JsonSerializer.Serialize(inputGroups));
 
-Console.ReadLine();
+client.GroupFillAsync(inputGroups).Wait();
+var players = client.PlayersGetAsync().Result;
+var player1 = players.First(p => p.Id == 1);
+var player2 = players.First(p => p.Id == 2);
+
+var groups = await client.GroupGetGamesAsync();
+
+Console.WriteLine("________________");
+
+foreach (var g in groups)
+{
+    Console.WriteLine();
+    Console.WriteLine($"Group {g.Group}");
+    Console.WriteLine($"PlayerId {g.PlayerId}");
+    Console.WriteLine();
+}
+
+Console.WriteLine(JsonSerializer.Serialize(groups));
+
+Console.WriteLine("________________");
+
+var group = groups.First(g => g.Group == player1.GroupNumber);

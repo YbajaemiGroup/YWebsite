@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
+using System.Linq;
 
-namespace YConsole;
+namespace YConsole.Utillities;
 
 public class ViewModelBase : INotifyPropertyChanged
 {

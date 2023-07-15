@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.Text.Json;
 using System.Xml.Serialization;
 using YApiModel;
@@ -82,7 +83,7 @@ public class YClient
         CheckException(response);
     }
 
-    public async Task<List<GroupGetData>> GroupGetGames()
+    public async Task<List<GroupGetData>> GroupGetGamesAsync()
     {
         var parameters = new HttpParameters();
         parameters.Add("token", Token);
@@ -177,22 +178,38 @@ public class YClient
         var parameters = new HttpParameters();
         parameters.Add("token", Token);
         parameters.Add("image_name", imageName);
-        var content = new MultipartFormDataContent();
         var fileStreamContent = new StreamContent(new MemoryStream(imageBytes));
         fileStreamContent.Headers.ContentType = new(imageName.Split('.')[1] switch
         {
             "jpeg" => "image/jpeg",
             "jpg" => "image/jpeg",
             "png" => "image/png",
-            _ => throw new ArgumentException(nameof(imageName), "Image should be .png .jpg of .jpeg")
+            _ => throw new ArgumentException("Image should be .png .jpg of .jpeg", nameof(imageName))
         });
-        content.Add(fileStreamContent, "file", imageName);
-        var response = await requestSender.SendRequestAsync("images.load", parameters, imageBytes);
+        var response = await requestSender.SendRequestAsync("images.load", parameters, fileStreamContent);
         CheckException(response);
         return GetResponseData<Image>(response);
     }
 
-    public async Task CreateToken(string tokenSource)
+    public async Task<Image> LoadImageAsync(string imageName, Stream stream)
+    {
+        var parameters = new HttpParameters();
+        parameters.Add("token", Token);
+        parameters.Add("image_name", imageName);
+        var fileStreamContent = new StreamContent(stream);
+        fileStreamContent.Headers.ContentType = new(imageName.Split('.')[1] switch
+        {
+            "jpeg" => "image/jpeg",
+            "jpg" => "image/jpeg",
+            "png" => "image/png",
+            _ => throw new ArgumentException("Image should be .png .jpg of .jpeg", nameof(imageName))
+        });
+        var response = await requestSender.SendRequestAsync("images.load", parameters, fileStreamContent);
+        CheckException(response);
+        return GetResponseData<Image>(response);
+    }
+
+    public async Task CreateTokenAsync(string tokenSource)
     {
         var parameters = new HttpParameters();
         parameters.Add("token", Token);
@@ -201,7 +218,7 @@ public class YClient
         CheckException(response);
     }
 
-    public async Task DeleteToken(string token)
+    public async Task DeleteTokenAsync(string token)
     {
         var parameters = new HttpParameters();
         parameters.Add("token", Token);

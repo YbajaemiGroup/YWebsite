@@ -1,23 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using YDatabase.Models;
 
 namespace YDatabase;
 
 public partial class YbajaemiContext : DbContext
 {
-    private string connectionString;
+    private readonly string _connectionString;
 
     public YbajaemiContext(string connectionString)
     {
-        this.connectionString = connectionString;
+        _connectionString = connectionString;
     }
 
     public YbajaemiContext(string connectionString, DbContextOptions<YbajaemiContext> options)
             : base(options)
     {
-        this.connectionString = connectionString;
+        _connectionString = connectionString;
     }
     public virtual DbSet<Game> Games { get; set; }
 
@@ -25,14 +23,12 @@ public partial class YbajaemiContext : DbContext
 
     public virtual DbSet<Link> Links { get; set; }
 
-    public virtual DbSet<Log> Logs { get; set; }
-
     public virtual DbSet<Player> Players { get; set; }
 
     public virtual DbSet<Token> Tokens { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseNpgsql(connectionString);
+        => optionsBuilder.UseNpgsql(_connectionString);
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -95,30 +91,6 @@ public partial class YbajaemiContext : DbContext
                 .HasForeignKey(d => d.Player)
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("fk_link_player");
-        });
-
-        modelBuilder.Entity<Log>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("logs_pkey");
-
-            entity.ToTable("logs", "tournier");
-
-            entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.DateTime)
-                .HasColumnType("timestamp without time zone")
-                .HasColumnName("date_time");
-            entity.Property(e => e.Exception)
-                .HasColumnType("character varying")
-                .HasColumnName("exception");
-            entity.Property(e => e.Message)
-                .HasColumnType("character varying")
-                .HasColumnName("message");
-            entity.Property(e => e.Severety)
-                .HasMaxLength(64)
-                .HasColumnName("severety");
-            entity.Property(e => e.Source)
-                .HasMaxLength(256)
-                .HasColumnName("source");
         });
 
         modelBuilder.Entity<Player>(entity =>

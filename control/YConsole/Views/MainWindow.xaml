@@ -23,7 +23,7 @@
                 <MenuItem.Header>
                     <TextBlock Text="Файл" Style="{StaticResource MenuItemHeaderStyle}"/>
                 </MenuItem.Header>
-                <MenuItem Command="{Binding OpenPlayersWorkspaceCommand}" CommandParameter="{Binding PlayerWorkspaceViewModel, Mode=OneWay, Source={StaticResource Locator}}">
+                <MenuItem Command="{Binding OpenPlayersWorkspaceCommand}">
                     <MenuItem.Header>
                         <TextBlock Text="Игроки" Style="{StaticResource MenuItemHeaderStyle}"/>
                     </MenuItem.Header>
@@ -48,12 +48,12 @@
                 <MenuItem.Header>
                     <TextBlock Text="Ключи" Style="{StaticResource MenuItemHeaderStyle}"/>
                 </MenuItem.Header>
-                <MenuItem>
+                <MenuItem Command="{Binding OpenTokenCreateCommand}">
                     <MenuItem.Header>
                         <TextBlock Text="Создать" Style="{StaticResource MenuItemHeaderStyle}"/>
                     </MenuItem.Header>
                 </MenuItem>
-                <MenuItem>
+                <MenuItem Command="{Binding OpenTokenDeleteCommand}">
                     <MenuItem.Header>
                         <TextBlock Text="Удалить" Style="{StaticResource MenuItemHeaderStyle}"/>
                     </MenuItem.Header>

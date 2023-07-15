@@ -33,24 +33,15 @@
             <ColumnDefinition Width="420*"/>
             <ColumnDefinition Width="1380*"/>
         </Grid.ColumnDefinitions>
-        <ListView Grid.Column="0" ItemsSource="{Binding Players}" SelectedItem="{Binding ChosenPlayer}"
-                  ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Id}" Width="100">id</GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=NickName}" Width="320">nickname</GridViewColumn>
-                </GridView>
-            </ListView.View>
-        </ListView>
         <Grid Grid.Column="1" Background="White">
             <TextBlock Text="Ник:" Margin="45,40,0,0" Style="{StaticResource ParameterLabel}"></TextBlock>
             <TextBlock Text="Фото:" Margin="45,70,0,0" Style="{StaticResource ParameterLabel}"></TextBlock>
 
             <Image Height="120" Width="120" Margin="45,100,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
-            <Button Content="Изменить" Margin="45,235,0,0" Style="{StaticResource DefaultButtonStyle}" />
+            <Button Content="Изменить" Margin="45,235,0,0" Style="{StaticResource DefaultButtonStyle}" Command="{Binding ChangeImageButton}" />
 
             <TextBlock Text="Описание:" Margin="45,280,0,0" Style="{StaticResource ParameterLabel}"></TextBlock>
-            
+
             <TextBlock Text="Группа:" Margin="45,400,0,0" Style="{StaticResource ParameterLabel}"></TextBlock>
             <TextBlock Text="Побед:" Margin="45,430,0,0" Style="{StaticResource ParameterLabel}"></TextBlock>
             <Button Margin="460,430,0,0" x:Name="IncreaseWins" Style="{StaticResource EncreaseDecreaseButton}" Content="+" Command="{Binding IncreaseWinsButton}" />
@@ -80,5 +71,14 @@
             <Button Content="Удалить" Margin="850,683,0,0" Style="{StaticResource DefaultButtonStyle}" Command="{Binding DeleteButton}" />
             <Button Content="Сохранить" Margin="1050,683,0,0" Style="{StaticResource DefaultButtonStyle}" Command="{Binding SaveButton}" />
         </Grid>
+        <ListView Grid.Column="0" ItemsSource="{Binding Players}" SelectedItem="{Binding ChosenPlayer}"
+                  ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" d:ItemsSource="{d:SampleData ItemCount=5}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding Id}" Width="100" Header="id"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding NickName}" Width="320" Header="nickname"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </UserControl>

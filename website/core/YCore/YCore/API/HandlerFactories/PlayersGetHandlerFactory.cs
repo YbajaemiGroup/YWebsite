@@ -16,7 +16,7 @@ namespace YCore.API.HandlerFactories
             {
                 playerId = Convert.ToInt32(GetParameter("player_id"));
             }
-            catch (ArgumentNullException)
+            catch (Exception)
             {
                 playerId = null;
             }

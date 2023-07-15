@@ -5,17 +5,33 @@ using System.Threading.Tasks;
 using System.Windows;
 using YApi;
 using YApiModel.Models;
+using YConsole.Utillities;
 using YConsole.ViewModels.Dialogs;
+<<<<<<< HEAD
+using YConsole.Views;
+=======
+using YConsole.Views.Dialogs;
+>>>>>>> issue#46
 
 namespace YConsole.ViewModels
 {
-    public class PlayerWorkspaceViewModel : ViewModelBase
+    public class PlayerWorkspaceViewModel : ViewModelBase, IDataLoadable
     {
         private const string DEFAULT_VALUE = "??";
 
         #region Bindings
 
-        public ObservableCollection<Player> Players { get; set; } = new();
+        private ObservableCollection<Player> players = new();
+
+        public ObservableCollection<Player> Players
+        {
+            get { return players; }
+            set
+            {
+                players = value;
+                OnPropertyChanged(nameof(Players));
+            }
+        }
 
         private Player? chosenPlayer;
 
@@ -240,12 +256,13 @@ namespace YConsole.ViewModels
 
         private readonly YApiInteractor _apiInteractor;
         private bool _saved = true;
+        private readonly IWindowService _windowService;
         private readonly IDialogService _dialogService;
 
-        public PlayerWorkspaceViewModel(YApiInteractor apiInteractor, IDialogService dialogService)
+        public PlayerWorkspaceViewModel(YApiInteractor apiInteractor, IWindowService windowService, IDialogService dialogService)
         {
             _apiInteractor = apiInteractor;
-            _ = Task.Run(async () => Players = new(await apiInteractor.GetAllPlayersAsync()));
+            _windowService = windowService;
             _dialogService = dialogService;
             SaveButton = new(OnSaveButtonClick);
             DeleteButton = new(OnDeleteButtonClick);
@@ -280,7 +297,7 @@ namespace YConsole.ViewModels
         private async void OnDeleteButtonClick(object? ignorable)
         {
             bool delete = false;
-            _dialogService.ShowDialog<DeleteConfirmationViewModel>(result => delete = result);
+            _dialogService.ShowDialog<DeleteConfirmationDialogViewModel>(result => delete = result);
             if (!delete)
             {
                 return;
@@ -305,7 +322,9 @@ namespace YConsole.ViewModels
 
         private void OnChangeImageButtonClick(object? ignorable)
         {
-            throw new NotImplementedException();
+            ImageDialogViewModel imageDialogViewModel = new(_apiInteractor, _dialogService);
+            _ = imageDialogViewModel.LoadDataAsync();
+            _windowService.Show(imageDialogViewModel);
         }
 
         private void OnIncreaseWinsButtonClick(object? ignorable)
@@ -346,6 +365,32 @@ namespace YConsole.ViewModels
             if (Points <= 0)
                 return;
             Points--;
+        }
+
+        public void LoadData()
+        {
+            try
+            {
+                Players = new(_apiInteractor.GetAllPlayersAsync().Result);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Произошла ошибка при загрузке игроков.");
+                Players = new();
+            }
+        }
+
+        public async Task LoadDataAsync()
+        {
+            try
+            {
+                Players = new(await _apiInteractor.GetAllPlayersAsync());
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Произошла ошибка при загрузке игроков.");
+                Players = new();
+            }
         }
 
         #endregion

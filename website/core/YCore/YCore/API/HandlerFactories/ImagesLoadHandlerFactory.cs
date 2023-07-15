@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Diagnostics;
 using System.Net;
+using System.Text;
+using System.Net.Http;
 using YCore.API.Handlers;
 
 namespace YCore.API.HandlerFactories
@@ -37,11 +39,8 @@ namespace YCore.API.HandlerFactories
             {
                 return new DataExpected();
             }
-            var ms = new MemoryStream();
-            context.Request.InputStream.CopyTo(ms);
-            var offset = ms.Length - context.Request.ContentLength64;
 
-            return new ImagesLoadHandler(imageName, imagesLocation, ms, offset);
+            return new ImagesLoadHandler(imageName, imagesLocation, context.Request.InputStream);
         }
     }
 }

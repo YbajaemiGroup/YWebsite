@@ -1,5 +1,4 @@
-﻿using Microsoft.Win32;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,13 +15,18 @@ using System.Windows.Shapes;
 namespace YConsole.Views.Dialogs
 {
     /// <summary>
-    /// Логика взаимодействия для DialogWindow.xaml
+    /// Логика взаимодействия для ImagesDialogWindow.xaml
     /// </summary>
-    public partial class DialogWindow : Window
+    public partial class ImagesDialogWindow : Window
     {
-        public DialogWindow()
+        public ImagesDialogWindow()
         {
             InitializeComponent();
+        }
+
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

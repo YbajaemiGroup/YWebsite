@@ -10,17 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace YConsole.Views.Dialogs
 {
     /// <summary>
-    /// Логика взаимодействия для ImageSelectingDialog.xaml
+    /// Логика взаимодействия для CreateTokenWindow.xaml
     /// </summary>
-    public partial class ImageSelectingDialog : UserControl
+    public partial class CreateTokenWindow : Window
     {
-        public ImageSelectingDialog()
+        public CreateTokenWindow()
         {
             InitializeComponent();
         }

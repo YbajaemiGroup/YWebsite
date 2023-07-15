@@ -25,10 +25,12 @@ public class DatabaseInteractor
     private static string _connectionString = string.Empty;
 
     public YbajaemiContext Context { get; private set; }
+    public LogContext LogContext { get; private set; }
 
     private DatabaseInteractor()
     {
         Context = new YbajaemiContext(_connectionString);
+        LogContext = new LogContext(_connectionString);
     }
 
     public static void LoadConnectionString(string connectionString)
@@ -162,6 +164,13 @@ public class DatabaseInteractor
     {
         var l = await Context.Links.AddAsync(link);
         Logger.Log(LogSeverity.Debug, nameof(DatabaseInteractor), "Link added in database.");
+        await CommitAsync();
+        return l.Entity;
+    }
+
+    public async Task<Link> UpdateLink(Link link)
+    {
+        var l = Context.Links.Update(link);
         await CommitAsync();
         return l.Entity;
     }
@@ -307,19 +316,8 @@ public class DatabaseInteractor
         return validated;
     }
 
-    public async Task CommitAsync(bool isdb = false)
+    public async Task CommitAsync()
     {
-        if (isdb)
-        {
-            try
-            {
-                await Context.SaveChangesAsync();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
         try
         {
             await Context.SaveChangesAsync();
@@ -332,9 +330,22 @@ public class DatabaseInteractor
         }
     }
 
-    public async Task WrileLog(LogSeverity logSeverity, string source, string message, Exception? exception = null)
+    public void CommitLog()
     {
-        await Context.Logs.AddAsync(new()
+        LogContext.SaveChanges();
+    }
+
+    public Task CommitLogAsync()
+    {
+        lock (LogContext)
+        {
+            return LogContext.SaveChangesAsync();
+        }
+    }
+
+    public Task WrileLogAsync(LogSeverity logSeverity, string source, string message, Exception? exception = null)
+    {
+        LogContext.Logs.Add(new()
         {
             DateTime = DateTime.Now,
             Severety = logSeverity.ToString(),
@@ -342,6 +353,6 @@ public class DatabaseInteractor
             Message = message,
             Exception = exception?.ToString()
         });
-        await CommitAsync(true);
+        return CommitLogAsync();
     }
 }

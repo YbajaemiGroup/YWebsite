@@ -1,0 +1,31 @@
+﻿<Window x:Class="YConsole.Views.Dialogs.ImagesDialogWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:YConsole.Views.Dialogs"
+        mc:Ignorable="d"
+        Title="ImagesDialogWindow" Height="450" Width="800"
+        DataContext="{Binding ImageDialogViewModel, Mode=OneWay, Source={StaticResource Locator}}">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <TextBlock Margin="20,10,0,0" Text="Выбранное изображение:" Height="15" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left" />
+        <Image Grid.Column="0" Margin="60,31,60,132" Source="{Binding SelectedImage.ImagePath}" />
+        <Button Grid.Column="0" Style="{StaticResource DefaultButtonStyle}" Content="Добавить" Margin="113,330,0,0" Command="{Binding AddButton}" />
+        <Button Grid.Column="0" Style="{StaticResource DefaultButtonStyle}" Content="Сохранить" Margin="113,375,0,0" />
+        <ListBox Grid.Column="1" ItemsSource="{Binding DatabaseImagesPaths}" SelectedItem="{Binding SelectedImage}"
+                 ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="ListBox_SelectionChanged">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid Width="367">
+                        <Image Height="128" Width="128" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Source="{Binding ImagePath}" />
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Height="20" Margin="160,22,10,22" Text="{Binding ImageName}" />
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</Window>

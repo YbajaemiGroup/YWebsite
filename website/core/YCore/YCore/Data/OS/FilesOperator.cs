@@ -50,7 +50,7 @@
             return null;
         }
 
-        public bool SaveFile(string fileName, Stream stream, long offset = 0)
+        public bool SaveFile(string fileName, Stream stream)
         {
             if (!SecurityUtilities.ValidateFileName(fileName))
             {
@@ -60,9 +60,9 @@
             {
                 string uri = $"{filesLocation}/{fileName}";
                 using var fileStream = File.Create(uri);
-                stream.Position = offset;
                 stream.CopyTo(fileStream);
                 fileStream.Flush();
+                stream.Flush();
                 stream.Close();
                 return true;
             }

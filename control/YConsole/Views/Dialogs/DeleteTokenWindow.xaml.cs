@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace YConsole.Views.Dialogs
 {
     /// <summary>
-    /// Логика взаимодействия для ImagesDialog.xaml
+    /// Логика взаимодействия для DeleteTokenWindow.xaml
     /// </summary>
-    public partial class ImagesDialog : Window
+    public partial class DeleteTokenWindow : Window
     {
-        public ImagesDialog()
+        public DeleteTokenWindow()
         {
             InitializeComponent();
         }

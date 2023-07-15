@@ -19,16 +19,17 @@ namespace YCoreTests.Tests
         public void TokenCreateAndDeleteTest()
         {
             string newToken = "new_token";
-            client.CreateToken(newToken).Wait();
+            client.CreateTokenAsync(newToken).Wait();
             var db = DatabaseInteractor.Instance();
             Assert.True(db.ValidateToken(newToken));
-            client.DeleteToken(newToken).Wait();
+            client.DeleteTokenAsync(newToken).Wait();
             Assert.False(db.ValidateToken(newToken));
         }
 
         [Fact]
         public void ImagesLoadAndGetTest()
         {
+#warning этот тест гавно
             string imageName = "image.png";
             using var ms = new MemoryStream();
             using var fs = File.OpenRead("E:\\MyProgs\\ybajaemi\\config\\1.png");
@@ -127,7 +128,7 @@ namespace YCoreTests.Tests
             Assert.Equal(1, player2.GroupNumber);
 
             Assert.Equal(player1.GroupNumber, player2.GroupNumber);
-            var group = client.GroupGetGames().Result.First(g => g.Group == player1.GroupNumber);
+            var group = client.GroupGetGamesAsync().Result.First(g => g.Group == player1.GroupNumber);
             Assert.Contains(group.PlayerId, p => p == player1.Id);
             Assert.Contains(group.PlayerId, p => p == player2.Id);
         }
