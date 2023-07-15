@@ -20,7 +20,7 @@ body {
     margin: 0;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
-    overflow-x: hidden;
+    overflow: auto;
 }
 html {
     scroll-behavior: smooth;
@@ -82,8 +82,49 @@ html {
 }
 
 
+.containerContacts {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  min-height: 20vh;
+  min-width: 65vw;
+}
+.contactsItem {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+.contactsLink {
+  text-decoration: none;
+  color: #fff;
+  font-family: 'Unbounded Medium';
+  font-size: 1.5vw;
+  margin-top: 15px;
+  margin-left: 40%;
+}
 
+.socialLink {
+  transition: all .3s;
+  color: #6441a5;
+  text-decoration: none;
+  text-shadow: none;
+  border: solid;
+  border-radius: 1rem;
+  padding: 5px;
+  justify-content: center;
+  align-items: center;
+}
+.socialLink:hover {
+  color: #9b65ff;
+  text-shadow: 0px 0px 30px #9b65ff;
+}
 
+.twLogo {
+  width: 3vw;
+  height: 3vw;
+  top: 10px;
+  margin: auto;
+}
 
 #players {
     background: linear-gradient( #45B649, #45B649);
@@ -320,14 +361,14 @@ h1 {
     }
 @media only screen and (max-width: 1200px) { 
     img { 
-        width: 64px;
-        height: 64px;  
+        width: 48px;
+        height: 48px;  
     } 
     }
 @media only screen and (max-width: 480px) { 
     img { 
-    width: 64px;
-    height: 64px;  
+    width: 24px;
+    height: 24px;  
     } 
     }
 
@@ -383,6 +424,7 @@ h1 {
   letter-spacing: var(--ls);
   position: relative;
   z-index: 2;
+  overflow-x: hidden;
   overflow-y: hidden;
   background: var(--bg);
   margin: 0;
