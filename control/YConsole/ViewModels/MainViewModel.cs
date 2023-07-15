@@ -41,7 +41,7 @@ namespace YConsole.ViewModels
         private void OnPlayersWorkspaceCommandClick(object? ignorable)
         {
             Workspace = _playerWorkspaceViewModel;
-            _ = _playerWorkspaceViewModel.LoadDataAsync();
+            _playerWorkspaceViewModel.LoadDataAsync();
         }
 
         private void OnTokenCreateWorkspaceClick (object? ignorable)

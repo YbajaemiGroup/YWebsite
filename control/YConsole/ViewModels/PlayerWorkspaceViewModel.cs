@@ -37,20 +37,21 @@ namespace YConsole.ViewModels
             set
             {
                 chosenPlayer = value;
-                Id = chosenPlayer?.Id ?? 0;
-                Nickname = chosenPlayer?.NickName ?? DEFAULT_VALUE;
-                ImageName = chosenPlayer?.ImageName ?? DEFAULT_VALUE;
-                Description = chosenPlayer?.Description ?? DEFAULT_VALUE;
-                GroupNumber = chosenPlayer?.GroupNumber ?? 0;
-                Won = chosenPlayer?.Won ?? 0;
-                Lose = chosenPlayer?.Lose ?? 0;
-                Points = chosenPlayer?.Points ?? 0;
+                Id = chosenPlayer?.Id;
+                Nickname = chosenPlayer?.NickName;
+                ImageName = chosenPlayer?.ImageName;
+                Description = chosenPlayer?.Description;
+                GroupNumber = chosenPlayer?.GroupNumber;
+                Won = chosenPlayer?.Won;
+                Lose = chosenPlayer?.Lose;
+                Points = chosenPlayer?.Points;
+                OnPropertyChanged(nameof(ChosenPlayer));
             }
         }
 
-        public int Id
+        public int? Id
         {
-            get => ChosenPlayer?.Id ?? 0;
+            get => ChosenPlayer?.Id;
             set
             {
                 if (_saved)
@@ -63,7 +64,6 @@ namespace YConsole.ViewModels
                 }
                 if (ChosenPlayer == null)
                 {
-                    MessageBox.Show("Выберите игрока.");
                     return;
                 }
                 ChosenPlayer.Id = value;
@@ -73,7 +73,7 @@ namespace YConsole.ViewModels
 
         public string Nickname
         {
-            get => ChosenPlayer?.NickName ?? "??";
+            get => ChosenPlayer?.NickName;
             set
             {
                 if (_saved)
@@ -86,7 +86,6 @@ namespace YConsole.ViewModels
                 }
                 if (ChosenPlayer == null)
                 {
-                    MessageBox.Show("Выберите игрока.");
                     return;
                 }
                 ChosenPlayer.NickName = value;
@@ -107,9 +106,9 @@ namespace YConsole.ViewModels
             }
         }
 
-        public string ImageName
+        public string? ImageName
         {
-            get => ChosenPlayer?.ImageName ?? "??";
+            get => ChosenPlayer?.ImageName;
             set
             {
                 if (_saved)
@@ -122,7 +121,6 @@ namespace YConsole.ViewModels
                 }
                 if (ChosenPlayer == null)
                 {
-                    MessageBox.Show("Выберите игрока.");
                     return;
                 }
                 ChosenPlayer.ImageName = value;
@@ -131,9 +129,9 @@ namespace YConsole.ViewModels
             }
         }
 
-        public string Description
+        public string? Description
         {
-            get => ChosenPlayer?.Description ?? "??";
+            get => ChosenPlayer?.Description;
             set
             {
                 if (_saved)
@@ -146,7 +144,6 @@ namespace YConsole.ViewModels
                 }
                 if (ChosenPlayer == null)
                 {
-                    MessageBox.Show("Выберите игрока.");
                     return;
                 }
                 ChosenPlayer.Description = value;
@@ -154,9 +151,9 @@ namespace YConsole.ViewModels
             }
         }
 
-        public int GroupNumber
+        public int? GroupNumber
         {
-            get => ChosenPlayer?.GroupNumber ?? 0;
+            get => ChosenPlayer?.GroupNumber;
             set
             {
                 if (_saved)
@@ -168,7 +165,6 @@ namespace YConsole.ViewModels
                 }
                 if (ChosenPlayer == null)
                 {
-                    MessageBox.Show("Выберите игрока.");
                     return;
                 }
                 ChosenPlayer.GroupNumber = value;
@@ -176,9 +172,9 @@ namespace YConsole.ViewModels
             }
         }
 
-        public int Won
+        public int? Won
         {
-            get => ChosenPlayer?.Won ?? 0;
+            get => ChosenPlayer?.Won;
             set
             {
                 if (_saved)
@@ -190,7 +186,6 @@ namespace YConsole.ViewModels
                 }
                 if (ChosenPlayer == null)
                 {
-                    MessageBox.Show("Выберите игрока.");
                     return;
                 }
                 ChosenPlayer.Won = value;
@@ -198,9 +193,9 @@ namespace YConsole.ViewModels
             }
         }
 
-        public int Lose
+        public int? Lose
         {
-            get => ChosenPlayer?.Lose ?? 0;
+            get => ChosenPlayer?.Lose;
             set
             {
                 if (_saved)
@@ -212,7 +207,6 @@ namespace YConsole.ViewModels
                 }
                 if (ChosenPlayer == null)
                 {
-                    MessageBox.Show("Выберите игрока.");
                     return;
                 }
                 ChosenPlayer.Lose = value;
@@ -220,9 +214,9 @@ namespace YConsole.ViewModels
             }
         }
 
-        public int Points
+        public int? Points
         {
-            get => ChosenPlayer?.Points ?? 0;
+            get => ChosenPlayer?.Points;
             set
             {
                 if (_saved)
@@ -234,7 +228,6 @@ namespace YConsole.ViewModels
                 }
                 if (ChosenPlayer == null)
                 {
-                    MessageBox.Show("Выберите игрока.");
                     return;
                 }
                 ChosenPlayer.Points = value;
