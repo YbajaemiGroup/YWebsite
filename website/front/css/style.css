@@ -230,6 +230,19 @@ h1 {
   background-image: url('/images/adges3.jpg');
 }
 
+.noBgButt { 
+  background-color: rgba(0, 0, 0, 0);
+  border: 0;
+  font-size: 1.5vw;
+  -webkit-transition: all .3s;
+  transition: all .3s;
+}
+.noBgButt:hover {
+  color:#73df06;
+}
+.noBgButt:active {
+  text-shadow: 1px 1px 35px rgb(194, 223, 6);
+}
 
 @media only screen and (max-width: 4096px) { 
     .sizingGroups {
