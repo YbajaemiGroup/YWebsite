@@ -127,7 +127,8 @@ namespace YConsole.ViewModels
             
             links = await _apiInteractor.GetAllLinksAsync();
 
-
+            UpdateLinksOfChosenPlayer();
+            OnPropertyChanged(nameof(LinksOfChosenPlayer));
 
             _ = Task.Run(() =>
             {
