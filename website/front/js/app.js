@@ -8,11 +8,12 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     let observer = new IntersectionObserver(navCheck, options);
-
+    
     function navCheck(entries) {
         try {
             entries.forEach(entry => {
                 const className = entry.target.className;
+                console.log(className);
                 const activeAnchor = document.querySelector(`[data-page=${className}]`);
                 // const gradientIndex = entry.target.getAttribute('data-index');
                 const coords = activeAnchor.getBoundingClientRect();
