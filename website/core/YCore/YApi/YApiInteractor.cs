@@ -31,6 +31,11 @@ namespace YApi
             await _client.PlayerDelete(playerId);
         }
 
+        public Task<List<Image>> GetImagesListAsync()
+        {
+            return _client.GetImagesList();
+        }
+
         public void DownloadImage(string imageName, string imagesDirectory)
         {
             using var dbImage = _client.GetImage(imageName, YApiModel.ImageType.Players).Result;

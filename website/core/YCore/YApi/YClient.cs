@@ -223,6 +223,13 @@ public class YClient
         return GetResponseData<Player>(response);
     }
 
+    public async Task<List<Image>> GetImagesList()
+    {
+        var response = await requestSender.SendRequestAsync("images.list");
+        CheckException(response);
+        return GetResponseData<List<Image>>(response);
+    }
+
     public async Task<Stream> GetImage(string imageName, ImageType imageType)
     {
         string imageTypeName = imageType switch
