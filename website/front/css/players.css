@@ -32,16 +32,39 @@
     /* это тоже самое, что grid-template-columns: 1fr 1fr 1fr 1fr; */
     grid-template-columns: repeat(4, 1fr);
     /* это тоже самое, что grid-template-rows: 300px 300px; */
-    grid-template-rows: repeat(4, 300px);
+    grid-template-rows: repeat(4, 230px);
 }
-
-@media only screen and (max-width: 800px) { 
+@media only screen and (max-width: 1450px) { 
     .players-grid {
         display: grid;
         align-items: center;
-        /* это тоже самое, что grid-template-columns: 1fr 1fr 1fr 1fr; */
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(6, 230px);
+    }
+    #players {
+        min-height: auto;
+    }
+}
+@media only screen and (max-width: 1100px) { 
+    .players-grid {
+        display: grid;
+        align-items: center;
         grid-template-columns: repeat(2, 1fr);
-        /* это тоже самое, что grid-template-rows: 300px 300px; */
-        grid-template-rows: repeat(8, 300px);
+        grid-template-rows: repeat(8, 230px);
+    }
+    #players {
+        min-height: auto;
+    }
+}
+
+@media only screen and (max-width: 750px) { 
+    .players-grid {
+        display: grid;
+        align-items: center;
+        grid-template-columns: repeat(1, 1fr);
+        grid-template-rows: repeat(16, 230px);
+    }
+    #players {
+        min-height: auto;
     }
 }

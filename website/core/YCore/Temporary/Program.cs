@@ -21,26 +21,3 @@ var inputGroups = new List<GroupFillData>()
             };
 
 Console.WriteLine(JsonSerializer.Serialize(inputGroups));
-
-client.GroupFillAsync(inputGroups).Wait();
-var players = client.PlayersGetAsync().Result;
-var player1 = players.First(p => p.Id == 1);
-var player2 = players.First(p => p.Id == 2);
-
-var groups = await client.GroupGetGamesAsync();
-
-Console.WriteLine("________________");
-
-foreach (var g in groups)
-{
-    Console.WriteLine();
-    Console.WriteLine($"Group {g.Group}");
-    Console.WriteLine($"PlayerId {g.PlayerId}");
-    Console.WriteLine();
-}
-
-Console.WriteLine(JsonSerializer.Serialize(groups));
-
-Console.WriteLine("________________");
-
-var group = groups.First(g => g.Group == player1.GroupNumber);
