@@ -74,9 +74,9 @@ namespace YApi
 
         public List<string> DownloadAllImages(string imageDirectory)
         {
-            var players = _client.PlayersGetAsync().Result;
+            var images = _client.GetImagesList().Result;
             var imagesNames = new List<string>();
-            foreach (var image in players.Select(p => p.ImageName))
+            foreach (var image in images.Select(i => i.ImageName))
             {
                 if (image != null)
                 {
@@ -89,8 +89,8 @@ namespace YApi
 
         public async IAsyncEnumerable<string> DownloadAllImagesAsync(string imageDirectory)
         {
-            var players = await _client.PlayersGetAsync();
-            foreach (var image in players.Select(p => p.ImageName))
+            var images = await _client.GetImagesList();
+            foreach (var image in images.Select(i => i.ImageName))
             {
                 if (image != null)
                 {

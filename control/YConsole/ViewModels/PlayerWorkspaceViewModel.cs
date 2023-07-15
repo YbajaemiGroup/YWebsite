@@ -13,8 +13,6 @@ namespace YConsole.ViewModels
 {
     public class PlayerWorkspaceViewModel : ViewModelBase, IDataLoadable
     {
-        private const string DEFAULT_VALUE = "??";
-
         #region Bindings
 
         private ObservableCollection<Player> players = new();
@@ -71,11 +69,16 @@ namespace YConsole.ViewModels
             }
         }
 
-        public string Nickname
+        public string? Nickname
         {
             get => ChosenPlayer?.NickName;
             set
             {
+                if (value == null)
+                {
+                    MessageBox.Show("Имя игрока не может быть пустым");
+                    return;
+                }
                 if (_saved)
                 {
                     if (value != ChosenPlayer?.NickName)
@@ -335,8 +338,7 @@ namespace YConsole.ViewModels
         {
             var imageDialogViewModel = _windowService.Show<ImageDialogViewModel>();
             imageDialogViewModel.OnImageUpdated += imageName => ImageName = imageName;
-            imageDialogViewModel.LoadData();
-            MessageBox.Show("Data loaded");
+            imageDialogViewModel.LoadDataAsync().ConfigureAwait(false);
         }
 
         private void OnIncreaseWinsButtonClick(object? ignorable)
