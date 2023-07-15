@@ -20,6 +20,7 @@ body {
     margin: 0;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    overflow-x: hidden;
 }
 html {
     scroll-behavior: smooth;
@@ -35,7 +36,54 @@ html {
 #playOff {
     /* background: linear-gradient(#34e89e, #0f3443); */
     background: black;
+    justify-content: left;
+    position: sticky;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
 }
+
+.containerT {
+  position: relative;
+  white-space: nowrap;
+  width: 90vw;
+  height: 90vh;
+  margin: 50px auto;
+  z-index: 2; 
+  overflow: auto;
+}
+
+@media only screen and (max-width: 1870px) { 
+  .scrollableContent {
+    white-space: nowrap;
+    width: 95%;
+    height: 95%;
+    padding: 10px;
+    overflow: auto;
+  }
+  /* Стили для скроллбара */
+  .containerT::-webkit-scrollbar {
+    width: 15px; /* Ширина скроллбара */
+  }
+  
+  .containerT::-webkit-scrollbar-track {
+    background: #000; /* Цвет фона трека */
+  }
+  
+  .containerT::-webkit-scrollbar-thumb {
+    background-color: #a7c958; /* Цвет полосы скроллбара */
+    border-radius: 15px; /* Закругление углов полосы скроллбара */
+    height: 10px;
+  }
+  
+  .containerT::-webkit-scrollbar-thumb:hover {
+    background-color: #809f39; /* Цвет полосы скроллбара при наведении */
+  }
+}
+
+
+
+
 
 #players {
     background: linear-gradient( #45B649, #45B649);
@@ -229,6 +277,7 @@ h1 {
   font-size: 1.5vw;
   -webkit-transition: all .3s;
   transition: all .3s;
+  cursor:pointer;
 }
 .noBgButt:hover {
   color:#73df06;
@@ -334,7 +383,7 @@ h1 {
   letter-spacing: var(--ls);
   position: relative;
   z-index: 2;
-  overflow: hidden;
+  overflow-y: hidden;
   background: var(--bg);
   margin: 0;
 }
