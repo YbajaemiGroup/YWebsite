@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Npgsql;
-using System.Data.Common;
+﻿using Npgsql;
 using YCore.API.IO.Exceptions;
 using YCore.Data;
 
@@ -52,13 +50,14 @@ namespace YCore.API.Handlers
                     }
                     if (player.Id == null)
                     {
-                        throw new NullReferenceException();
+                        continue;
                     }
                     processedPlayers.Add(db.UpdatePlayer(new YDatabase.Models.Player()
                     {
                         Id = player.Id.Value,
                         Nickname = player.NickName,
                         Descr = player.Description,
+                        ImageId = GetImage(player.ImageName, db)?.Id,
                         GroupNumber = player.GroupNumber,
                         Won = player.Won,
                         Lose = player.Lose,

@@ -1,46 +1,26 @@
-﻿using System.Globalization;
-using System.Text.Json;
-using Temporary;
+﻿using System.Text.Json;
 using YApi;
 using YApiModel.Models;
 
 var client = new YClient("token");
 
-var inputGroups = new List<GroupFillData>()
-            {
-                new()
-                {
-                    Group = 1,
-                    PlayerId = 1
-                },
-                new()
-                {
-                    Group = 1,
-                    PlayerId = 2
-                }
-            };
-
-Console.WriteLine(JsonSerializer.Serialize(inputGroups));
-
-client.GroupFillAsync(inputGroups).Wait();
-var players = client.PlayersGetAsync().Result;
-var player1 = players.First(p => p.Id == 1);
-var player2 = players.First(p => p.Id == 2);
-
-var groups = await client.GroupGetGamesAsync();
-
-Console.WriteLine("________________");
-
-foreach (var g in groups)
+var pl = await client.PlayersAddOrUpdateAsync(new()
 {
-    Console.WriteLine();
-    Console.WriteLine($"Group {g.Group}");
-    Console.WriteLine($"PlayerId {g.PlayerId}");
-    Console.WriteLine();
+    new Player("player123", "123")
+});
+
+foreach (var p in pl)
+{
+    Console.WriteLine(JsonSerializer.Serialize(p));
 }
+Console.ReadLine();
 
-Console.WriteLine(JsonSerializer.Serialize(groups));
+pl = await client.PlayersAddOrUpdateAsync(new()
+{
+    new Player("player123", "123", id: pl.First().Id, imageName: "img1.png")
+});
 
-Console.WriteLine("________________");
-
-var group = groups.First(g => g.Group == player1.GroupNumber);
+foreach (var p in pl)
+{
+    Console.WriteLine(JsonSerializer.Serialize(p));
+}
