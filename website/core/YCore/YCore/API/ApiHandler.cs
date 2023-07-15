@@ -14,6 +14,7 @@ namespace YCore.API
         public const string LINKS_ADD = "links.add";
         public const string LINKS_DELETE = "links.delete";
         public const string IMAGES_LOAD = "images.load";
+        public const string IMAGES_LIST = "images.list";
         public const string IMAGES_GET = "images.get";
         public const string GROUP_FILL = "group.fill";
         public const string GROUP_GET = "group.get";
@@ -31,6 +32,7 @@ namespace YCore.API
             LINKS_DELETE,
             LINKS_GET,
             IMAGES_GET,
+            IMAGES_LIST,
             IMAGES_LOAD,
             GROUP_FILL,
             GROUP_GET,
@@ -64,6 +66,7 @@ namespace YCore.API
                 LINKS_DELETE => new LinksDeleteHandlerFactory(context),
                 IMAGES_LOAD => new ImagesLoadHandlerFactory(context, configuration.ImagesLocation),
                 IMAGES_GET => new ImagesGetHandlerFactory(context, configuration.ImagesLocation, configuration.StaffImagesLocation),
+                IMAGES_LIST => new ImagesListHandlerFactory(context),
                 GROUP_FILL => new GroupFillHandlerFactory(context),
                 GROUP_GET => new GroupGetHandlerFactory(),
                 PLAYERS_ADD => new PlayersAddHandlerFactory(context),
