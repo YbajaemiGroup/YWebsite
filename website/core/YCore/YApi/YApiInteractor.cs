@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-using System.Diagnostics.Metrics;
-using YApiModel.Models;
+﻿using YApiModel.Models;
 
 namespace YApi
 {
@@ -18,14 +16,14 @@ namespace YApi
             return _client.PlayersGetAsync().Result;
         }
 
-        public async Task<List<Player>> GetAllPlayersAsync()
+        public Task<List<Player>> GetAllPlayersAsync()
         {
-            return await _client.PlayersGetAsync();
+            return _client.PlayersGetAsync();
         }
 
-        public async Task<List<Player>> UpdatePlayersAsync(List<Player> players)
+        public Task<List<Player>> UpdatePlayersAsync(List<Player> players)
         {
-            return await _client.PlayersAddOrUpdateAsync(players);
+            return _client.PlayersAddOrUpdateAsync(players);
         }
 
         public async Task DeletePlayer(int playerId)
@@ -36,19 +34,27 @@ namespace YApi
         public void DownloadImage(string imageName, string imagesDirectory)
         {
             using var dbImage = _client.GetImage(imageName, YApiModel.ImageType.Players).Result;
-            using var localImage = File.OpenWrite($"{imagesDirectory}\\{imageName}");
-            dbImage.CopyTo(localImage);
-            localImage.Flush();
-            dbImage.Flush();
+            string imagePath = $"{imagesDirectory}\\{imageName}";
+            if (!File.Exists(imagePath))
+            {
+                using var localImage = File.OpenWrite(imagePath);
+                dbImage.CopyTo(localImage);
+                localImage.Flush();
+                dbImage.Flush();
+            }
         }
 
         public async Task DownloadImageAsync(string imageName, string imagesDirectory)
         {
             using var dbImage = await _client.GetImage(imageName, YApiModel.ImageType.Players);
-            using var localImage = File.OpenWrite($"{imagesDirectory}\\{imageName}");
-            await dbImage.CopyToAsync(localImage);
-            await localImage.FlushAsync();
-            await dbImage.FlushAsync();
+            string imagePath = $"{imagesDirectory}\\{imageName}";
+            if (!File.Exists(imagePath))
+            {
+                using var localImage = File.OpenWrite(imagePath);
+                await dbImage.CopyToAsync(localImage);
+                await localImage.FlushAsync().ConfigureAwait(false);
+                await dbImage.FlushAsync().ConfigureAwait(false);
+            }
         }
 
         public async Task DownloadImageAsync(string imageName, Stream stream)
@@ -61,7 +67,7 @@ namespace YApi
             await dbImage.CopyToAsync(stream);
         }
 
-        public List<string> DownloadImages(string imageDirectory)
+        public List<string> DownloadAllImages(string imageDirectory)
         {
             var players = _client.PlayersGetAsync().Result;
             var imagesNames = new List<string>();

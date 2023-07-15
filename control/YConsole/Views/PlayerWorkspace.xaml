@@ -71,7 +71,7 @@
             <Button Content="Удалить" Margin="850,683,0,0" Style="{StaticResource DefaultButtonStyle}" Command="{Binding DeleteButton}" />
             <Button Content="Сохранить" Margin="1050,683,0,0" Style="{StaticResource DefaultButtonStyle}" Command="{Binding SaveButton}" />
         </Grid>
-        <ListView Grid.Column="0" ItemsSource="{Binding Players}" SelectedItem="{Binding ChosenPlayer}"
+        <ListView Grid.Column="0" ItemsSource="{Binding Players}" SelectedItem="{Binding ChosenPlayer, Mode=TwoWay}"
                   ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" d:ItemsSource="{d:SampleData ItemCount=5}">
             <ListView.View>
                 <GridView>

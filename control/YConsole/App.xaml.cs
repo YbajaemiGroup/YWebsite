@@ -35,9 +35,9 @@ namespace YConsole
 
                     services.AddSingleton<MainViewModel>();
                     services.AddSingleton<PlayerWorkspaceViewModel>();
-                    services.AddSingleton<ImageDialogViewModel>();
-                    services.AddSingleton<TokenCreateViewModel>();
-                    services.AddSingleton<TokenDeleteViewModel>();
+                    services.AddTransient<ImageDialogViewModel>();
+                    services.AddTransient<TokenCreateViewModel>();
+                    services.AddTransient<TokenDeleteViewModel>();
                 }).Build();
 
         protected override void OnStartup(StartupEventArgs e)

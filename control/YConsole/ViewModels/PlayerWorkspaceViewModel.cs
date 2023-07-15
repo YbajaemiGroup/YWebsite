@@ -37,7 +37,6 @@ namespace YConsole.ViewModels
             set
             {
                 chosenPlayer = value;
-                _saved = true;
                 Id = chosenPlayer?.Id ?? 0;
                 Nickname = chosenPlayer?.NickName ?? DEFAULT_VALUE;
                 ImageName = chosenPlayer?.ImageName ?? DEFAULT_VALUE;
@@ -264,13 +263,14 @@ namespace YConsole.ViewModels
 
         #endregion
 
-        private readonly YApiInteractor _apiInteractor;
+        private readonly IApiInteractor _apiInteractor;
         private bool _saved = true;
         private readonly IWindowService _windowService;
         private readonly IDialogService _dialogService;
+        private readonly IConfigInteractor _configInteractor;
         private readonly string _imagesPath;
 
-        public PlayerWorkspaceViewModel(YApiInteractor apiInteractor,
+        public PlayerWorkspaceViewModel(IApiInteractor apiInteractor,
                                         IWindowService windowService,
                                         IDialogService dialogService,
                                         IConfigInteractor configInteractor)
@@ -278,6 +278,7 @@ namespace YConsole.ViewModels
             _apiInteractor = apiInteractor;
             _windowService = windowService;
             _dialogService = dialogService;
+            _configInteractor = configInteractor;
             _imagesPath = configInteractor.GetImagesLocation();
             SaveButton = new(OnSaveButtonClick);
             DeleteButton = new(OnDeleteButtonClick);
@@ -301,6 +302,7 @@ namespace YConsole.ViewModels
             {
                 Players = new(await _apiInteractor.UpdatePlayersAsync(Players.ToList()));
                 _saved = true;
+                OnPropertyChanged(nameof(Status));
             }
             catch (Exception e)
             {
@@ -333,13 +335,15 @@ namespace YConsole.ViewModels
             Players.Add(newPlayer);
             ChosenPlayer = newPlayer;
             _saved = false;
+            OnPropertyChanged(nameof(Status));
         }
 
         private void OnChangeImageButtonClick(object? ignorable)
         {
-            ImageDialogViewModel imageDialogViewModel = new(_apiInteractor, _dialogService);
-            _ = imageDialogViewModel.LoadDataAsync();
-            _windowService.Show(imageDialogViewModel);
+            var imageDialogViewModel = _windowService.Show<ImageDialogViewModel>();
+            imageDialogViewModel.OnImageUpdated += imageName => ImageName = imageName;
+            imageDialogViewModel.LoadData();
+            MessageBox.Show("Data loaded");
         }
 
         private void OnIncreaseWinsButtonClick(object? ignorable)

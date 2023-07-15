@@ -1,11 +1,11 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using YApi;
-using YConsole.Model;
 using YConsole.Utillities;
 
 namespace YConsole.ViewModels.Dialogs
@@ -54,11 +54,11 @@ namespace YConsole.ViewModels.Dialogs
         #endregion
 
         public readonly string _imageSource;
-        private readonly YApiInteractor _apiInteractor;
+        private readonly IApiInteractor _apiInteractor;
         private readonly IDialogService _dialogService;
         public event Action<string>? OnImageUpdated;
 
-        public ImageDialogViewModel(YApiInteractor apiInteractor, IDialogService dialogService, IConfigInteractor configInteractor)
+        public ImageDialogViewModel(IApiInteractor apiInteractor, IDialogService dialogService, IConfigInteractor configInteractor)
         {
             _apiInteractor = apiInteractor;
             _dialogService = dialogService;
@@ -69,7 +69,7 @@ namespace YConsole.ViewModels.Dialogs
 
         public void LoadData()
         {
-            var images = _apiInteractor.DownloadImages(_imageSource);
+            var images = _apiInteractor.DownloadAllImages(_imageSource);
             foreach (var image in images)
             {
                 DatabaseImagesPaths.Add(new()
@@ -141,7 +141,10 @@ namespace YConsole.ViewModels.Dialogs
 
         private void OnSaveButtonClick(object? ignorable)
         {
-            
+            if (SelectedImage?.ImageName != null)
+            {
+                OnImageUpdated?.Invoke(SelectedImage.ImageName);
+            }
         }
 
         #endregion
