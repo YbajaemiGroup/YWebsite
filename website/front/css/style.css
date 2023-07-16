@@ -20,6 +20,7 @@ body {
     margin: 0;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    overflow: auto;
 }
 html {
     scroll-behavior: smooth;
@@ -35,6 +36,94 @@ html {
 #playOff {
     /* background: linear-gradient(#34e89e, #0f3443); */
     background: black;
+    justify-content: left;
+    position: sticky;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+}
+
+.containerT {
+  position: relative;
+  white-space: nowrap;
+  width: 90vw;
+  height: 90vh;
+  margin: 50px auto;
+  z-index: 2; 
+  overflow: auto;
+}
+
+@media only screen and (max-width: 1870px) { 
+  .scrollableContent {
+    white-space: nowrap;
+    width: 95%;
+    height: 95%;
+    padding: 10px;
+    overflow: auto;
+  }
+  /* Стили для скроллбара */
+  .containerT::-webkit-scrollbar {
+    width: 15px; /* Ширина скроллбара */
+  }
+  
+  .containerT::-webkit-scrollbar-track {
+    background: #000; /* Цвет фона трека */
+  }
+  
+  .containerT::-webkit-scrollbar-thumb {
+    background-color: #a7c958; /* Цвет полосы скроллбара */
+    border-radius: 15px; /* Закругление углов полосы скроллбара */
+    height: 10px;
+  }
+  
+  .containerT::-webkit-scrollbar-thumb:hover {
+    background-color: #809f39; /* Цвет полосы скроллбара при наведении */
+  }
+}
+
+
+.containerContacts {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  min-height: 20vh;
+  min-width: 65vw;
+}
+.contactsItem {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+.contactsLink {
+  text-decoration: none;
+  color: #fff;
+  font-family: 'Unbounded Medium';
+  font-size: 1.5vw;
+  margin-top: 15px;
+  margin-left: 40%;
+}
+
+.socialLink {
+  transition: all .3s;
+  color: #6441a5;
+  text-decoration: none;
+  text-shadow: none;
+  border: solid;
+  border-radius: 1rem;
+  padding: 5px;
+  justify-content: center;
+  align-items: center;
+}
+.socialLink:hover {
+  color: #9b65ff;
+  text-shadow: 0px 0px 30px #9b65ff;
+}
+
+.twLogo {
+  width: 3vw;
+  height: 3vw;
+  top: 10px;
+  margin: auto;
 }
 
 #players {
@@ -42,13 +131,6 @@ html {
 }
 #contacts {
     background: #000000;
-}
-
-.players {
-
-  padding: 4rem 2rem;
-
-
 }
 .card-img-container {
   height: fit-content;
@@ -220,6 +302,19 @@ h1 {
   padding: 40px;
 }
 
+.contacts-div {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.content-contacts {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
 .groupStage-1:nth-of-type(1) {
   background-image: url('/images/adges1.jpg');
 }
@@ -230,6 +325,20 @@ h1 {
   background-image: url('/images/adges3.jpg');
 }
 
+.noBgButt { 
+  background-color: rgba(0, 0, 0, 0);
+  border: 0;
+  font-size: 1.5vw;
+  -webkit-transition: all .3s;
+  transition: all .3s;
+  cursor:pointer;
+}
+.noBgButt:hover {
+  color:#73df06;
+}
+.noBgButt:active {
+  text-shadow: 1px 1px 35px rgb(194, 223, 6);
+}
 
 @media only screen and (max-width: 4096px) { 
     .sizingGroups {
@@ -265,14 +374,14 @@ h1 {
     }
 @media only screen and (max-width: 1200px) { 
     img { 
-        width: 64px;
-        height: 64px;  
+        width: 48px;
+        height: 48px;  
     } 
     }
 @media only screen and (max-width: 480px) { 
     img { 
-    width: 64px;
-    height: 64px;  
+    width: 24px;
+    height: 24px;  
     } 
     }
 
@@ -328,7 +437,8 @@ h1 {
   letter-spacing: var(--ls);
   position: relative;
   z-index: 2;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: hidden;
   background: var(--bg);
   margin: 0;
 }
