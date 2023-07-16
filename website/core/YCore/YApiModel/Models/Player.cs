@@ -59,9 +59,4 @@ public class Player
         }
         return false;
     }
-
-    public override int GetHashCode()
-    {
-        return HashCode.Combine(Id, NickName, ImageName, Description, GroupNumber, Won, Lose, Points);
-    }
 }

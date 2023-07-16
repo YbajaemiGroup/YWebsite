@@ -59,7 +59,6 @@ namespace YCoreTests.Tests
             Assert.Equal(player.NickName, dbPlayer.NickName);
             Assert.Equal(player.Description, dbPlayer.Description);
             dbPlayer.Won = 100;
-            dbPlayer.ImageName = "image2.png";
             dbPlayer.Lose = 100;
             dbPlayer.Description = "some kind of a new description";
             dbPlayer = client.PlayersAddOrUpdateAsync(new() { dbPlayer }).Result.First();

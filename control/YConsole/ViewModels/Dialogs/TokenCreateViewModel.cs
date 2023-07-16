@@ -1,8 +1,4 @@
-﻿using System.Diagnostics;
-using System.Runtime.CompilerServices;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Threading.Tasks;
 using YApi;
 using YConsole.Utillities;
 
@@ -39,9 +35,9 @@ public class TokenCreateViewModel : ViewModelBase
 
     public RelayCommand CreateTokenButton { get; private set; }
 
-    private readonly YApiInteractor _apiInteractor;
+    private readonly IApiInteractor _apiInteractor;
 
-    public TokenCreateViewModel(YApiInteractor apiInteractor)
+    public TokenCreateViewModel(IApiInteractor apiInteractor)
     {
         _apiInteractor = apiInteractor;
         CreateTokenButton = new(OnCreateTokenButtonClick);

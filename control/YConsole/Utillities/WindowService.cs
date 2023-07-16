@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows;
 
 namespace YConsole.Utillities;
@@ -22,7 +23,7 @@ class WindowService : IWindowService
         _serviceProvider = serviceProvider;
     }
 
-    public void Show<IViewModel>() where IViewModel : ViewModelBase
+    public IViewModel Show<IViewModel>() where IViewModel : ViewModelBase
     {
         var viewType = _mappings[typeof(IViewModel)];
         if (viewType == null)
@@ -35,14 +36,16 @@ class WindowService : IWindowService
             throw new TypeUnloadedException($"No service loaded for {viewType}");
         }
         var windowViewModel = _serviceProvider.GetService(typeof(IViewModel));
-        if (windowViewModel == null)
+        if (windowViewModel is null or not ViewModelBase)
         {
-            throw new TypeUnloadedException($"No View setted for this IViewModel ({typeof(IViewModel).FullName}).");
+            throw new TypeUnloadedException($"No View setted for this IViewModel ({typeof(IViewModel).FullName}). " +
+                $"Or binding does not realising ViewModelBase");
         }
         if (view is Window window)
         {
             window.DataContext = windowViewModel;
             window.Show();
+            return (IViewModel)windowViewModel;
         }
         else
         {

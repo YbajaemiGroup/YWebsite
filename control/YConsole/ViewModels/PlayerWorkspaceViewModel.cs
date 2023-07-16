@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -12,8 +13,6 @@ namespace YConsole.ViewModels
 {
     public class PlayerWorkspaceViewModel : ViewModelBase, IDataLoadable
     {
-        private const string DEFAULT_VALUE = "??";
-
         #region Bindings
 
         private ObservableCollection<Player> players = new();
@@ -36,21 +35,21 @@ namespace YConsole.ViewModels
             set
             {
                 chosenPlayer = value;
-                _saved = true;
-                Id = chosenPlayer?.Id ?? 0;
-                Nickname = chosenPlayer?.NickName ?? DEFAULT_VALUE;
-                ImageName = chosenPlayer?.ImageName ?? DEFAULT_VALUE;
-                Description = chosenPlayer?.Description ?? DEFAULT_VALUE;
-                GroupNumber = chosenPlayer?.GroupNumber ?? 0;
-                Won = chosenPlayer?.Won ?? 0;
-                Lose = chosenPlayer?.Lose ?? 0;
-                Points = chosenPlayer?.Points ?? 0;
+                Id = chosenPlayer?.Id;
+                Nickname = chosenPlayer?.NickName;
+                ImageName = chosenPlayer?.ImageName;
+                Description = chosenPlayer?.Description;
+                GroupNumber = chosenPlayer?.GroupNumber;
+                Won = chosenPlayer?.Won;
+                Lose = chosenPlayer?.Lose;
+                Points = chosenPlayer?.Points;
+                OnPropertyChanged(nameof(ChosenPlayer));
             }
         }
 
-        public int Id
+        public int? Id
         {
-            get => ChosenPlayer?.Id ?? 0;
+            get => ChosenPlayer?.Id;
             set
             {
                 if (_saved)
@@ -63,7 +62,6 @@ namespace YConsole.ViewModels
                 }
                 if (ChosenPlayer == null)
                 {
-                    MessageBox.Show("Выберите игрока.");
                     return;
                 }
                 ChosenPlayer.Id = value;
@@ -71,11 +69,16 @@ namespace YConsole.ViewModels
             }
         }
 
-        public string Nickname
+        public string? Nickname
         {
-            get => ChosenPlayer?.NickName ?? "??";
+            get => ChosenPlayer?.NickName;
             set
             {
+                if (value == null)
+                {
+                    MessageBox.Show("Имя игрока не может быть пустым");
+                    return;
+                }
                 if (_saved)
                 {
                     if (value != ChosenPlayer?.NickName)
@@ -86,7 +89,6 @@ namespace YConsole.ViewModels
                 }
                 if (ChosenPlayer == null)
                 {
-                    MessageBox.Show("Выберите игрока.");
                     return;
                 }
                 ChosenPlayer.NickName = value;
@@ -94,9 +96,22 @@ namespace YConsole.ViewModels
             }
         }
 
-        public string ImageName
+        public string? SelectedImagePath
         {
-            get => ChosenPlayer?.ImageName ?? "??";
+            get
+            {
+                string fullName = $"{_imagesPath}\\{ImageName}";
+                if (string.IsNullOrEmpty(ImageName) || !File.Exists(fullName))
+                {
+                    return null;
+                }
+                return fullName;
+            }
+        }
+
+        public string? ImageName
+        {
+            get => ChosenPlayer?.ImageName;
             set
             {
                 if (_saved)
@@ -109,17 +124,17 @@ namespace YConsole.ViewModels
                 }
                 if (ChosenPlayer == null)
                 {
-                    MessageBox.Show("Выберите игрока.");
                     return;
                 }
                 ChosenPlayer.ImageName = value;
                 OnPropertyChanged(nameof(ImageName));
+                OnPropertyChanged(nameof(SelectedImagePath));
             }
         }
 
-        public string Description
+        public string? Description
         {
-            get => ChosenPlayer?.Description ?? "??";
+            get => ChosenPlayer?.Description;
             set
             {
                 if (_saved)
@@ -132,7 +147,6 @@ namespace YConsole.ViewModels
                 }
                 if (ChosenPlayer == null)
                 {
-                    MessageBox.Show("Выберите игрока.");
                     return;
                 }
                 ChosenPlayer.Description = value;
@@ -140,9 +154,9 @@ namespace YConsole.ViewModels
             }
         }
 
-        public int GroupNumber
+        public int? GroupNumber
         {
-            get => ChosenPlayer?.GroupNumber ?? 0;
+            get => ChosenPlayer?.GroupNumber;
             set
             {
                 if (_saved)
@@ -154,7 +168,6 @@ namespace YConsole.ViewModels
                 }
                 if (ChosenPlayer == null)
                 {
-                    MessageBox.Show("Выберите игрока.");
                     return;
                 }
                 ChosenPlayer.GroupNumber = value;
@@ -162,9 +175,9 @@ namespace YConsole.ViewModels
             }
         }
 
-        public int Won
+        public int? Won
         {
-            get => ChosenPlayer?.Won ?? 0;
+            get => ChosenPlayer?.Won;
             set
             {
                 if (_saved)
@@ -176,7 +189,6 @@ namespace YConsole.ViewModels
                 }
                 if (ChosenPlayer == null)
                 {
-                    MessageBox.Show("Выберите игрока.");
                     return;
                 }
                 ChosenPlayer.Won = value;
@@ -184,9 +196,9 @@ namespace YConsole.ViewModels
             }
         }
 
-        public int Lose
+        public int? Lose
         {
-            get => ChosenPlayer?.Lose ?? 0;
+            get => ChosenPlayer?.Lose;
             set
             {
                 if (_saved)
@@ -198,7 +210,6 @@ namespace YConsole.ViewModels
                 }
                 if (ChosenPlayer == null)
                 {
-                    MessageBox.Show("Выберите игрока.");
                     return;
                 }
                 ChosenPlayer.Lose = value;
@@ -206,9 +217,9 @@ namespace YConsole.ViewModels
             }
         }
 
-        public int Points
+        public int? Points
         {
-            get => ChosenPlayer?.Points ?? 0;
+            get => ChosenPlayer?.Points;
             set
             {
                 if (_saved)
@@ -220,7 +231,6 @@ namespace YConsole.ViewModels
                 }
                 if (ChosenPlayer == null)
                 {
-                    MessageBox.Show("Выберите игрока.");
                     return;
                 }
                 ChosenPlayer.Points = value;
@@ -249,16 +259,23 @@ namespace YConsole.ViewModels
 
         #endregion
 
-        private readonly YApiInteractor _apiInteractor;
+        private readonly IApiInteractor _apiInteractor;
         private bool _saved = true;
         private readonly IWindowService _windowService;
         private readonly IDialogService _dialogService;
+        private readonly IConfigInteractor _configInteractor;
+        private readonly string _imagesPath;
 
-        public PlayerWorkspaceViewModel(YApiInteractor apiInteractor, IWindowService windowService, IDialogService dialogService)
+        public PlayerWorkspaceViewModel(IApiInteractor apiInteractor,
+                                        IWindowService windowService,
+                                        IDialogService dialogService,
+                                        IConfigInteractor configInteractor)
         {
             _apiInteractor = apiInteractor;
             _windowService = windowService;
             _dialogService = dialogService;
+            _configInteractor = configInteractor;
+            _imagesPath = configInteractor.GetImagesLocation();
             SaveButton = new(OnSaveButtonClick);
             DeleteButton = new(OnDeleteButtonClick);
             CreateButton = new(OnCreateButtonClick);
@@ -281,6 +298,7 @@ namespace YConsole.ViewModels
             {
                 Players = new(await _apiInteractor.UpdatePlayersAsync(Players.ToList()));
                 _saved = true;
+                OnPropertyChanged(nameof(Status));
             }
             catch (Exception e)
             {
@@ -313,13 +331,14 @@ namespace YConsole.ViewModels
             Players.Add(newPlayer);
             ChosenPlayer = newPlayer;
             _saved = false;
+            OnPropertyChanged(nameof(Status));
         }
 
         private void OnChangeImageButtonClick(object? ignorable)
         {
-            ImageDialogViewModel imageDialogViewModel = new(_apiInteractor, _dialogService);
+            var imageDialogViewModel = _windowService.Show<ImageDialogViewModel>();
+            imageDialogViewModel.OnImageUpdated += imageName => ImageName = imageName;
             _ = imageDialogViewModel.LoadDataAsync();
-            _windowService.Show(imageDialogViewModel);
         }
 
         private void OnIncreaseWinsButtonClick(object? ignorable)
