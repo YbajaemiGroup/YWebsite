@@ -28,7 +28,7 @@ internal class RequestSender
     /// <exception cref="HttpRequestException"></exception>
     /// <exception cref="TaskCanceledException"></exception>
     /// <exception cref="Exception"></exception>
-    public async Task<Stream> DownloadImageAsync(string method, HttpParameters parameters)
+    public async Task<Stream?> DownloadImageAsync(string method, HttpParameters parameters)
     {
         using var message = new HttpRequestMessage();
         message.RequestUri = new(parameters == null ? _url : GetUrlWithParameters(method, parameters));

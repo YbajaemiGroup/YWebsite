@@ -34,32 +34,32 @@
             <ColumnDefinition Width="1380*"/>
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="1" Background="White">
-            <TextBlock Text="Ник:" Margin="45,40,0,0" Style="{StaticResource ParameterLabel}"></TextBlock>
-            <TextBlock Text="Фото:" Margin="45,70,0,0" Style="{StaticResource ParameterLabel}"></TextBlock>
+            <TextBlock Text="Ник:" Margin="45,48,0,0" Style="{StaticResource ParameterLabel}"></TextBlock>
+            <TextBlock Text="Фото:" Margin="45,78,0,0" Style="{StaticResource ParameterLabel}"></TextBlock>
 
-            <Image Height="120" Width="120" Margin="45,100,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Source="{Binding SelectedImagePath, TargetNullValue={x:Null}}" />
-            <Button Content="Изменить" Margin="45,235,0,0" Style="{StaticResource DefaultButtonStyle}" Command="{Binding ChangeImageButton}" />
+            <Image Height="240" Width="426" Margin="45,113,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Source="{Binding SelectedImagePath, TargetNullValue={x:Null}}" />
+            <Button Content="Изменить" Margin="45,440,0,0" Style="{StaticResource DefaultButtonStyle}" Command="{Binding ChangeImageButton}" />
 
-            <TextBlock Text="Описание:" Margin="45,280,0,0" Style="{StaticResource ParameterLabel}"></TextBlock>
+            <TextBlock Text="Описание:" Margin="45,485,0,0" Style="{StaticResource ParameterLabel}"></TextBlock>
 
-            <TextBlock Text="Группа:" Margin="45,400,0,0" Style="{StaticResource ParameterLabel}"></TextBlock>
-            <TextBlock Text="Побед:" Margin="45,430,0,0" Style="{StaticResource ParameterLabel}"></TextBlock>
-            <Button Margin="460,430,0,0" x:Name="IncreaseWins" Style="{StaticResource EncreaseDecreaseButton}" Content="+" Command="{Binding IncreaseWinsButton}" />
-            <Button Margin="490,430,0,0" x:Name="DecreaseWins" Style="{StaticResource EncreaseDecreaseButton}" Content="-" Command="{Binding DecreaseWinsButton}" />
-            <TextBlock Text="Поражений:" Margin="45,460,0,0" Style="{StaticResource ParameterLabel}"></TextBlock>
-            <Button Margin="460,460,0,0" x:Name="IncreaseLoses" Style="{StaticResource EncreaseDecreaseButton}" Content="+" Command="{Binding IncreaseLosesButton}" />
-            <Button Margin="490,460,0,0" x:Name="DecreaseLoses" Style="{StaticResource EncreaseDecreaseButton}" Content="-" Command="{Binding DecreaseLosesButton}" />
-            <TextBlock Text="Счет:" Margin="45,490,0,0" Style="{StaticResource ParameterLabel}"></TextBlock>
-            <Button Margin="460,490,0,0" x:Name="IncreasePoints" Style="{StaticResource EncreaseDecreaseButton}" Content="+" Command="{Binding IncreasePointsButton}" />
-            <Button Margin="490,490,0,0" x:Name="DecreasePoints" Style="{StaticResource EncreaseDecreaseButton}" Content="-" Command="{Binding DecreasePointsButton}" />
+            <TextBlock Text="Группа:" Margin="45,605,0,0" Style="{StaticResource ParameterLabel}"></TextBlock>
+            <TextBlock Text="Побед:" Margin="45,635,0,0" Style="{StaticResource ParameterLabel}"></TextBlock>
+            <Button Margin="460,635,0,0" x:Name="IncreaseWins" Style="{StaticResource EncreaseDecreaseButton}" Content="+" Command="{Binding IncreaseWinsButton}" />
+            <Button Margin="490,635,0,0" x:Name="DecreaseWins" Style="{StaticResource EncreaseDecreaseButton}" Content="-" Command="{Binding DecreaseWinsButton}" />
+            <TextBlock Text="Поражений:" Margin="45,665,0,0" Style="{StaticResource ParameterLabel}"></TextBlock>
+            <Button Margin="460,665,0,0" x:Name="IncreaseLoses" Style="{StaticResource EncreaseDecreaseButton}" Content="+" Command="{Binding IncreaseLosesButton}" />
+            <Button Margin="490,665,0,0" x:Name="DecreaseLoses" Style="{StaticResource EncreaseDecreaseButton}" Content="-" Command="{Binding DecreaseLosesButton}" />
+            <TextBlock Text="Счет:" Margin="45,695,0,0" Style="{StaticResource ParameterLabel}"></TextBlock>
+            <Button Margin="460,695,0,0" x:Name="IncreasePoints" Style="{StaticResource EncreaseDecreaseButton}" Content="+" Command="{Binding IncreasePointsButton}" />
+            <Button Margin="490,695,0,0" x:Name="DecreasePoints" Style="{StaticResource EncreaseDecreaseButton}" Content="-" Command="{Binding DecreasePointsButton}" />
 
-            <TextBox x:Name="NicknameTextBox" Margin="175,40,0,0" Style="{StaticResource ParameterValue}" Text="{Binding Nickname}"></TextBox>
+            <TextBox x:Name="NicknameTextBox" Margin="175,48,0,0" Style="{StaticResource ParameterValue}" Text="{Binding Nickname}"></TextBox>
             <TextBlock Margin="175,70,0,0" Style="{StaticResource ParameterLabel}" Text="{Binding ImageName}"></TextBlock>
-            <TextBox x:Name="DescriptionTextBox" Margin="45,310,0,0" Height="70" Style="{StaticResource ParameterValue}" Text="{Binding Description}" Width="380"></TextBox>
-            <TextBox x:Name="GroupTextBox" Margin="175,400,0,0" Style="{StaticResource ParameterValue}" Text="{Binding GroupNumber}"></TextBox>
-            <TextBox x:Name="WinTextBox" Margin="175,430,0,0" Style="{StaticResource ParameterValue}" Text="{Binding Won}"></TextBox>
-            <TextBox x:Name="LoseTextBox" Margin="175,460,0,0" Style="{StaticResource ParameterValue}" Text="{Binding Lose}"></TextBox>
-            <TextBox x:Name="ScoreTextBox" Margin="175,490,0,0" Style="{StaticResource ParameterValue}" Text="{Binding Points}"></TextBox>
+            <TextBox x:Name="DescriptionTextBox" Margin="45,515,0,0" Height="70" Style="{StaticResource ParameterValue}" Text="{Binding Description}" Width="380"></TextBox>
+            <TextBox x:Name="GroupTextBox" Margin="175,605,0,0" Style="{StaticResource ParameterValue}" Text="{Binding GroupNumber}"></TextBox>
+            <TextBox x:Name="WinTextBox" Margin="175,635,0,0" Style="{StaticResource ParameterValue}" Text="{Binding Won}"></TextBox>
+            <TextBox x:Name="LoseTextBox" Margin="175,665,0,0" Style="{StaticResource ParameterValue}" Text="{Binding Lose}"></TextBox>
+            <TextBox x:Name="ScoreTextBox" Margin="175,695,0,0" Style="{StaticResource ParameterValue}" Text="{Binding Points}"></TextBox>
 
             <TextBlock Text="Количество игроков:" Width="150" Height="15" Margin="650,40,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"></TextBlock>
             <TextBlock Text="Статус:" Width="150" Height="15" Margin="650,70,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"></TextBlock>

@@ -114,28 +114,49 @@ namespace YConsole.ViewModels.Dialogs
                 {
                     return;
                 }
-                File.Delete($"{_imageSource}\\{fileName}");
+                try
+                {
+                    File.Delete($"{_imageSource}\\{fileName}");
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Невозможно удалить файл. Попробуйте сделайть это вручную.");
+                    return;
+                }
             }
-            var image = File.OpenRead(openFileDialog.FileName);
-            if (image == null)
-            {
-                MessageBox.Show($"Невозможно прочитать файл {openFileDialog.FileName}.");
-                return;
-            }
-            var loadingImageToServer = _apiInteractor.LoadImageToServerAsync(fileName, image);
             try
             {
-                File.Copy(openFileDialog.FileName, $"{_imageSource}\\{fileName}");
+                var image = File.OpenRead(openFileDialog.FileName);
+                if (image == null)
+                {
+                    MessageBox.Show($"Невозможно прочитать файл {openFileDialog.FileName}.");
+                    return;
+                }
+                var loadingImageToServer = _apiInteractor.LoadImageToServerAsync(fileName, image);
+                try
+                {
+                    File.Copy(openFileDialog.FileName, $"{_imageSource}\\{fileName}");
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show($"Произошла ошибка при перемещении файла {fileName} в локальную папку с изображениями.");
+                    return;
+                }
+                await loadingImageToServer;
+                if (!loadingImageToServer.IsCompletedSuccessfully)
+                {
+                    MessageBox.Show(loadingImageToServer.Exception?.Message);
+                }
+                DatabaseImagesPaths.Add(new()
+                {
+                    ImageName = openFileDialog.FileName.Split('\\')[^1],
+                    ImagePath = openFileDialog.FileName
+                });
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                MessageBox.Show($"Произошла ошибка при перемещении файла {fileName} в локальную папку с изображениями.");
+                MessageBox.Show($"Произошла ошибка. {e.Message}");
                 return;
-            }
-            await loadingImageToServer;
-            if (!loadingImageToServer.IsCompletedSuccessfully)
-            {
-                MessageBox.Show(loadingImageToServer.Exception?.Message);
             }
         }
 

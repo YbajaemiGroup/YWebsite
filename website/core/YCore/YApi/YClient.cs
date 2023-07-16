@@ -230,7 +230,7 @@ public class YClient
         return GetResponseData<List<Image>>(response);
     }
 
-    public async Task<Stream> GetImage(string imageName, ImageType imageType)
+    public async Task<Stream?> GetImage(string imageName, ImageType imageType)
     {
         string imageTypeName = imageType switch
         {

@@ -38,10 +38,10 @@ namespace YConsole.ViewModels
 
         #region Command handlers
 
-        private void OnPlayersWorkspaceCommandClick(object? ignorable)
+        private async void OnPlayersWorkspaceCommandClick(object? ignorable)
         {
             Workspace = _playerWorkspaceViewModel;
-            _playerWorkspaceViewModel.LoadDataAsync();
+            await _playerWorkspaceViewModel.LoadDataAsync();
         }
 
         private void OnTokenCreateWorkspaceClick (object? ignorable)

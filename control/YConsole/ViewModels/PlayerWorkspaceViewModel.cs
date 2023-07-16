@@ -338,7 +338,7 @@ namespace YConsole.ViewModels
         {
             var imageDialogViewModel = _windowService.Show<ImageDialogViewModel>();
             imageDialogViewModel.OnImageUpdated += imageName => ImageName = imageName;
-            imageDialogViewModel.LoadDataAsync().ConfigureAwait(false);
+            _ = imageDialogViewModel.LoadDataAsync();
         }
 
         private void OnIncreaseWinsButtonClick(object? ignorable)

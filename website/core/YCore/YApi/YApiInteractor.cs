@@ -1,4 +1,5 @@
-﻿using YApiModel.Models;
+﻿using System.Diagnostics;
+using YApiModel.Models;
 
 namespace YApi
 {
@@ -39,6 +40,10 @@ namespace YApi
         public void DownloadImage(string imageName, string imagesDirectory)
         {
             using var dbImage = _client.GetImage(imageName, YApiModel.ImageType.Players).Result;
+            if (dbImage == null)
+            {
+                throw new NullReferenceException("dbImage was null");
+            }
             string imagePath = $"{imagesDirectory}\\{imageName}";
             if (!File.Exists(imagePath))
             {
@@ -52,6 +57,10 @@ namespace YApi
         public async Task DownloadImageAsync(string imageName, string imagesDirectory)
         {
             using var dbImage = await _client.GetImage(imageName, YApiModel.ImageType.Players);
+            if (dbImage == null)
+            {
+                throw new NullReferenceException("No image found in database.");
+            }
             string imagePath = $"{imagesDirectory}\\{imageName}";
             if (!File.Exists(imagePath))
             {
@@ -69,6 +78,10 @@ namespace YApi
                 throw new ArgumentException("Can't write to stream.", nameof(stream));
             }
             using var dbImage = await _client.GetImage(imageName, YApiModel.ImageType.Players);
+            if (dbImage == null)
+            {
+                throw new NullReferenceException("No image found in database.");
+            }
             await dbImage.CopyToAsync(stream);
         }
 
@@ -80,7 +93,14 @@ namespace YApi
             {
                 if (image != null)
                 {
-                    DownloadImage(image, imageDirectory);
+                    try
+                    {
+                        DownloadImage(image, imageDirectory);
+                    }
+                    catch (NullReferenceException)
+                    {
+                        continue;
+                    }
                     imagesNames.Add(image);
                 }
             }
@@ -94,7 +114,14 @@ namespace YApi
             {
                 if (image != null)
                 {
-                    await DownloadImageAsync(image, imageDirectory);
+                    try
+                    {
+                        await DownloadImageAsync(image, imageDirectory);
+                    }
+                    catch (Exception)
+                    {
+                        continue;
+                    }
                     yield return image;
                 }
             }
