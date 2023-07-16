@@ -28,6 +28,7 @@ namespace YConsole
                     services.AddSingleton<MainWindow>();
                     services.AddSingleton<PlayerWorkspace>();
                     services.AddSingleton<LinkWorkspace>();
+                    services.AddSingleton<GroupsWorkspace>();
                     services.AddTransient<ImagesDialogWindow>();
                     services.AddTransient<CreateTokenWindow>();
                     services.AddTransient<DeleteTokenWindow>();
@@ -37,6 +38,7 @@ namespace YConsole
                     services.AddSingleton<MainViewModel>();
                     services.AddSingleton<PlayerWorkspaceViewModel>();
                     services.AddSingleton<LinkWorkspaceViewModel>();
+                    services.AddSingleton<GroupsWorkspaceViewModel>();
                     services.AddTransient<ImageDialogViewModel>();
                     services.AddTransient<TokenCreateViewModel>();
                     services.AddTransient<TokenDeleteViewModel>();

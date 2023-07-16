@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace YConsole.Utillities;
+namespace YConsole.ViewModels;
 
 public class RelayCommand : ICommand
 {

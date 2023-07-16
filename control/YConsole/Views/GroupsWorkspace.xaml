@@ -1,0 +1,83 @@
+﻿<Window x:Class="YConsole.Views.GroupsWorkspace"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="GroupsWorkspace" Height="450" Width="800"
+        DataContext="{Binding GroupsWorkspaceViewModel, Mode=OneWay, Source={StaticResource Locator}}">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.3*" />
+            <ColumnDefinition Width="0.4*" />
+            <ColumnDefinition Width="0.3*" />
+        </Grid.ColumnDefinitions>
+        <TreeView Grid.Column="0">
+            <TextBlock Text="Группы" />
+            <TreeViewItem Header="Группа A" ItemsSource="{Binding GroupAPlayers}" />
+            <TreeViewItem Header="Группа B" ItemsSource="{Binding GroupBPlayers}" />
+            <TreeViewItem Header="Группа C" ItemsSource="{Binding GroupCPlayers}" />
+            <TreeViewItem Header="Группа D" ItemsSource="{Binding GroupDPlayers}" />
+        </TreeView>
+        <StackPanel Grid.Column="1">
+            <TextBlock Text="Нераспределенные игроки:" />
+            <ListView Height="420" ItemsSource="{Binding UnallocatedPlayers, Mode=OneWay}" SelectedItem="{Binding SelectedUnallocatedPlayer}" d:ItemsSource="{d:SampleData ItemCount=5}">
+                <ListBox.ContextMenu>
+                    <ContextMenu>
+                        <TextBlock Text="{Binding SelectedUnallocatedPlayer.NickName, Mode=OneWay}" />
+                        <Button Content="Добавить в группу А" Command="{Binding AddPlayerToGroupAButton}" />
+                        <Button Content="Добавить в группу B" Command="{Binding AddPlayerToGroupBButton}" />
+                        <Button Content="Добавить в группу C" Command="{Binding AddPlayerToGroupCButton}" />
+                        <Button Content="Добавить в группу D" Command="{Binding AddPlayerToGroupDButton}" />
+                    </ContextMenu>
+                </ListBox.ContextMenu>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="NickName" Width="165" DisplayMemberBinding="{Binding NickName}" />
+                        <GridViewColumn Header="Won" Width="45" DisplayMemberBinding="{Binding Won}" />
+                        <GridViewColumn Header="Lose" Width="50" DisplayMemberBinding="{Binding Lose}" />
+                        <GridViewColumn Header="Points" Width="50" DisplayMemberBinding="{Binding Points}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </StackPanel>
+        <StackPanel Grid.Column="2">
+            <StackPanel.Resources>
+                <Style x:Key="ValueStyle" TargetType="TextBlock">
+                    <Setter Property="HorizontalAlignment" Value="Right" />
+                    <Setter Property="TextAlignment" Value="Center" />
+                    <Setter Property="Margin" Value="0,5,15,0" />
+                </Style>
+                <Style x:Key="ValueNameStyle" TargetType="TextBlock">
+                    <Setter Property="HorizontalAlignment" Value="Left" />
+                    <Setter Property="TextAlignment" Value="Center" />
+                    <Setter Property="Margin" Value="15,5,0,0" />
+                </Style>
+            </StackPanel.Resources>
+            <TextBlock Text="Количество игроков:" Margin="10" />
+            <Grid>
+                <TextBlock Text="Группа A" Style="{StaticResource ValueNameStyle}" />
+                <TextBlock Text="{Binding GroupASize}" Style="{StaticResource ValueStyle}" />
+            </Grid>
+            <Grid>
+                <TextBlock Text="Группа B" Style="{StaticResource ValueNameStyle}" />
+                <TextBlock Text="{Binding GroupBSize}" Style="{StaticResource ValueStyle}" />
+            </Grid>
+            <Grid>
+                <TextBlock Text="Группа C" Style="{StaticResource ValueNameStyle}" />
+                <TextBlock Text="{Binding GroupCSize}" Style="{StaticResource ValueStyle}" />
+            </Grid>
+            <Grid>
+                <TextBlock Text="Группа D" Style="{StaticResource ValueNameStyle}" />
+                <TextBlock Text="{Binding GroupDSize}" Style="{StaticResource ValueStyle}" />
+            </Grid>
+            <Grid>
+                <TextBlock Text="Заполненность" Style="{StaticResource ValueNameStyle}" />
+                <TextBlock Text="{Binding Occupancy}" Style="{StaticResource ValueStyle}" />
+            </Grid>
+        </StackPanel>
+        <Button Grid.Column="2" Content="Сохранить" Style="{StaticResource DefaultButtonStyle}"
+                HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="25"
+                Command="{Binding SaveButton}"/>
+    </Grid>
+</Window>

@@ -1,4 +1,6 @@
-﻿namespace YConsole.Utillities;
+﻿using YConsole.ViewModels;
+
+namespace YConsole.Utillities;
 
 public interface IWindowService
 {
