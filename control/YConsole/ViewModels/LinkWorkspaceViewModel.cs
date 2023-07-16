@@ -84,9 +84,9 @@ namespace YConsole.ViewModels
         public RelayCommand CreateButton { get; private set; }
         public RelayCommand DeleteDialogButton { get; private set; }
 
-        private readonly YApiInteractor _apiInteractor;
+        private readonly IApiInteractor _apiInteractor;
 
-        public LinkWorkspaceViewModel(YApiInteractor apiInteractor) 
+        public LinkWorkspaceViewModel(IApiInteractor apiInteractor) 
         { 
             _apiInteractor = apiInteractor;
             SaveButton = new(OnSaveButtonClick);

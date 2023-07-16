@@ -17,5 +17,8 @@ namespace YApi
         Task<Image> LoadImageToServerAsync(string imageName, Stream stream);
         Task LoadTokenToServerAsync(string tokenSource);
         Task<List<Player>> UpdatePlayersAsync(List<Player> players);
+        Task DeleteLinkAsync(int value);
+        Task<List<Link>> PostLinksAsync(List<Link> links);
+        Task<List<Link>> GetAllLinksAsync();
     }
 }

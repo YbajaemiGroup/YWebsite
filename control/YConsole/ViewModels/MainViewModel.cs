@@ -49,10 +49,10 @@ namespace YConsole.ViewModels
             await _playerWorkspaceViewModel.LoadDataAsync();
         }
 
-        private void OnLinksWorkspaceCommandClick(object? ignorable)
+        private async void OnLinksWorkspaceCommandClick(object? ignorable)
         {
             Workspace = _linkWorkspaceViewModel;
-            _ = _linkWorkspaceViewModel.LoadDataAsync();
+            await _linkWorkspaceViewModel.LoadDataAsync();
         }
 
         private void OnTokenCreateWorkspaceClick (object? ignorable)
