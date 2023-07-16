@@ -8,6 +8,7 @@ namespace YConsole.ViewModels
         private readonly IWindowService _windowService;
         private readonly PlayerWorkspaceViewModel _playerWorkspaceViewModel;
         private readonly LinkWorkspaceViewModel _linkWorkspaceViewModel;
+        private readonly GroupsWorkspaceViewModel _groupsWorkspaceViewModel;
 
         private ViewModelBase? workspace;
         public ViewModelBase? Workspace
@@ -20,14 +21,18 @@ namespace YConsole.ViewModels
             }
         }
 
-        public MainViewModel(IWindowService windowService, PlayerWorkspaceViewModel playerWorkspaceViewModel, LinkWorkspaceViewModel linkWorkspaceViewModel)
+        public MainViewModel(IWindowService windowService,
+                             PlayerWorkspaceViewModel playerWorkspaceViewModel,
+                             LinkWorkspaceViewModel linkWorkspaceViewModel,
+                             GroupsWorkspaceViewModel groupsWorkspaceViewModel)
         {
             _windowService = windowService;
             _playerWorkspaceViewModel = playerWorkspaceViewModel;
             _linkWorkspaceViewModel = linkWorkspaceViewModel;
+            _groupsWorkspaceViewModel = groupsWorkspaceViewModel;
             OpenPlayersWorkspaceCommand = new(OnPlayersWorkspaceCommandClick);
             OpenLinksWorkspaceCommand = new(OnLinksWorkspaceCommandClick);
-            
+            OpenGroupsWorkspaceCommand = new(OnGroupsWorkspaceCommandClick);
             OpenTokenCreateCommand = new(OnTokenCreateWorkspaceClick);
             OpenTokenDeleteCommand = new(OnTokenDeleteWorkspaceClick);
         }
@@ -36,6 +41,7 @@ namespace YConsole.ViewModels
 
         public RelayCommand OpenPlayersWorkspaceCommand { get; private set; }
         public RelayCommand OpenLinksWorkspaceCommand { get; private set; }
+        public RelayCommand OpenGroupsWorkspaceCommand { get; private set; }
         public RelayCommand OpenTokenCreateCommand { get; private set; }
         public RelayCommand OpenTokenDeleteCommand { get; private set; }
 
@@ -43,16 +49,22 @@ namespace YConsole.ViewModels
 
         #region Command handlers
 
-        private async void OnPlayersWorkspaceCommandClick(object? ignorable)
+        private void OnPlayersWorkspaceCommandClick(object? ignorable)
         {
             Workspace = _playerWorkspaceViewModel;
-            await _playerWorkspaceViewModel.LoadDataAsync();
+            _ = _playerWorkspaceViewModel.LoadDataAsync();
         }
 
-        private async void OnLinksWorkspaceCommandClick(object? ignorable)
+        private void OnLinksWorkspaceCommandClick(object? ignorable)
         {
             Workspace = _linkWorkspaceViewModel;
-            await _linkWorkspaceViewModel.LoadDataAsync();
+            _ = _linkWorkspaceViewModel.LoadDataAsync();
+        }
+
+        private void OnGroupsWorkspaceCommandClick(object? ignorable)
+        {
+            Workspace = _groupsWorkspaceViewModel;
+            _ = _groupsWorkspaceViewModel.LoadDataAsync();
         }
 
         private void OnTokenCreateWorkspaceClick (object? ignorable)

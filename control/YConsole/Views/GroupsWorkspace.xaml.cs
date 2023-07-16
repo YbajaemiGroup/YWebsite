@@ -17,7 +17,7 @@ namespace YConsole.Views
     /// <summary>
     /// Логика взаимодействия для GroupsWorkspace.xaml
     /// </summary>
-    public partial class GroupsWorkspace : Window
+    public partial class GroupsWorkspace : UserControl
     {
         public GroupsWorkspace()
         {

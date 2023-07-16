@@ -1,10 +1,10 @@
 ﻿<Window x:Class="YConsole.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:YConsole.Views"
         xmlns:vm="clr-namespace:YConsole.ViewModels"
+        xmlns:local="clr-namespace:YConsole.Views"
         mc:Ignorable="d"
         DataContext="{Binding MainViewModel, Mode=OneWay, Source={StaticResource Locator}}"
         Title="MainWindow" Height="800" Width="1800">
@@ -14,6 +14,9 @@
         </DataTemplate>
         <DataTemplate DataType="{x:Type vm:LinkWorkspaceViewModel}">
             <local:LinkWorkspace />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:GroupsWorkspaceViewModel}">
+            <local:GroupsWorkspace />
         </DataTemplate>
     </Window.Resources>
     <Grid>
@@ -31,7 +34,7 @@
                         <TextBlock Text="Игроки" Style="{StaticResource MenuItemHeaderStyle}"/>
                     </MenuItem.Header>
                 </MenuItem>
-                <MenuItem>
+                <MenuItem Command="{Binding OpenGroupsWorkspaceCommand}">
                     <MenuItem.Header>
                         <TextBlock Text="Группы" Style="{StaticResource MenuItemHeaderStyle}"/>
                     </MenuItem.Header>

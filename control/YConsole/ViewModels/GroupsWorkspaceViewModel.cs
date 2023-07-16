@@ -17,7 +17,7 @@ namespace YConsole.ViewModels
         private const int GROUP_C_NUMBER = 3;
         private const int GROUP_D_NUMBER = 4;
 
-        private List<Player> _players = null!;
+        private List<Player> _players = new();
 
         #region Bindings
         private Player? selectedUnallocatedPlayer;
@@ -92,7 +92,7 @@ namespace YConsole.ViewModels
         public int GroupCSize => GroupCPlayers.Count;
         public int GroupDSize => GroupDPlayers.Count;
 
-        public int Occupancy => throw new NotImplementedException();
+        public int Occupancy => 0;
         #endregion
 
         #region Command bindings
@@ -198,14 +198,25 @@ namespace YConsole.ViewModels
         }
         #endregion
 
+        private void UpdateAllLists()
+        {
+            OnPropertyChanged(nameof(UnallocatedPlayers));
+            OnPropertyChanged(nameof(GroupAPlayers));
+            OnPropertyChanged(nameof(GroupBPlayers));
+            OnPropertyChanged(nameof(GroupCPlayers));
+            OnPropertyChanged(nameof(GroupDPlayers));
+        }
+
         public void LoadData()
         {
             _players = _apiInteractor.GetAllPlayers();
+            UpdateAllLists();
         }
 
         public async Task LoadDataAsync()
         {
             _players = await _apiInteractor.GetAllPlayersAsync();
+            UpdateAllLists();
         }
     }
 }

@@ -1,27 +1,33 @@
-﻿<Window x:Class="YConsole.Views.GroupsWorkspace"
+﻿<UserControl x:Class="YConsole.Views.GroupsWorkspace"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="GroupsWorkspace" Height="450" Width="800"
+        d:DesignHeight="775" d:DesignWidth="1800"
         DataContext="{Binding GroupsWorkspaceViewModel, Mode=OneWay, Source={StaticResource Locator}}">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.3*" />
-            <ColumnDefinition Width="0.4*" />
+            <ColumnDefinition Width="0.2*" />
+            <ColumnDefinition Width="0.6*" />
             <ColumnDefinition Width="0.3*" />
         </Grid.ColumnDefinitions>
         <TreeView Grid.Column="0">
             <TextBlock Text="Группы" />
-            <TreeViewItem Header="Группа A" ItemsSource="{Binding GroupAPlayers}" />
+            <TreeViewItem Header="Группа A" ItemsSource="{Binding GroupAPlayers}">
+                <TreeViewItem.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding NickName}" />
+                    </DataTemplate>
+                </TreeViewItem.ItemTemplate>
+            </TreeViewItem>
             <TreeViewItem Header="Группа B" ItemsSource="{Binding GroupBPlayers}" />
             <TreeViewItem Header="Группа C" ItemsSource="{Binding GroupCPlayers}" />
             <TreeViewItem Header="Группа D" ItemsSource="{Binding GroupDPlayers}" />
         </TreeView>
         <StackPanel Grid.Column="1">
             <TextBlock Text="Нераспределенные игроки:" />
-            <ListView Height="420" ItemsSource="{Binding UnallocatedPlayers, Mode=OneWay}" SelectedItem="{Binding SelectedUnallocatedPlayer}" d:ItemsSource="{d:SampleData ItemCount=5}">
+            <ListView Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ContentControl, AncestorLevel=1}, Path=Height}" ItemsSource="{Binding UnallocatedPlayers, Mode=OneWay}" SelectedItem="{Binding SelectedUnallocatedPlayer}" d:ItemsSource="{d:SampleData ItemCount=5}">
                 <ListBox.ContextMenu>
                     <ContextMenu>
                         <TextBlock Text="{Binding SelectedUnallocatedPlayer.NickName, Mode=OneWay}" />
@@ -33,8 +39,8 @@
                 </ListBox.ContextMenu>
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="NickName" Width="165" DisplayMemberBinding="{Binding NickName}" />
-                        <GridViewColumn Header="Won" Width="45" DisplayMemberBinding="{Binding Won}" />
+                        <GridViewColumn Header="NickName" Width="220" DisplayMemberBinding="{Binding NickName}" />
+                        <GridViewColumn Header="Won" Width="50" DisplayMemberBinding="{Binding Won}" />
                         <GridViewColumn Header="Lose" Width="50" DisplayMemberBinding="{Binding Lose}" />
                         <GridViewColumn Header="Points" Width="50" DisplayMemberBinding="{Binding Points}" />
                     </GridView>
@@ -80,4 +86,4 @@
                 HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="25"
                 Command="{Binding SaveButton}"/>
     </Grid>
-</Window>
+</UserControl>
