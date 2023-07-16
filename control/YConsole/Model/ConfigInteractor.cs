@@ -8,7 +8,7 @@ namespace YConsole.Model
     public class ConfigInteractor : IConfigInteractor
     {
 #if DEBUG
-        private const string CONFIG_PATH = "E:\\MyProgs\\ybajaemi\\config\\ConsoleConfig\\";
+        private const string CONFIG_PATH = "H:\\YBAJAEMI\\cons\\ConsoleConfig\\";
 #else
         private const string CONFIG_PATH = ".\\Conf\\";
 #endif

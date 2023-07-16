@@ -29,9 +29,7 @@
 .players-grid {
     display: grid;
     align-items: center;
-    /* это тоже самое, что grid-template-columns: 1fr 1fr 1fr 1fr; */
     grid-template-columns: repeat(4, 1fr);
-    /* это тоже самое, что grid-template-rows: 300px 300px; */
     grid-template-rows: repeat(4, 230px);
 }
 @media only screen and (max-width: 1450px) { 
