@@ -2,6 +2,6 @@
 
 public interface IWindowService
 {
-    public void Show<IViewModel>() where IViewModel : ViewModelBase;
+    public IViewModel Show<IViewModel>() where IViewModel : ViewModelBase;
     public void Show(ViewModelBase viewModel);
 }

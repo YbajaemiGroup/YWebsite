@@ -15,7 +15,7 @@
         <TextBlock Margin="20,10,0,0" Text="Выбранное изображение:" Height="15" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left" />
         <Image Grid.Column="0" Margin="60,31,60,132" Source="{Binding SelectedImage.ImagePath}" />
         <Button Grid.Column="0" Style="{StaticResource DefaultButtonStyle}" Content="Добавить" Margin="113,330,0,0" Command="{Binding AddButton}" />
-        <Button Grid.Column="0" Style="{StaticResource DefaultButtonStyle}" Content="Сохранить" Margin="113,375,0,0" />
+        <Button Grid.Column="0" Style="{StaticResource DefaultButtonStyle}" Content="Сохранить" Margin="113,375,0,0" Click="Button_Click" Command="{Binding SaveCommand}" />
         <ListBox Grid.Column="1" ItemsSource="{Binding DatabaseImagesPaths}" SelectedItem="{Binding SelectedImage}"
                  ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="ListBox_SelectionChanged">
             <ListBox.ItemTemplate>

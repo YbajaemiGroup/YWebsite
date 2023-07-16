@@ -183,7 +183,7 @@ namespace YConsole.ViewModels
                 links = await _apiInteractor.GetAllLinksAsync();
                 OnPropertyChanged(nameof(LinksOfChosenPlayer));
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show("Произошла ошибка при загрузке ссылок и игроков.");
                 Players = new();

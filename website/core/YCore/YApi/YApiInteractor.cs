@@ -1,16 +1,15 @@
 ﻿using System.Diagnostics;
-using System.Diagnostics.Metrics;
 using YApiModel.Models;
 
 namespace YApi
 {
-    public class YApiInteractor
+    public class YApiInteractor : IApiInteractor
     {
         private readonly YClient _client;
 
-        public YApiInteractor(string token)
+        public YApiInteractor(IConfigInteractor configInteractor)
         {
-            _client = new YClient(token);
+            _client = new YClient(configInteractor.GetToken());
         }
 
         public List<Player> GetAllPlayers()
@@ -18,14 +17,14 @@ namespace YApi
             return _client.PlayersGetAsync().Result;
         }
 
-        public async Task<List<Player>> GetAllPlayersAsync()
+        public Task<List<Player>> GetAllPlayersAsync()
         {
-            return await _client.PlayersGetAsync();
+            return _client.PlayersGetAsync();
         }
 
-        public async Task<List<Player>> UpdatePlayersAsync(List<Player> players)
+        public Task<List<Player>> UpdatePlayersAsync(List<Player> players)
         {
-            return await _client.PlayersAddOrUpdateAsync(players);
+            return _client.PlayersAddOrUpdateAsync(players);
         }
 
         public async Task DeletePlayer(int playerId)
@@ -33,33 +32,75 @@ namespace YApi
             await _client.PlayerDelete(playerId);
         }
 
+        public Task<List<Image>> GetImagesListAsync()
+        {
+            return _client.GetImagesList();
+        }
+
         public void DownloadImage(string imageName, string imagesDirectory)
         {
             using var dbImage = _client.GetImage(imageName, YApiModel.ImageType.Players).Result;
-            using var localImage = File.OpenWrite($"{imagesDirectory}\\{imageName}");
-            dbImage.CopyTo(localImage);
-            localImage.Flush();
-            dbImage.Flush();
+            if (dbImage == null)
+            {
+                throw new NullReferenceException("dbImage was null");
+            }
+            string imagePath = $"{imagesDirectory}\\{imageName}";
+            if (!File.Exists(imagePath))
+            {
+                using var localImage = File.OpenWrite(imagePath);
+                dbImage.CopyTo(localImage);
+                localImage.Flush();
+                dbImage.Flush();
+            }
         }
 
         public async Task DownloadImageAsync(string imageName, string imagesDirectory)
         {
             using var dbImage = await _client.GetImage(imageName, YApiModel.ImageType.Players);
-            using var localImage = File.OpenWrite($"{imagesDirectory}\\{imageName}");
-            await dbImage.CopyToAsync(localImage);
-            await localImage.FlushAsync();
-            await dbImage.FlushAsync();
+            if (dbImage == null)
+            {
+                throw new NullReferenceException("No image found in database.");
+            }
+            string imagePath = $"{imagesDirectory}\\{imageName}";
+            if (!File.Exists(imagePath))
+            {
+                using var localImage = File.OpenWrite(imagePath);
+                await dbImage.CopyToAsync(localImage);
+                await localImage.FlushAsync().ConfigureAwait(false);
+                await dbImage.FlushAsync().ConfigureAwait(false);
+            }
         }
 
-        public List<string> DownloadImages(string imageDirectory)
+        public async Task DownloadImageAsync(string imageName, Stream stream)
         {
-            var players = _client.PlayersGetAsync().Result;
+            if (!stream.CanWrite)
+            {
+                throw new ArgumentException("Can't write to stream.", nameof(stream));
+            }
+            using var dbImage = await _client.GetImage(imageName, YApiModel.ImageType.Players);
+            if (dbImage == null)
+            {
+                throw new NullReferenceException("No image found in database.");
+            }
+            await dbImage.CopyToAsync(stream);
+        }
+
+        public List<string> DownloadAllImages(string imageDirectory)
+        {
+            var images = _client.GetImagesList().Result;
             var imagesNames = new List<string>();
-            foreach (var image in players.Select(p => p.ImageName))
+            foreach (var image in images.Select(i => i.ImageName))
             {
                 if (image != null)
                 {
-                    DownloadImage(image, imageDirectory);
+                    try
+                    {
+                        DownloadImage(image, imageDirectory);
+                    }
+                    catch (NullReferenceException)
+                    {
+                        continue;
+                    }
                     imagesNames.Add(image);
                 }
             }
@@ -68,12 +109,19 @@ namespace YApi
 
         public async IAsyncEnumerable<string> DownloadAllImagesAsync(string imageDirectory)
         {
-            var players = await _client.PlayersGetAsync();
-            foreach (var image in players.Select(p => p.ImageName))
+            var images = await _client.GetImagesList();
+            foreach (var image in images.Select(i => i.ImageName))
             {
                 if (image != null)
                 {
-                    await DownloadImageAsync(image, imageDirectory);
+                    try
+                    {
+                        await DownloadImageAsync(image, imageDirectory);
+                    }
+                    catch (Exception)
+                    {
+                        continue;
+                    }
                     yield return image;
                 }
             }

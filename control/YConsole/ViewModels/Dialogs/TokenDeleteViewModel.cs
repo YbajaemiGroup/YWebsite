@@ -36,9 +36,9 @@ public class TokenDeleteViewModel : ViewModelBase
 
     public RelayCommand DeleteTokenButton { get; private set; }
 
-    private readonly YApiInteractor _apiInteractor;
+    private readonly IApiInteractor _apiInteractor;
 
-    public TokenDeleteViewModel(YApiInteractor apiInteractor)
+    public TokenDeleteViewModel(IApiInteractor apiInteractor)
     {
         _apiInteractor = apiInteractor;
         DeleteTokenButton = new(OnDeleteTokenClick);

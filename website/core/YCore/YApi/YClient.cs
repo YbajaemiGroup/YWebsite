@@ -13,7 +13,7 @@ public class YClient
 
     public string Token { get; set; }
     public bool TokenLoaded { get => Token != null; }
-    private RequestSender requestSender;
+    private readonly RequestSender requestSender;
 
     public YClient(string token)
     {
@@ -24,7 +24,8 @@ public class YClient
     /// <summary>
     /// Throws exception if server returned error.
     /// </summary>
-    /// <param name="response"></param>
+    /// <param name="response">Server response object</param>
+    /// <exception cref="Exception"></exception>
     private void CheckException(Response response)
     {
         if (response.Exception != null)
@@ -33,7 +34,15 @@ public class YClient
         }
     }
 
-    private T GetResponseData<T>(Response response)
+    /// <summary>
+    /// Gets data from server response and casting it to <typeparamref name="T"/>
+    /// </summary>
+    /// <typeparam name="T">Specified response data type</typeparam>
+    /// <param name="response"></param>
+    /// <returns>Response data</returns>
+    /// <exception cref="NullReferenceException"></exception>
+    /// <exception cref="ArgumentException"></exception>
+    private static T GetResponseData<T>(Response response)
     {
         if (response.ResponseData == null)
         {
@@ -62,7 +71,12 @@ public class YClient
 
     public async Task<List<Round>> GetBracketAsync()
     {
-        var response = await requestSender.SendRequestAsync("bracket.updates.get");
+        var bracketGetting = requestSender.SendRequestAsync("bracket.updates.get");
+        var response = await bracketGetting;
+        if (!bracketGetting.IsCompletedSuccessfully)
+        {
+            throw bracketGetting.Exception ?? throw new Exception("requestSender.SendRequestAsync returned unsuccessfully with no exception.");
+        }
         CheckException(response);
         return GetResponseData<List<Round>>(response);
     }
@@ -71,7 +85,12 @@ public class YClient
     {
         var parameters = new HttpParameters();
         parameters.Add("token", Token);
-        var response = await requestSender.SendRequestAsync("bracket.updates.set", parameters, new Request(bracket));
+        var bracketSetting = requestSender.SendRequestAsync("bracket.updates.set", parameters, new Request(bracket));
+        var response = await bracketSetting;
+        if (!bracketSetting.IsCompletedSuccessfully)
+        {
+            throw bracketSetting.Exception ?? throw new Exception("requestSender.SendRequestAsync returned unsuccessfully with no exception.");
+        }
         CheckException(response);
     }
 
@@ -79,7 +98,12 @@ public class YClient
     {
         var parameters = new HttpParameters();
         parameters.Add("token", Token);
-        var response = await requestSender.SendRequestAsync("group.fill", parameters, new Request(groups));
+        var groupFilling = requestSender.SendRequestAsync("group.fill", parameters, new Request(groups));
+        var response = await groupFilling;
+        if (!groupFilling.IsCompletedSuccessfully)
+        {
+            throw groupFilling.Exception ?? throw new Exception("requestSender.SendRequestAsync returned unsuccessfully with no exception.");
+        }
         CheckException(response);
     }
 
@@ -87,7 +111,12 @@ public class YClient
     {
         var parameters = new HttpParameters();
         parameters.Add("token", Token);
-        var response = await requestSender.SendRequestAsync("group.get", parameters);
+        var groupGamesGetting = requestSender.SendRequestAsync("group.get", parameters);
+        var response = await groupGamesGetting;
+        if (!groupGamesGetting.IsCompletedSuccessfully)
+        {
+            throw groupGamesGetting.Exception ?? throw new Exception("requestSender.SendRequestAsync returned unsuccessfully with no exception.");
+        }
         CheckException(response);
         return GetResponseData<List<GroupGetData>>(response);
     }
@@ -96,14 +125,24 @@ public class YClient
     {
         var parameters = new HttpParameters();
         parameters.Add("player_id", playerId);
-        var response = await requestSender.SendRequestAsync("links.get", parameters);
+        var linksGetting = requestSender.SendRequestAsync("links.get", parameters);
+        var response = await linksGetting;
+        if (!linksGetting.IsCompletedSuccessfully)
+        {
+            throw linksGetting.Exception ?? throw new Exception("requestSender.SendRequestAsync returned unsuccessfully with no exception.");
+        }
         CheckException(response);
         return GetResponseData<List<Link>>(response);
     }
 
     public async Task<List<Link>> GetLinksAsync()
     {
-        var response = await requestSender.SendRequestAsync("links.get");
+        var linksGetting = requestSender.SendRequestAsync("links.get");
+        var response = await linksGetting;
+        if (!linksGetting.IsCompletedSuccessfully)
+        {
+            throw linksGetting.Exception ?? throw new Exception("requestSender.SendRequestAsync returned unsuccessfully with no exception.");
+        }
         CheckException(response);
         return GetResponseData<List<Link>>(response);
     }
@@ -112,7 +151,12 @@ public class YClient
     {
         var parameters = new HttpParameters();
         parameters.Add("token", Token);
-        var response = await requestSender.SendRequestAsync("links.add", parameters, new Request(links));
+        var linksAdding = requestSender.SendRequestAsync("links.add", parameters, new Request(links));
+        var response = await linksAdding;
+        if (!linksAdding.IsCompletedSuccessfully)
+        {
+            throw linksAdding.Exception ?? throw new Exception("requestSender.SendRequestAsync returned unsuccessfully with no exception.");
+        }
         CheckException(response);
         return GetResponseData<List<Link>>(response);
     }
@@ -122,7 +166,12 @@ public class YClient
         var parameters = new HttpParameters();
         parameters.Add("token", Token);
         parameters.Add("link_id", linkId);
-        var response = await requestSender.SendRequestAsync("links.delete", parameters);
+        var linksDeleting = requestSender.SendRequestAsync("links.delete", parameters);
+        var response = await linksDeleting;
+        if (!linksDeleting.IsCompletedSuccessfully)
+        {
+            throw linksDeleting.Exception ?? throw new Exception("requestSender.SendRequestAsync returned unsuccessfully with no exception.");
+        }
         CheckException(response);
         Debug.WriteLine("Links Deleted");
     }
@@ -136,7 +185,12 @@ public class YClient
     {
         var parameters = new HttpParameters();
         parameters.Add("token", Token);
-        var response = await requestSender.SendRequestAsync("players.add", parameters, new Request(players));
+        var playersAdding = requestSender.SendRequestAsync("players.add", parameters, new Request(players));
+        var response = await playersAdding;
+        if (!playersAdding.IsCompletedSuccessfully)
+        {
+            throw playersAdding.Exception ?? throw new Exception("requestSender.SendRequestAsync returned unsuccessfully with no exception.");
+        }
         CheckException(response);
         return GetResponseData<List<Player>>(response);
     }
@@ -145,7 +199,12 @@ public class YClient
     {
         var parameters = new HttpParameters();
         parameters.Add("token", Token);
-        var response = await requestSender.SendRequestAsync("players.get", parameters);
+        var playersGetting = requestSender.SendRequestAsync("players.get", parameters);
+        var response = await playersGetting;
+        if (!playersGetting.IsCompletedSuccessfully)
+        {
+            throw playersGetting.Exception ?? throw new Exception("requestSender.SendRequestAsync returned unsuccessfully with no exception.");
+        }
         CheckException(response);
         return GetResponseData<List<Player>>(response);
     }
@@ -155,12 +214,24 @@ public class YClient
         var parameters = new HttpParameters();
         parameters.Add("token", Token);
         parameters.Add("player_id", playerId);
-        var response = await requestSender.SendRequestAsync("players.delete", parameters);
+        var playersDeleting = requestSender.SendRequestAsync("players.delete", parameters);
+        var response = await playersDeleting;
+        if (!playersDeleting.IsCompletedSuccessfully)
+        {
+            throw playersDeleting.Exception ?? throw new Exception("requestSender.SendRequestAsync returned unsuccessfully with no exception.");
+        }
         CheckException(response);
         return GetResponseData<Player>(response);
     }
 
-    public async Task<Stream> GetImage(string imageName, ImageType imageType)
+    public async Task<List<Image>> GetImagesList()
+    {
+        var response = await requestSender.SendRequestAsync("images.list");
+        CheckException(response);
+        return GetResponseData<List<Image>>(response);
+    }
+
+    public async Task<Stream?> GetImage(string imageName, ImageType imageType)
     {
         string imageTypeName = imageType switch
         {
@@ -171,7 +242,13 @@ public class YClient
         var parameters = new HttpParameters();
         parameters.Add("image_name", imageName);
         parameters.Add("image_type", imageTypeName);
-        return await requestSender.DownloadImageAsync("images.get", parameters);
+        var requestSending = requestSender.DownloadImageAsync("images.get", parameters);
+        var stream = await requestSending;
+        if (!requestSending.IsCompletedSuccessfully)
+        {
+            throw requestSending.Exception ?? new Exception("requestSender.DownloadImageAsync returned unsuccessfully with no exception.");
+        }
+        return stream;
     }
 
     public async Task<Image> LoadImageAsync(string imageName, byte[] imageBytes)
@@ -187,7 +264,12 @@ public class YClient
             "png" => "image/png",
             _ => throw new ArgumentException("Image should be .png .jpg of .jpeg", nameof(imageName))
         });
-        var response = await requestSender.SendRequestAsync("images.load", parameters, fileStreamContent);
+        var imageLoading = requestSender.SendRequestAsync("images.load", parameters, fileStreamContent);
+        var response = await imageLoading;
+        if (!imageLoading.IsCompletedSuccessfully)
+        {
+            throw imageLoading.Exception ?? new Exception("requestSender.SendRequestAsync returned unsuccessfully with no exception.");
+        }
         CheckException(response);
         return GetResponseData<Image>(response);
     }
@@ -205,7 +287,12 @@ public class YClient
             "png" => "image/png",
             _ => throw new ArgumentException("Image should be .png .jpg of .jpeg", nameof(imageName))
         });
-        var response = await requestSender.SendRequestAsync("images.load", parameters, fileStreamContent);
+        var imageLoading = requestSender.SendRequestAsync("images.load", parameters, fileStreamContent);
+        var response = await imageLoading;
+        if (!imageLoading.IsCompletedSuccessfully)
+        {
+            throw imageLoading.Exception ?? new Exception("requestSender.SendRequestAsync returned unsuccessfully with no exception.");
+        }
         CheckException(response);
         return GetResponseData<Image>(response);
     }
@@ -215,7 +302,12 @@ public class YClient
         var parameters = new HttpParameters();
         parameters.Add("token", Token);
         parameters.Add("token_source", tokenSource);
-        var response = await requestSender.SendRequestAsync("token.create", parameters);
+        var tokenCreating = requestSender.SendRequestAsync("token.create", parameters);
+        var response = await tokenCreating;
+        if (!tokenCreating.IsCompletedSuccessfully)
+        {
+            throw tokenCreating.Exception ?? new Exception("requestSender.SendRequestAsync returned unsuccessfully with no exception.");
+        }
         CheckException(response);
     }
 
@@ -224,7 +316,12 @@ public class YClient
         var parameters = new HttpParameters();
         parameters.Add("token", Token);
         parameters.Add("d_token", token);
-        var response = await requestSender.SendRequestAsync("token.delete", parameters);
+        var tokenDeleteting = requestSender.SendRequestAsync("token.delete", parameters);
+        var response = await tokenDeleteting;
+        if (!tokenDeleteting.IsCompletedSuccessfully)
+        {
+            throw tokenDeleteting.Exception ?? new Exception("requestSender.SendRequestAsync returned unsuccessfully with no exception.");
+        }
         CheckException(response);
     }
 }

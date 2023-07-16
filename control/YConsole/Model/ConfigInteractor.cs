@@ -1,10 +1,11 @@
 ﻿using System;
 using System.IO;
 using System.Xml;
+using YApi;
 
 namespace YConsole.Model
 {
-    public class ConfigInteractor
+    public class ConfigInteractor : IConfigInteractor
     {
 #if DEBUG
         private const string CONFIG_PATH = "H:\\YBAJAEMI\\cons\\ConsoleConfig\\";
@@ -17,7 +18,7 @@ namespace YConsole.Model
         private const string TOKEN_FILE_PATH = CONFIG_PATH + TOKEN_FILE;
         private const string CONFIG_FILE_PATH = CONFIG_PATH + CONFIG_FILE;
 
-        public static string GetToken()
+        public string GetToken()
         {
             var file = File.OpenRead(TOKEN_FILE_PATH);
             using var fileReader = new StreamReader(file);
@@ -26,7 +27,7 @@ namespace YConsole.Model
             return token;
         }
 
-        public static string GetImagesLocation()
+        public string GetImagesLocation()
         {
             var config = new XmlDocument();
             config.Load(CONFIG_FILE_PATH);
