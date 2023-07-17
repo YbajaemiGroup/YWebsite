@@ -19,6 +19,7 @@
     font-family: 'Unbounded Medium';
 }
 .card-img-border {
+    border: solid;
     border-radius: 150px;
     width: 150px;
     height: 150px;

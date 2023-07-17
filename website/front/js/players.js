@@ -48,6 +48,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (linka.includes('vk.com')) {
                     imgElement = card.querySelector('#img-vk');
                 } 
+                else if (linka.includes('telegram') || linka.includes('tg.')) {
+                    imgElement = card.querySelector('#img-tg');
+                }
                 else if (linka.includes('twitch.tv')) {
                     imgElement = card.querySelector('#img-twitch');
                 } 
@@ -57,6 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 else if (linka.includes('youtube.com') || linka.includes('youtu.be')) {
                     imgElement = card.querySelector('#img-youtube');
                 }
+                
 
                 if (imgElement) {
                     imgElement.style.display = 'inline';
