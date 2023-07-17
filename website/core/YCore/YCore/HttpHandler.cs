@@ -29,6 +29,11 @@ namespace YCore
             if (IsApi(url))
                 return;
             var fileName = url[1..];
+            if (fileName == null)
+            {
+                context.Response.Close();
+                return;
+            }
 
             Logger.Log(LogSeverity.Debug, nameof(HttpHandler), fileName);
 
