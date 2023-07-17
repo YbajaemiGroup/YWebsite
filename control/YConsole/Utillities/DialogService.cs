@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using YConsole.ViewModels;
+using YConsole.ViewModels.Dialogs;
 using YConsole.Views.Dialogs;
 
 namespace YConsole.Utillities;
@@ -39,13 +40,17 @@ class DialogService : IDialogService
         _dialogWindow.ShowDialog();
     }
 
-    public void ShowDialog(ViewModelBase viewModel, Action<bool> callback)
+    public void ShowDialog(ViewModelBase viewModel, Action<bool> callback, string? questionText)
     {
         var viewType = _mappings[viewModel.GetType()];
+        if (viewModel is IDialogViewModel dialog && questionText != null)
+        {
+            dialog.SetQuestionText(questionText);
+        }
         ShowDialogInternal(viewType, viewModel, callback);
     }
 
-    public void ShowDialog<TViewModel>(Action<bool> callback) where TViewModel : ViewModelBase
+    public void ShowDialog<TViewModel>(Action<bool> callback, string? questionText) where TViewModel : ViewModelBase, IDialogViewModel
     {
         var viewType = _mappings[typeof(TViewModel)];
         if (typeof(TViewModel).GetConstructors().Min(c => c.GetParameters().Length) > 0)
@@ -55,6 +60,10 @@ class DialogService : IDialogService
         if (Activator.CreateInstance(typeof(TViewModel)) is not ViewModelBase viewModel)
         {
             throw new ArgumentException("Can't cast TViewModel to ViewModelBase.", nameof(TViewModel));
+        }
+        if (viewModel is IDialogViewModel dialog && questionText != null)
+        {
+            dialog.SetQuestionText(questionText);
         }
         ShowDialogInternal(viewType, viewModel, callback);
     }
