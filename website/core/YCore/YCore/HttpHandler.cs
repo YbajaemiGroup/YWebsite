@@ -49,6 +49,7 @@ namespace YCore
             }
             var responseSender = new RawDataResponseSender(fileStream);
             responseSender.Send(context.Response.OutputStream);
+            fileStream.Dispose();
             context.Response.Close();
         }
     }

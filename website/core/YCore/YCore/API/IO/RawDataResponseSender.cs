@@ -1,4 +1,6 @@
-﻿namespace YCore.API.IO
+﻿using System.Net;
+
+namespace YCore.API.IO
 {
     public class RawDataResponseSender : IResponseSender
     {
@@ -15,10 +17,7 @@
             {
                 throw new AccessViolationException();
             }
-            using var writer = new BinaryWriter(outputStream);
-            byte[] bytes = new byte[data.Length];
-            data.Read(bytes, 0, bytes.Length);
-            writer.Write(bytes);
+            data.CopyTo(outputStream);
             outputStream.Flush();
             data.Close();
         }
