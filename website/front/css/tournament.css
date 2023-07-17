@@ -150,8 +150,7 @@
   }
   
   .tournament__match__team {
-    font-size: 14px;
-    font-weight: bold;
+    font-size: 1rem;
     transition: color 0.3s ease;
     font-family: 'Unbounded Medium';
     color: #fff;

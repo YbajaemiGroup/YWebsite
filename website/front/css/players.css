@@ -1,14 +1,15 @@
+@import "https://unpkg.com/open-props";
 .player-card {
     padding: 20px;
     margin: 10px;
     border: solid;
     border-radius: 2em;
     background-color: white;
-    transition: 0.2s;
+    transition: 1s;
 }
 .player-card:hover {
-    box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.2);
-    transition: 0.2s;
+    /* box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.2); */
+    box-shadow: var(--shadow-5);
 }
 .card-content {
     display: flex;
