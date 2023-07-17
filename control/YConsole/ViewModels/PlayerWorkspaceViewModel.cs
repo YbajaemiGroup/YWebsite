@@ -310,7 +310,7 @@ namespace YConsole.ViewModels
         private async void OnDeleteButtonClick(object? ignorable)
         {
             bool delete = false;
-            _dialogService.ShowDialog<DeleteConfirmationDialogViewModel>(result => delete = result);
+            _dialogService.ShowDialog<DeleteConfirmationDialogViewModel>(result => delete = result, $"Удалить игрока {ChosenPlayer?.NickName}?");
             if (!delete)
             {
                 return;
