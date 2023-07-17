@@ -1,23 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace YConsole.ViewModels.Dialogs;
 
-namespace YConsole.ViewModels.Dialogs
+public class DialogViewModel : ViewModelBase, IDialogViewModel
 {
-    public class DialogViewModel : ViewModelBase
+    public string QuestionText { get; set; }
+
+    public DialogViewModel()
     {
-        public string QuestionText { get; set; }
+        QuestionText = string.Empty;
+    }
 
-        public DialogViewModel()
-        {
-            QuestionText = string.Empty;
-        }
+    public DialogViewModel(string questionText)
+    {
+        QuestionText = questionText;
+    }
 
-        public DialogViewModel(string questionText)
-        {
-            QuestionText = questionText;
-        }
+    public void SetQuestionText(string text)
+    {
+        QuestionText = text;
     }
 }

@@ -107,9 +107,8 @@ namespace YConsole.ViewModels.Dialogs
             if (File.Exists($"{_imageSource}\\{fileName}"))
             {
                 MessageBox.Show($"Файл {fileName} уже существует в папке {_imageSource}.");
-                var dvm = new ReplaceImageDialogViewModel($"Заменить файл {fileName} в папке назначения?");
                 bool answer = false;
-                _dialogService.ShowDialog(dvm, res => answer = res);
+                _dialogService.ShowDialog<ReplaceImageDialogViewModel>(res => answer = res, $"Заменить файл {fileName} в папке назначения?");
                 if (!answer)
                 {
                     return;
