@@ -3,16 +3,21 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:behaviors="clr-namespace:YConsole.Views.Utils"
         mc:Ignorable="d"
         d:DesignHeight="775" d:DesignWidth="1800"
         DataContext="{Binding GroupsWorkspaceViewModel, Mode=OneWay, Source={StaticResource Locator}}">
-    <Grid>
+    <Grid Background="White">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.2*" />
             <ColumnDefinition Width="0.6*" />
             <ColumnDefinition Width="0.3*" />
         </Grid.ColumnDefinitions>
         <TreeView Grid.Column="0">
+            <i:Interaction.Behaviors>
+                <behaviors:BindedSelectedItemBehavior SelectedItem="{Binding SelectedGroupPlayer, Mode=TwoWay}" />
+            </i:Interaction.Behaviors>
             <TextBlock Text="Группы" />
             <TreeViewItem Header="Группа A" ItemsSource="{Binding GroupAPlayers}">
                 <TreeViewItem.ItemTemplate>
@@ -20,10 +25,60 @@
                         <TextBlock Text="{Binding NickName}" />
                     </DataTemplate>
                 </TreeViewItem.ItemTemplate>
+                <TreeViewItem.ContextMenu>
+                    <ContextMenu>
+                        <TextBlock Text="Группа A" />
+                        <TextBlock Text="{Binding SelectedGroupPlayer.NickName}" />
+                        <Separator />
+                        <Button Content="Удалить" Command="{Binding DeletePlayerFromGroupButton}" />
+                    </ContextMenu>
+                </TreeViewItem.ContextMenu>
             </TreeViewItem>
-            <TreeViewItem Header="Группа B" ItemsSource="{Binding GroupBPlayers}" />
-            <TreeViewItem Header="Группа C" ItemsSource="{Binding GroupCPlayers}" />
-            <TreeViewItem Header="Группа D" ItemsSource="{Binding GroupDPlayers}" />
+            <TreeViewItem Header="Группа B" ItemsSource="{Binding GroupBPlayers}">
+                <TreeViewItem.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding NickName}" />
+                    </DataTemplate>
+                </TreeViewItem.ItemTemplate>
+                <TreeViewItem.ContextMenu>
+                    <ContextMenu>
+                        <TextBlock Text="Группа B" />
+                        <TextBlock Text="{Binding SelectedGroupPlayer.NickName}" />
+                        <Separator />
+                        <Button Content="Удалить" Command="{Binding DeletePlayerFromGroupButton}" />
+                    </ContextMenu>
+                </TreeViewItem.ContextMenu>
+            </TreeViewItem>
+            <TreeViewItem Header="Группа C" ItemsSource="{Binding GroupCPlayers}">
+                <TreeViewItem.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding NickName}" />
+                    </DataTemplate>
+                </TreeViewItem.ItemTemplate>
+                <TreeViewItem.ContextMenu>
+                    <ContextMenu>
+                        <TextBlock Text="Группа C" />
+                        <TextBlock Text="{Binding SelectedGroupPlayer.NickName}" />
+                        <Separator />
+                        <Button Content="Удалить" Command="{Binding DeletePlayerFromGroupButton}" />
+                    </ContextMenu>
+                </TreeViewItem.ContextMenu>
+            </TreeViewItem>
+            <TreeViewItem Header="Группа D" ItemsSource="{Binding GroupDPlayers}">
+                <TreeViewItem.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding NickName}" />
+                    </DataTemplate>
+                </TreeViewItem.ItemTemplate>
+                <TreeViewItem.ContextMenu>
+                    <ContextMenu>
+                        <TextBlock Text="Группа D" />
+                        <TextBlock Text="{Binding SelectedGroupPlayer.NickName}" />
+                        <Separator />
+                        <Button Content="Удалить" Command="{Binding DeletePlayerFromGroupButton}" />
+                    </ContextMenu>
+                </TreeViewItem.ContextMenu>
+            </TreeViewItem>
         </TreeView>
         <StackPanel Grid.Column="1">
             <TextBlock Text="Нераспределенные игроки:" />
@@ -31,6 +86,7 @@
                 <ListBox.ContextMenu>
                     <ContextMenu>
                         <TextBlock Text="{Binding SelectedUnallocatedPlayer.NickName, Mode=OneWay}" />
+                        <Separator />
                         <Button Content="Добавить в группу А" Command="{Binding AddPlayerToGroupAButton}" />
                         <Button Content="Добавить в группу B" Command="{Binding AddPlayerToGroupBButton}" />
                         <Button Content="Добавить в группу C" Command="{Binding AddPlayerToGroupCButton}" />
@@ -39,10 +95,10 @@
                 </ListBox.ContextMenu>
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="NickName" Width="220" DisplayMemberBinding="{Binding NickName}" />
-                        <GridViewColumn Header="Won" Width="50" DisplayMemberBinding="{Binding Won}" />
-                        <GridViewColumn Header="Lose" Width="50" DisplayMemberBinding="{Binding Lose}" />
-                        <GridViewColumn Header="Points" Width="50" DisplayMemberBinding="{Binding Points}" />
+                        <GridViewColumn Header="NickName" Width="600" DisplayMemberBinding="{Binding NickName}" />
+                        <GridViewColumn Header="Won" Width="100" DisplayMemberBinding="{Binding Won}" />
+                        <GridViewColumn Header="Lose" Width="100" DisplayMemberBinding="{Binding Lose}" />
+                        <GridViewColumn Header="Points" Width="100" DisplayMemberBinding="{Binding Points}" />
                     </GridView>
                 </ListView.View>
             </ListView>
@@ -60,7 +116,10 @@
                     <Setter Property="Margin" Value="15,5,0,0" />
                 </Style>
             </StackPanel.Resources>
-            <TextBlock Text="Количество игроков:" Margin="10" />
+            <Grid>
+                <TextBlock Text="Количество игроков:" Style="{StaticResource ValueNameStyle}" />
+                <TextBlock Text="{Binding PlayersCount}" Style="{StaticResource ValueStyle}" />
+            </Grid>
             <Grid>
                 <TextBlock Text="Группа A" Style="{StaticResource ValueNameStyle}" />
                 <TextBlock Text="{Binding GroupASize}" Style="{StaticResource ValueStyle}" />
@@ -82,8 +141,9 @@
                 <TextBlock Text="{Binding Occupancy}" Style="{StaticResource ValueStyle}" />
             </Grid>
         </StackPanel>
+        <TextBlock Grid.Column="2" Text="{Binding StatusString}" Height="30" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,80" />
         <Button Grid.Column="2" Content="Сохранить" Style="{StaticResource DefaultButtonStyle}"
-                HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="25"
+                HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,25"
                 Command="{Binding SaveButton}"/>
     </Grid>
 </UserControl>

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Media.Media3D;
 using YApi;
 using YApiModel.Models;
 
@@ -34,51 +34,15 @@ namespace YConsole.ViewModels
 
         public ObservableCollection<Player> UnallocatedPlayers => new(_players.Where(p => p.GroupNumber == null));
 
-        private Player? selectedGroupAPlayer;
+        private Player? selectedGroupPlayer;
 
-        public Player? SelectedGroupAPlayer
+        public Player? SelectedGroupPlayer
         {
-            get { return selectedGroupAPlayer; }
+            get { return selectedGroupPlayer; }
             set
             {
-                selectedGroupAPlayer = value;
-                OnPropertyChanged(nameof(SelectedGroupAPlayer));
-            }
-        }
-
-        private Player? selectedGroupBPlayer;
-
-        public Player? SelectedGroupBPlayer
-        {
-            get { return selectedGroupBPlayer; }
-            set
-            {
-                selectedGroupBPlayer = value;
-                OnPropertyChanged(nameof(SelectedGroupBPlayer));
-            }
-        }
-
-        private Player? selectedGroupCPlayer;
-
-        public Player? SelectedGroupCPlayer
-        {
-            get { return selectedGroupCPlayer; }
-            set
-            {
-                selectedGroupCPlayer = value;
-                OnPropertyChanged(nameof(SelectedGroupCPlayer));
-            }
-        }
-
-        private Player? selectedGroupDPlayer;
-
-        public Player? SelectedGroupDPlayer
-        {
-            get { return selectedGroupDPlayer; }
-            set
-            {
-                selectedGroupDPlayer = value;
-                OnPropertyChanged(nameof(SelectedGroupDPlayer));
+                selectedGroupPlayer = value;
+                OnPropertyChanged(nameof(SelectedGroupPlayer));
             }
         }
 
@@ -92,14 +56,30 @@ namespace YConsole.ViewModels
         public int GroupCSize => GroupCPlayers.Count;
         public int GroupDSize => GroupDPlayers.Count;
 
-        public int Occupancy => 0;
+        public string Occupancy
+        {
+            get
+            {
+                float result;
+                try
+                {
+                    result = (float)_players.Where(p => p.GroupNumber != null).Count() / _players.Count * 100;
+                }
+                catch (DivideByZeroException)
+                {
+                    result = 0;
+                }
+                return $"{result}%";
+            }
+        }
+
+        public int PlayersCount => _players.Count;
+
+        public string StatusString { get; private set; } = string.Empty;
         #endregion
 
         #region Command bindings
-        public RelayCommand DeletePlayerFromGroupAButton { get; private set; }
-        public RelayCommand DeletePlayerFromGroupBButton { get; private set; }
-        public RelayCommand DeletePlayerFromGroupCButton { get; private set; }
-        public RelayCommand DeletePlayerFromGroupDButton { get; private set; }
+        public RelayCommand DeletePlayerFromGroupButton { get; private set; }
         public RelayCommand AddPlayerToGroupAButton { get; private set; }
         public RelayCommand AddPlayerToGroupBButton { get; private set; }
         public RelayCommand AddPlayerToGroupCButton { get; private set; }
@@ -112,10 +92,7 @@ namespace YConsole.ViewModels
         public GroupsWorkspaceViewModel(IApiInteractor apiInteractor)
         {
             _apiInteractor = apiInteractor;
-            DeletePlayerFromGroupAButton = new(OnDeletePlayerFromGroupAButtonClick);
-            DeletePlayerFromGroupBButton = new(OnDeletePlayerFromGroupBButtonClick);
-            DeletePlayerFromGroupCButton = new(OnDeletePlayerFromGroupCButtonClick);
-            DeletePlayerFromGroupDButton = new(OnDeletePlayerFromGroupDButtonClick);
+            DeletePlayerFromGroupButton = new(OnDeletePlayerFromGroupButtonClick);
             AddPlayerToGroupAButton = new(OnAddPlayerToGroupAButtonClick);
             AddPlayerToGroupBButton = new(OnAddPlayerToGroupBButtonClick);
             AddPlayerToGroupCButton = new(OnAddPlayerToGroupCButtonClick);
@@ -124,24 +101,16 @@ namespace YConsole.ViewModels
         }
 
         #region Command handlers
-        private void OnDeletePlayerFromGroupAButtonClick(object? ignorable)
+        private void OnDeletePlayerFromGroupButtonClick(object? ignorable)
         {
-            throw new NotImplementedException();
-        }
-
-        private void OnDeletePlayerFromGroupBButtonClick(object? ignorable)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void OnDeletePlayerFromGroupCButtonClick(object? ignorable)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void OnDeletePlayerFromGroupDButtonClick(object? ignorable)
-        {
-            throw new NotImplementedException();
+            Debug.WriteLine(SelectedGroupPlayer?.NickName ?? "null");
+            if (selectedGroupPlayer == null)
+            {
+                MessageBox.Show("Выберите игрока.");
+                return;
+            }
+            selectedGroupPlayer.GroupNumber = null;
+            UpdateAllListsProperties();
         }
 
         private void OnAddPlayerToGroupAButtonClick(object? ignorable)
@@ -154,6 +123,8 @@ namespace YConsole.ViewModels
             SelectedUnallocatedPlayer.GroupNumber = GROUP_A_NUMBER;
             OnPropertyChanged(nameof(UnallocatedPlayers));
             OnPropertyChanged(nameof(GroupAPlayers));
+            OnPropertyChanged(nameof(GroupASize));
+            OnPropertyChanged(nameof(Occupancy));
         }
 
         private void OnAddPlayerToGroupBButtonClick(object? ignorable)
@@ -166,6 +137,8 @@ namespace YConsole.ViewModels
             SelectedUnallocatedPlayer.GroupNumber = GROUP_B_NUMBER;
             OnPropertyChanged(nameof(UnallocatedPlayers));
             OnPropertyChanged(nameof(GroupBPlayers));
+            OnPropertyChanged(nameof(GroupBSize));
+            OnPropertyChanged(nameof(Occupancy));
         }
 
         private void OnAddPlayerToGroupCButtonClick(object? ignorable)
@@ -178,6 +151,8 @@ namespace YConsole.ViewModels
             SelectedUnallocatedPlayer.GroupNumber = GROUP_C_NUMBER;
             OnPropertyChanged(nameof(UnallocatedPlayers));
             OnPropertyChanged(nameof(GroupCPlayers));
+            OnPropertyChanged(nameof(GroupCSize));
+            OnPropertyChanged(nameof(Occupancy));
         }
 
         private void OnAddPlayerToGroupDButtonClick(object? ignorable)
@@ -190,33 +165,54 @@ namespace YConsole.ViewModels
             SelectedUnallocatedPlayer.GroupNumber = GROUP_D_NUMBER;
             OnPropertyChanged(nameof(UnallocatedPlayers));
             OnPropertyChanged(nameof(GroupDPlayers));
+            OnPropertyChanged(nameof(GroupDSize));
+            OnPropertyChanged(nameof(Occupancy));
         }
 
-        private void OnSaveButtonClick(object? ignorable)
+        private async void OnSaveButtonClick(object? ignorable)
         {
-            throw new NotImplementedException();
+            _players = await _apiInteractor.UpdatePlayersAsync(_players);
+            ShowStatusString("Сохранено.");
         }
         #endregion
 
-        private void UpdateAllLists()
+        private void UpdateAllListsProperties()
         {
             OnPropertyChanged(nameof(UnallocatedPlayers));
             OnPropertyChanged(nameof(GroupAPlayers));
             OnPropertyChanged(nameof(GroupBPlayers));
             OnPropertyChanged(nameof(GroupCPlayers));
             OnPropertyChanged(nameof(GroupDPlayers));
+            OnPropertyChanged(nameof(GroupASize));
+            OnPropertyChanged(nameof(GroupBSize));
+            OnPropertyChanged(nameof(GroupCSize));
+            OnPropertyChanged(nameof(GroupDSize));
+            OnPropertyChanged(nameof(Occupancy));
+            OnPropertyChanged(nameof(PlayersCount));
+        }
+
+        private void ShowStatusString(string status)
+        {
+            _ = Task.Run(async () =>
+            {
+                StatusString = status;
+                OnPropertyChanged(nameof(StatusString));
+                await Task.Delay(3000);
+                StatusString = string.Empty;
+                OnPropertyChanged(nameof(StatusString));
+            });
         }
 
         public void LoadData()
         {
             _players = _apiInteractor.GetAllPlayers();
-            UpdateAllLists();
+            UpdateAllListsProperties();
         }
 
         public async Task LoadDataAsync()
         {
             _players = await _apiInteractor.GetAllPlayersAsync();
-            UpdateAllLists();
+            UpdateAllListsProperties();
         }
     }
 }
