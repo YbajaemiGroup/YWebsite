@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
             textDesc.textContent = playerArray['data'][i]['description'];
 
             if (xhrImages.responseText.includes('error')) {
-                imgPlayer.src = 'http://via.placeholder.com/150x150';
+                imgPlayer.src = 'images/placeholder.png';
             }
             else {
                 imgPlayer.src = xhrImages.responseURL;

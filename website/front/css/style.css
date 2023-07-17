@@ -1,9 +1,4 @@
 @font-face {
-    font-family: 'Unbounded Bold';
-    src: local('Unbounded Bold'),
-         url('/fonts/textMain.woff2') format('woff2'); 
-  }
-@font-face {
     font-family: 'Unbounded Medium';
     src: local('Unbounded Medium'),
          url('/fonts/Unbounded-Medium.woff2') format('woff2');
@@ -229,7 +224,7 @@ html {
 
 .mainText {
     color: #a7c958;
-    font-family: 'Unbounded Bold';
+    font-family: 'Unbounded Medium';
 }
 .menuText {
     color: #fff;
@@ -247,7 +242,7 @@ html {
 
 h1 {
     color: #fff;
-    font-family: 'Unbounded Bold';
+    font-family: 'Unbounded Medium';
 }
 
 .black-text {
