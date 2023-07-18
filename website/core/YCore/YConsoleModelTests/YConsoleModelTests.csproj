@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\website\core\YCore\YApi\YApi.csproj" />
+    <ProjectReference Include="..\YConsoleModel\YConsoleModel.csproj" />
   </ItemGroup>
 
 </Project>

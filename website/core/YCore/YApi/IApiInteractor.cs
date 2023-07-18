@@ -20,5 +20,7 @@ namespace YApi
         Task DeleteLinkAsync(int value);
         Task<List<Link>> PostLinksAsync(List<Link> links);
         Task<List<Link>> GetAllLinksAsync();
+        Task<List<Round>> GetBracketAsync();
+        Task PostBracketAsync(List<Round> bracket);
     }
 }

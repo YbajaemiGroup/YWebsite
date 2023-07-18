@@ -76,7 +76,6 @@ namespace YConsole.ViewModels
             {
                 if (value == null)
                 {
-                    MessageBox.Show("Имя игрока не может быть пустым");
                     return;
                 }
                 if (_saved)
@@ -318,6 +317,10 @@ namespace YConsole.ViewModels
             if (ChosenPlayer?.Id == null)
             {
                 MessageBox.Show("Выберите игрока");
+                if (ChosenPlayer != null)
+                {
+                    Players.Remove(ChosenPlayer);
+                }
                 return;
             }
             await _apiInteractor.DeletePlayer(ChosenPlayer.Id.Value);

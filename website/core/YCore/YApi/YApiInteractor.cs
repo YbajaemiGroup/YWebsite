@@ -173,5 +173,15 @@ namespace YApi
         {
             return _client.DeleteLinksAsync(linkId);   
         }
+
+        public Task<List<Round>> GetBracketAsync()
+        {
+            return _client.GetBracketAsync();
+        }
+
+        public Task PostBracketAsync(List<Round> bracket)
+        {
+            return _client.SetBracketAsync(bracket);
+        }
     }
 }

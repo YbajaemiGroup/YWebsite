@@ -18,6 +18,9 @@
         <DataTemplate DataType="{x:Type vm:GroupsWorkspaceViewModel}">
             <local:GroupsWorkspace />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:PlayOffWorkspaceViewModel}">
+            <local:PlayOffWorkspace />
+        </DataTemplate>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -39,7 +42,7 @@
                         <TextBlock Text="Группы" Style="{StaticResource MenuItemHeaderStyle}"/>
                     </MenuItem.Header>
                 </MenuItem>
-                <MenuItem>
+                <MenuItem Command="{Binding OpenPlayOffWorkspaceCommand}">
                     <MenuItem.Header>
                         <TextBlock Text="Плей-офф" Style="{StaticResource MenuItemHeaderStyle}"/>
                     </MenuItem.Header>

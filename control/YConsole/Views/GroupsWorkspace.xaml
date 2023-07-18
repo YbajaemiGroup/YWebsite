@@ -4,7 +4,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-        xmlns:behaviors="clr-namespace:YConsole.Views.Utils"
+        xmlns:behaviours="clr-namespace:YConsole.Views.Utils"
         mc:Ignorable="d"
         d:DesignHeight="775" d:DesignWidth="1800"
         DataContext="{Binding GroupsWorkspaceViewModel, Mode=OneWay, Source={StaticResource Locator}}">
@@ -16,7 +16,7 @@
         </Grid.ColumnDefinitions>
         <TreeView Grid.Column="0">
             <i:Interaction.Behaviors>
-                <behaviors:BindedSelectedItemBehavior SelectedItem="{Binding SelectedGroupPlayer, Mode=TwoWay}" />
+                <behaviours:BindedSelectedItemBehavior SelectedItem="{Binding SelectedGroupPlayer, Mode=TwoWay}" />
             </i:Interaction.Behaviors>
             <TextBlock Text="Группы" />
             <TreeViewItem Header="Группа A" ItemsSource="{Binding GroupAPlayers}">

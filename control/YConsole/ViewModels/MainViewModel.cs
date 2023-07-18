@@ -9,6 +9,7 @@ namespace YConsole.ViewModels
         private readonly PlayerWorkspaceViewModel _playerWorkspaceViewModel;
         private readonly LinkWorkspaceViewModel _linkWorkspaceViewModel;
         private readonly GroupsWorkspaceViewModel _groupsWorkspaceViewModel;
+        private readonly PlayOffWorkspaceViewModel _playOffWorkspaceViewModel;
 
         private ViewModelBase? workspace;
         public ViewModelBase? Workspace
@@ -24,15 +25,18 @@ namespace YConsole.ViewModels
         public MainViewModel(IWindowService windowService,
                              PlayerWorkspaceViewModel playerWorkspaceViewModel,
                              LinkWorkspaceViewModel linkWorkspaceViewModel,
-                             GroupsWorkspaceViewModel groupsWorkspaceViewModel)
+                             GroupsWorkspaceViewModel groupsWorkspaceViewModel,
+                             PlayOffWorkspaceViewModel playOffWorkspaceViewModel)
         {
             _windowService = windowService;
             _playerWorkspaceViewModel = playerWorkspaceViewModel;
             _linkWorkspaceViewModel = linkWorkspaceViewModel;
             _groupsWorkspaceViewModel = groupsWorkspaceViewModel;
+            _playOffWorkspaceViewModel = playOffWorkspaceViewModel;
             OpenPlayersWorkspaceCommand = new(OnPlayersWorkspaceCommandClick);
             OpenLinksWorkspaceCommand = new(OnLinksWorkspaceCommandClick);
             OpenGroupsWorkspaceCommand = new(OnGroupsWorkspaceCommandClick);
+            OpenPlayOffWorkspaceCommand = new(OnOpenPlayOffWorkspaceCommandClick);
             OpenTokenCreateCommand = new(OnTokenCreateWorkspaceClick);
             OpenTokenDeleteCommand = new(OnTokenDeleteWorkspaceClick);
         }
@@ -42,6 +46,7 @@ namespace YConsole.ViewModels
         public RelayCommand OpenPlayersWorkspaceCommand { get; private set; }
         public RelayCommand OpenLinksWorkspaceCommand { get; private set; }
         public RelayCommand OpenGroupsWorkspaceCommand { get; private set; }
+        public RelayCommand OpenPlayOffWorkspaceCommand { get; private set; }
         public RelayCommand OpenTokenCreateCommand { get; private set; }
         public RelayCommand OpenTokenDeleteCommand { get; private set; }
 
@@ -65,6 +70,12 @@ namespace YConsole.ViewModels
         {
             Workspace = _groupsWorkspaceViewModel;
             _ = _groupsWorkspaceViewModel.LoadDataAsync();
+        }
+
+        private void OnOpenPlayOffWorkspaceCommandClick(object? ignorable)
+        {
+            Workspace = _playOffWorkspaceViewModel;
+            _ = _playOffWorkspaceViewModel.LoadDataAsync();
         }
 
         private void OnTokenCreateWorkspaceClick (object? ignorable)

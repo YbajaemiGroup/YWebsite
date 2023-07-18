@@ -4,8 +4,23 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:YConsole.Views"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:behaviours="clr-namespace:YConsole.Views.Utils"
              mc:Ignorable="d" 
-             d:DesignHeight="800" d:DesignWidth="1800">
+             d:DesignHeight="800" d:DesignWidth="1800"
+             DataContext="{Binding PlayOffWorkspaceViewModel, Mode=OneWay, Source={StaticResource Locator}}">
+    <UserControl.Resources>
+        <Style x:Key="ComboboxItemTemplateStyle" TargetType="ComboBox">
+            <Setter Property="ItemTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding NickName}" />
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="ItemsSource" Value="{Binding Players}" />
+        </Style>
+    </UserControl.Resources>
     <Grid Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="375*" />
@@ -28,20 +43,52 @@
         <StackPanel Grid.Column="0" Grid.Row="0"
                     VerticalAlignment="Center">
             <StackPanel Background="Wheat" Margin="20,0,20,0">
-                <ComboBox Width="170" Height="35" Margin="5" />
-                <ComboBox Width="170" Height="35" Margin="5" />
+                <ComboBox Width="170" Height="35" Margin="5" Style="{StaticResource ComboboxItemTemplateStyle}">
+                    <i:Interaction.Behaviors>
+                        <behaviours:BindablePlayerDescriptorsBehaviour IsUpper="True" RoundDescriptor="1" PlayerDescriptor="0" PlayerMetadataCommand="{Binding PlayerCommand}" />
+                    </i:Interaction.Behaviors>
+                </ComboBox>
+                <ComboBox Width="170" Height="35" Margin="5" Style="{StaticResource ComboboxItemTemplateStyle}">
+                    <i:Interaction.Behaviors>
+                        <behaviours:BindablePlayerDescriptorsBehaviour IsUpper="True" RoundDescriptor="1" PlayerDescriptor="1" PlayerMetadataCommand="{Binding PlayerCommand}" />
+                    </i:Interaction.Behaviors>
+                </ComboBox>
             </StackPanel>
             <StackPanel Background="#FFA8D6FF" Margin="20,0,20,0">
-                <ComboBox Width="170" Height="35" Margin="5" />
-                <ComboBox Width="170" Height="35" Margin="5" />
+                <ComboBox Width="170" Height="35" Margin="5" Style="{StaticResource ComboboxItemTemplateStyle}">
+                    <i:Interaction.Behaviors>
+                        <behaviours:BindablePlayerDescriptorsBehaviour IsUpper="True" RoundDescriptor="1" PlayerDescriptor="2" PlayerMetadataCommand="{Binding PlayerCommand}" />
+                    </i:Interaction.Behaviors>
+                </ComboBox>
+                <ComboBox Width="170" Height="35" Margin="5" Style="{StaticResource ComboboxItemTemplateStyle}">
+                    <i:Interaction.Behaviors>
+                        <behaviours:BindablePlayerDescriptorsBehaviour IsUpper="True" RoundDescriptor="1" PlayerDescriptor="3" PlayerMetadataCommand="{Binding PlayerCommand}" />
+                    </i:Interaction.Behaviors>
+                </ComboBox>
             </StackPanel>
             <StackPanel Background="Wheat" Margin="20,0,20,0">
-                <ComboBox Width="170" Height="35" Margin="5" />
-                <ComboBox Width="170" Height="35" Margin="5" />
+                <ComboBox Width="170" Height="35" Margin="5" Style="{StaticResource ComboboxItemTemplateStyle}">
+                    <i:Interaction.Behaviors>
+                        <behaviours:BindablePlayerDescriptorsBehaviour IsUpper="True" RoundDescriptor="1" PlayerDescriptor="4" PlayerMetadataCommand="{Binding PlayerCommand}" />
+                    </i:Interaction.Behaviors>
+                </ComboBox>
+                <ComboBox Width="170" Height="35" Margin="5" Style="{StaticResource ComboboxItemTemplateStyle}">
+                    <i:Interaction.Behaviors>
+                        <behaviours:BindablePlayerDescriptorsBehaviour IsUpper="True" RoundDescriptor="1" PlayerDescriptor="5" PlayerMetadataCommand="{Binding PlayerCommand}" />
+                    </i:Interaction.Behaviors>
+                </ComboBox>
             </StackPanel>
             <StackPanel Background="#FFA8D6FF" Margin="20,0,20,0">
-                <ComboBox Width="170" Height="35" Margin="5" />
-                <ComboBox Width="170" Height="35" Margin="5" />
+                <ComboBox Width="170" Height="35" Margin="5" Style="{StaticResource ComboboxItemTemplateStyle}">
+                    <i:Interaction.Behaviors>
+                        <behaviours:BindablePlayerDescriptorsBehaviour IsUpper="True" RoundDescriptor="1" PlayerDescriptor="6" PlayerMetadataCommand="{Binding PlayerCommand}" />
+                    </i:Interaction.Behaviors>
+                </ComboBox>
+                <ComboBox Width="170" Height="35" Margin="5" Style="{StaticResource ComboboxItemTemplateStyle}">
+                    <i:Interaction.Behaviors>
+                        <behaviours:BindablePlayerDescriptorsBehaviour IsUpper="True" RoundDescriptor="1" PlayerDescriptor="7" PlayerMetadataCommand="{Binding PlayerCommand}" />
+                    </i:Interaction.Behaviors>
+                </ComboBox>
             </StackPanel>
             
         </StackPanel>
@@ -49,12 +96,28 @@
         <StackPanel Grid.Column="1" Grid.Row="0"
                     VerticalAlignment="Center">
             <StackPanel Background="Wheat" Margin="20,23,20,23">
-                <ComboBox Width="170" Height="35" Margin="0,5,0,28" />
-                <ComboBox Width="170" Height="35" Margin="0,28,0,5" />
+                <ComboBox Width="170" Height="35" Margin="0,5,0,28" Style="{StaticResource ComboboxItemTemplateStyle}">
+                    <i:Interaction.Behaviors>
+                        <behaviours:BindablePlayerDescriptorsBehaviour IsUpper="True" RoundDescriptor="2" PlayerDescriptor="0" PlayerMetadataCommand="{Binding PlayerCommand}" />
+                    </i:Interaction.Behaviors>
+                </ComboBox>
+                <ComboBox Width="170" Height="35" Margin="0,28,0,5" Style="{StaticResource ComboboxItemTemplateStyle}">
+                    <i:Interaction.Behaviors>
+                        <behaviours:BindablePlayerDescriptorsBehaviour IsUpper="True" RoundDescriptor="2" PlayerDescriptor="1" PlayerMetadataCommand="{Binding PlayerCommand}" />
+                    </i:Interaction.Behaviors>
+                </ComboBox>
             </StackPanel>
             <StackPanel Background="#FFA8D6FF" Margin="20,23,20,23">
-                <ComboBox Width="170" Height="35" Margin="0,5,0,28" />
-                <ComboBox Width="170" Height="35" Margin="0,28,0,5" />
+                <ComboBox Width="170" Height="35" Margin="0,5,0,28" Style="{StaticResource ComboboxItemTemplateStyle}">
+                    <i:Interaction.Behaviors>
+                        <behaviours:BindablePlayerDescriptorsBehaviour IsUpper="True" RoundDescriptor="2" PlayerDescriptor="2" PlayerMetadataCommand="{Binding PlayerCommand}" />
+                    </i:Interaction.Behaviors>
+                </ComboBox>
+                <ComboBox Width="170" Height="35" Margin="0,28,0,5" Style="{StaticResource ComboboxItemTemplateStyle}">
+                    <i:Interaction.Behaviors>
+                        <behaviours:BindablePlayerDescriptorsBehaviour IsUpper="True" RoundDescriptor="2" PlayerDescriptor="3" PlayerMetadataCommand="{Binding PlayerCommand}" />
+                    </i:Interaction.Behaviors>
+                </ComboBox>
             </StackPanel>
             
         </StackPanel>
@@ -62,14 +125,26 @@
         <StackPanel Grid.Column="2" Grid.Row="0"
                     VerticalAlignment="Center">
             <StackPanel Background="Wheat" Margin="20,80,20,80">
-                <ComboBox Width="170" Height="35" Margin="0,5,0,70" />
-                <ComboBox Width="170" Height="35" Margin="0,70,0,5" />
+                <ComboBox Width="170" Height="35" Margin="0,5,0,70" Style="{StaticResource ComboboxItemTemplateStyle}">
+                    <i:Interaction.Behaviors>
+                        <behaviours:BindablePlayerDescriptorsBehaviour IsUpper="True" RoundDescriptor="3" PlayerDescriptor="0" PlayerMetadataCommand="{Binding PlayerCommand}" />
+                    </i:Interaction.Behaviors>
+                </ComboBox>
+                <ComboBox Width="170" Height="35" Margin="0,70,0,5" Style="{StaticResource ComboboxItemTemplateStyle}">
+                    <i:Interaction.Behaviors>
+                        <behaviours:BindablePlayerDescriptorsBehaviour IsUpper="True" RoundDescriptor="3" PlayerDescriptor="1" PlayerMetadataCommand="{Binding PlayerCommand}" />
+                    </i:Interaction.Behaviors>
+                </ComboBox>
             </StackPanel>
         </StackPanel>
         <!-- Раунд 4 -->
         <StackPanel Background="#FFA8D6FF" Grid.Column="3" Grid.Row="0"
                     VerticalAlignment="Center">
-            <ComboBox Width="170" Height="35" Margin="5" />
+            <ComboBox Width="170" Height="35" Margin="5" Style="{StaticResource ComboboxItemTemplateStyle}">
+                <i:Interaction.Behaviors>
+                    <behaviours:BindablePlayerDescriptorsBehaviour IsUpper="True" RoundDescriptor="4" PlayerDescriptor="0" PlayerMetadataCommand="{Binding PlayerCommand}" />
+                </i:Interaction.Behaviors>
+            </ComboBox>
         </StackPanel>
 
         
@@ -78,20 +153,52 @@
         <StackPanel Grid.Column="0" Grid.Row="2"
                     VerticalAlignment="Center">
             <StackPanel Background="Wheat" Margin="20,0,20,0">
-                <ComboBox Width="170" Height="35" Margin="5" />
-                <ComboBox Width="170" Height="35" Margin="5" />
+                <ComboBox Width="170" Height="35" Margin="5" Style="{StaticResource ComboboxItemTemplateStyle}">
+                    <i:Interaction.Behaviors>
+                        <behaviours:BindablePlayerDescriptorsBehaviour IsUpper="False" RoundDescriptor="1" PlayerDescriptor="8" PlayerMetadataCommand="{Binding PlayerCommand}" />
+                    </i:Interaction.Behaviors>
+                </ComboBox>
+                <ComboBox Width="170" Height="35" Margin="5" Style="{StaticResource ComboboxItemTemplateStyle}">
+                    <i:Interaction.Behaviors>
+                        <behaviours:BindablePlayerDescriptorsBehaviour IsUpper="False" RoundDescriptor="1" PlayerDescriptor="9" PlayerMetadataCommand="{Binding PlayerCommand}" />
+                    </i:Interaction.Behaviors>
+                </ComboBox>
             </StackPanel>
             <StackPanel Background="#FFA8D6FF" Margin="20,0,20,0">
-                <ComboBox Width="170" Height="35" Margin="5" />
-                <ComboBox Width="170" Height="35" Margin="5" />
+                <ComboBox Width="170" Height="35" Margin="5" Style="{StaticResource ComboboxItemTemplateStyle}">
+                    <i:Interaction.Behaviors>
+                        <behaviours:BindablePlayerDescriptorsBehaviour IsUpper="False" RoundDescriptor="1" PlayerDescriptor="10" PlayerMetadataCommand="{Binding PlayerCommand}" />
+                    </i:Interaction.Behaviors>
+                </ComboBox>
+                <ComboBox Width="170" Height="35" Margin="5" Style="{StaticResource ComboboxItemTemplateStyle}">
+                    <i:Interaction.Behaviors>
+                        <behaviours:BindablePlayerDescriptorsBehaviour IsUpper="False" RoundDescriptor="1" PlayerDescriptor="11" PlayerMetadataCommand="{Binding PlayerCommand}" />
+                    </i:Interaction.Behaviors>
+                </ComboBox>
             </StackPanel>
             <StackPanel Background="Wheat" Margin="20,0,20,0">
-                <ComboBox Width="170" Height="35" Margin="5" />
-                <ComboBox Width="170" Height="35" Margin="5" />
+                <ComboBox Width="170" Height="35" Margin="5" Style="{StaticResource ComboboxItemTemplateStyle}">
+                    <i:Interaction.Behaviors>
+                        <behaviours:BindablePlayerDescriptorsBehaviour IsUpper="False" RoundDescriptor="1" PlayerDescriptor="12" PlayerMetadataCommand="{Binding PlayerCommand}" />
+                    </i:Interaction.Behaviors>
+                </ComboBox>
+                <ComboBox Width="170" Height="35" Margin="5" Style="{StaticResource ComboboxItemTemplateStyle}">
+                    <i:Interaction.Behaviors>
+                        <behaviours:BindablePlayerDescriptorsBehaviour IsUpper="False" RoundDescriptor="1" PlayerDescriptor="13" PlayerMetadataCommand="{Binding PlayerCommand}" />
+                    </i:Interaction.Behaviors>
+                </ComboBox>
             </StackPanel>
             <StackPanel Background="#FFA8D6FF" Margin="20,0,20,0">
-                <ComboBox Width="170" Height="35" Margin="5" />
-                <ComboBox Width="170" Height="35" Margin="5" />
+                <ComboBox Width="170" Height="35" Margin="5" Style="{StaticResource ComboboxItemTemplateStyle}">
+                    <i:Interaction.Behaviors>
+                        <behaviours:BindablePlayerDescriptorsBehaviour IsUpper="False" RoundDescriptor="1" PlayerDescriptor="14" PlayerMetadataCommand="{Binding PlayerCommand}" />
+                    </i:Interaction.Behaviors>
+                </ComboBox>
+                <ComboBox Width="170" Height="35" Margin="5" Style="{StaticResource ComboboxItemTemplateStyle}">
+                    <i:Interaction.Behaviors>
+                        <behaviours:BindablePlayerDescriptorsBehaviour IsUpper="False" RoundDescriptor="1" PlayerDescriptor="15" PlayerMetadataCommand="{Binding PlayerCommand}" />
+                    </i:Interaction.Behaviors>
+                </ComboBox>
             </StackPanel>
 
         </StackPanel>
@@ -99,20 +206,52 @@
         <StackPanel Grid.Column="1" Grid.Row="2"
                     VerticalAlignment="Center">
             <StackPanel Background="Wheat" Margin="20,0,20,0">
-                <ComboBox Width="170" Height="35" Margin="5" />
-                <ComboBox Width="170" Height="35" Margin="5" />
+                <ComboBox Width="170" Height="35" Margin="5" Style="{StaticResource ComboboxItemTemplateStyle}">
+                    <i:Interaction.Behaviors>
+                        <behaviours:BindablePlayerDescriptorsBehaviour IsUpper="False" RoundDescriptor="2" PlayerDescriptor="4" PlayerMetadataCommand="{Binding PlayerCommand}" />
+                    </i:Interaction.Behaviors>
+                </ComboBox>
+                <ComboBox Width="170" Height="35" Margin="5" Style="{StaticResource ComboboxItemTemplateStyle}">
+                    <i:Interaction.Behaviors>
+                        <behaviours:BindablePlayerDescriptorsBehaviour IsUpper="False" RoundDescriptor="2" PlayerDescriptor="5" PlayerMetadataCommand="{Binding PlayerCommand}" />
+                    </i:Interaction.Behaviors>
+                </ComboBox>
             </StackPanel>
             <StackPanel Background="#FFA8D6FF" Margin="20,0,20,0">
-                <ComboBox Width="170" Height="35" Margin="5" />
-                <ComboBox Width="170" Height="35" Margin="5" />
+                <ComboBox Width="170" Height="35" Margin="5" Style="{StaticResource ComboboxItemTemplateStyle}">
+                    <i:Interaction.Behaviors>
+                        <behaviours:BindablePlayerDescriptorsBehaviour IsUpper="False" RoundDescriptor="2" PlayerDescriptor="6" PlayerMetadataCommand="{Binding PlayerCommand}" />
+                    </i:Interaction.Behaviors>
+                </ComboBox>
+                <ComboBox Width="170" Height="35" Margin="5" Style="{StaticResource ComboboxItemTemplateStyle}">
+                    <i:Interaction.Behaviors>
+                        <behaviours:BindablePlayerDescriptorsBehaviour IsUpper="False" RoundDescriptor="2" PlayerDescriptor="7" PlayerMetadataCommand="{Binding PlayerCommand}" />
+                    </i:Interaction.Behaviors>
+                </ComboBox>
             </StackPanel>
             <StackPanel Background="Wheat" Margin="20,0,20,0">
-                <ComboBox Width="170" Height="35" Margin="5" />
-                <ComboBox Width="170" Height="35" Margin="5" />
+                <ComboBox Width="170" Height="35" Margin="5" Style="{StaticResource ComboboxItemTemplateStyle}">
+                    <i:Interaction.Behaviors>
+                        <behaviours:BindablePlayerDescriptorsBehaviour IsUpper="False" RoundDescriptor="2" PlayerDescriptor="8" PlayerMetadataCommand="{Binding PlayerCommand}" />
+                    </i:Interaction.Behaviors>
+                </ComboBox>
+                <ComboBox Width="170" Height="35" Margin="5" Style="{StaticResource ComboboxItemTemplateStyle}">
+                    <i:Interaction.Behaviors>
+                        <behaviours:BindablePlayerDescriptorsBehaviour IsUpper="False" RoundDescriptor="2" PlayerDescriptor="9" PlayerMetadataCommand="{Binding PlayerCommand}" />
+                    </i:Interaction.Behaviors>
+                </ComboBox>
             </StackPanel>
             <StackPanel Background="#FFA8D6FF" Margin="20,0,20,0">
-                <ComboBox Width="170" Height="35" Margin="5" />
-                <ComboBox Width="170" Height="35" Margin="5" />
+                <ComboBox Width="170" Height="35" Margin="5" Style="{StaticResource ComboboxItemTemplateStyle}">
+                    <i:Interaction.Behaviors>
+                        <behaviours:BindablePlayerDescriptorsBehaviour IsUpper="False" RoundDescriptor="2" PlayerDescriptor="10" PlayerMetadataCommand="{Binding PlayerCommand}" />
+                    </i:Interaction.Behaviors>
+                </ComboBox>
+                <ComboBox Width="170" Height="35" Margin="5" Style="{StaticResource ComboboxItemTemplateStyle}">
+                    <i:Interaction.Behaviors>
+                        <behaviours:BindablePlayerDescriptorsBehaviour IsUpper="False" RoundDescriptor="2" PlayerDescriptor="11" PlayerMetadataCommand="{Binding PlayerCommand}" />
+                    </i:Interaction.Behaviors>
+                </ComboBox>
             </StackPanel>
 
         </StackPanel>
@@ -120,12 +259,28 @@
         <StackPanel Grid.Column="2" Grid.Row="2"
                     VerticalAlignment="Center">
             <StackPanel Background="Wheat" Margin="20,23,20,23">
-                <ComboBox Width="170" Height="35" Margin="0,5,0,28" />
-                <ComboBox Width="170" Height="35" Margin="0,28,0,5" />
+                <ComboBox Width="170" Height="35" Margin="0,5,0,28" Style="{StaticResource ComboboxItemTemplateStyle}">
+                    <i:Interaction.Behaviors>
+                        <behaviours:BindablePlayerDescriptorsBehaviour IsUpper="False" RoundDescriptor="3" PlayerDescriptor="2" PlayerMetadataCommand="{Binding PlayerCommand}" />
+                    </i:Interaction.Behaviors>
+                </ComboBox>
+                <ComboBox Width="170" Height="35" Margin="0,28,0,5" Style="{StaticResource ComboboxItemTemplateStyle}">
+                    <i:Interaction.Behaviors>
+                        <behaviours:BindablePlayerDescriptorsBehaviour IsUpper="False" RoundDescriptor="3" PlayerDescriptor="3" PlayerMetadataCommand="{Binding PlayerCommand}" />
+                    </i:Interaction.Behaviors>
+                </ComboBox>
             </StackPanel>
             <StackPanel Background="#FFA8D6FF" Margin="20,23,20,23">
-                <ComboBox Width="170" Height="35" Margin="0,5,0,28" />
-                <ComboBox Width="170" Height="35" Margin="0,28,0,5" />
+                <ComboBox Width="170" Height="35" Margin="0,5,0,28" Style="{StaticResource ComboboxItemTemplateStyle}">
+                    <i:Interaction.Behaviors>
+                        <behaviours:BindablePlayerDescriptorsBehaviour IsUpper="False" RoundDescriptor="3" PlayerDescriptor="4" PlayerMetadataCommand="{Binding PlayerCommand}" />
+                    </i:Interaction.Behaviors>
+                </ComboBox>
+                <ComboBox Width="170" Height="35" Margin="0,28,0,5" Style="{StaticResource ComboboxItemTemplateStyle}">
+                    <i:Interaction.Behaviors>
+                        <behaviours:BindablePlayerDescriptorsBehaviour IsUpper="False" RoundDescriptor="3" PlayerDescriptor="5" PlayerMetadataCommand="{Binding PlayerCommand}" />
+                    </i:Interaction.Behaviors>
+                </ComboBox>
             </StackPanel>
 
         </StackPanel>
@@ -133,12 +288,28 @@
         <StackPanel Grid.Column="3" Grid.Row="2"
                     VerticalAlignment="Center">
             <StackPanel Background="Wheat" Margin="20,23,20,23">
-                <ComboBox Width="170" Height="35" Margin="0,5,0,28" />
-                <ComboBox Width="170" Height="35" Margin="0,28,0,5" />
+                <ComboBox Width="170" Height="35" Margin="0,5,0,28" Style="{StaticResource ComboboxItemTemplateStyle}">
+                    <i:Interaction.Behaviors>
+                        <behaviours:BindablePlayerDescriptorsBehaviour IsUpper="False" RoundDescriptor="4" PlayerDescriptor="2" PlayerMetadataCommand="{Binding PlayerCommand}" />
+                    </i:Interaction.Behaviors>
+                </ComboBox>
+                <ComboBox Width="170" Height="35" Margin="0,28,0,5" Style="{StaticResource ComboboxItemTemplateStyle}">
+                    <i:Interaction.Behaviors>
+                        <behaviours:BindablePlayerDescriptorsBehaviour IsUpper="False" RoundDescriptor="4" PlayerDescriptor="3" PlayerMetadataCommand="{Binding PlayerCommand}" />
+                    </i:Interaction.Behaviors>
+                </ComboBox>
             </StackPanel>
             <StackPanel Background="#FFA8D6FF" Margin="20,23,20,23">
-                <ComboBox Width="170" Height="35" Margin="0,5,0,28" />
-                <ComboBox Width="170" Height="35" Margin="0,28,0,5" />
+                <ComboBox Width="170" Height="35" Margin="0,5,0,28" Style="{StaticResource ComboboxItemTemplateStyle}">
+                    <i:Interaction.Behaviors>
+                        <behaviours:BindablePlayerDescriptorsBehaviour IsUpper="False" RoundDescriptor="4" PlayerDescriptor="4" PlayerMetadataCommand="{Binding PlayerCommand}" />
+                    </i:Interaction.Behaviors>
+                </ComboBox>
+                <ComboBox Width="170" Height="35" Margin="0,28,0,5" Style="{StaticResource ComboboxItemTemplateStyle}">
+                    <i:Interaction.Behaviors>
+                        <behaviours:BindablePlayerDescriptorsBehaviour IsUpper="False" RoundDescriptor="4" PlayerDescriptor="5" PlayerMetadataCommand="{Binding PlayerCommand}" />
+                    </i:Interaction.Behaviors>
+                </ComboBox>
             </StackPanel>
 
         </StackPanel>
@@ -146,29 +317,55 @@
         <StackPanel Grid.Column="4" Grid.Row="2"
                     VerticalAlignment="Center">
             <StackPanel Background="Wheat" Margin="20,80,20,80">
-                <ComboBox Width="170" Height="35" Margin="0,5,0,70" />
-                <ComboBox Width="170" Height="35" Margin="0,70,0,5" />
+                <ComboBox Width="170" Height="35" Margin="0,5,0,70" Style="{StaticResource ComboboxItemTemplateStyle}">
+                    <i:Interaction.Behaviors>
+                        <behaviours:BindablePlayerDescriptorsBehaviour IsUpper="False" RoundDescriptor="5" PlayerDescriptor="0" PlayerMetadataCommand="{Binding PlayerCommand}" />
+                    </i:Interaction.Behaviors>
+                </ComboBox>
+                <ComboBox Width="170" Height="35" Margin="0,70,0,5" Style="{StaticResource ComboboxItemTemplateStyle}">
+                    <i:Interaction.Behaviors>
+                        <behaviours:BindablePlayerDescriptorsBehaviour IsUpper="False" RoundDescriptor="5" PlayerDescriptor="1" PlayerMetadataCommand="{Binding PlayerCommand}" />
+                    </i:Interaction.Behaviors>
+                </ComboBox>
             </StackPanel>
         </StackPanel>
         <!-- Раунд 6 -->
         <StackPanel Grid.Column="5" Grid.Row="2"
                     VerticalAlignment="Center">
             <StackPanel Background="#FFA8D6FF" Margin="20,80,20,80">
-                <ComboBox Width="170" Height="35" Margin="0,5,0,70" />
-                <ComboBox Width="170" Height="35" Margin="0,70,0,5" />
+                <ComboBox Width="170" Height="35" Margin="0,5,0,70" Style="{StaticResource ComboboxItemTemplateStyle}">
+                    <i:Interaction.Behaviors>
+                        <behaviours:BindablePlayerDescriptorsBehaviour IsUpper="False" RoundDescriptor="6" PlayerDescriptor="0" PlayerMetadataCommand="{Binding PlayerCommand}" />
+                    </i:Interaction.Behaviors>
+                </ComboBox>
+                <ComboBox Width="170" Height="35" Margin="0,70,0,5" Style="{StaticResource ComboboxItemTemplateStyle}">
+                    <i:Interaction.Behaviors>
+                        <behaviours:BindablePlayerDescriptorsBehaviour IsUpper="False" RoundDescriptor="6" PlayerDescriptor="1" PlayerMetadataCommand="{Binding PlayerCommand}" />
+                    </i:Interaction.Behaviors>
+                </ComboBox>
             </StackPanel>
         </StackPanel>
         <!-- Раунд 7 -->
         <StackPanel Background="#FFA8D6FF" Grid.Column="6" Grid.Row="2"
                     VerticalAlignment="Center">
-            <ComboBox Width="170" Height="35" Margin="5" />
+            <ComboBox Width="170" Height="35" Margin="5" Style="{StaticResource ComboboxItemTemplateStyle}">
+                <i:Interaction.Behaviors>
+                    <behaviours:BindablePlayerDescriptorsBehaviour IsUpper="False" RoundDescriptor="7" PlayerDescriptor="0" PlayerMetadataCommand="{Binding PlayerCommand}" />
+                </i:Interaction.Behaviors>
+            </ComboBox>
         </StackPanel>
         
         <!-- Виннер чикен диннер -->
         <StackPanel Background="Azure" Grid.Column="7" Grid.Row="1"
                     VerticalAlignment="Center">
-            <ComboBox Width="170" Height="35" Margin="5" />
+            <ComboBox Width="170" Height="35" Margin="5" Style="{StaticResource ComboboxItemTemplateStyle}">
+                <i:Interaction.Behaviors>
+                    <behaviours:BindablePlayerDescriptorsBehaviour IsUpper="True" RoundDescriptor="8" PlayerDescriptor="0" PlayerMetadataCommand="{Binding PlayerCommand}" />
+                </i:Interaction.Behaviors>
+            </ComboBox>
         </StackPanel>
+
+        <Button Content="Сохранить" Grid.Column="7" Grid.Row="2" Style="{StaticResource DefaultButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,30" Command="{Binding SaveButton}" />
 
     </Grid>
 </UserControl>

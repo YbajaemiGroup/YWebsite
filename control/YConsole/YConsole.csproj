@@ -16,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\website\core\YCore\YApiModel\YApiModel.csproj" />
     <ProjectReference Include="..\..\website\core\YCore\YApi\YApi.csproj" />
+    <ProjectReference Include="..\..\website\core\YCore\YConsoleModel\YConsoleModel.csproj" />
   </ItemGroup>
 
 </Project>
