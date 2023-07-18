@@ -103,7 +103,6 @@ namespace YConsole.Model
                 return;
             }
             var nextRoundGame = nextRound.Games
-                .Where(g => g.IsUpper)
                 .FirstOrDefault(g => BracketUtils.Player1Won(game, g) ||
                                      BracketUtils.Player2Won(game, g)); // игра из следующего раунда, в которой играет игрок из этой игры.
             if (nextRoundGame == null)

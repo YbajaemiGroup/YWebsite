@@ -115,6 +115,11 @@ namespace YConsole.ViewModels
 
         private void OnAddPlayerToGroupAButtonClick(object? ignorable)
         {
+            if (GroupASize == 4)
+            {
+                MessageBox.Show("Группа А укомплектована.");
+                return;
+            }
             if (SelectedUnallocatedPlayer == null)
             {
                 MessageBox.Show("Выберите игрока.");
@@ -129,6 +134,11 @@ namespace YConsole.ViewModels
 
         private void OnAddPlayerToGroupBButtonClick(object? ignorable)
         {
+            if (GroupBSize == 4)
+            {
+                MessageBox.Show("Группа B укомплектована.");
+                return;
+            }
             if (SelectedUnallocatedPlayer == null)
             {
                 MessageBox.Show("Выберите игрока.");
@@ -143,6 +153,11 @@ namespace YConsole.ViewModels
 
         private void OnAddPlayerToGroupCButtonClick(object? ignorable)
         {
+            if (GroupCSize == 4)
+            {
+                MessageBox.Show("Группа C укомплектована.");
+                return;
+            }
             if (SelectedUnallocatedPlayer == null)
             {
                 MessageBox.Show("Выберите игрока.");
@@ -157,6 +172,11 @@ namespace YConsole.ViewModels
 
         private void OnAddPlayerToGroupDButtonClick(object? ignorable)
         {
+            if (GroupDSize == 4)
+            {
+                MessageBox.Show("Группа D укомплектована.");
+                return;
+            }
             if (SelectedUnallocatedPlayer == null)
             {
                 MessageBox.Show("Выберите игрока.");
