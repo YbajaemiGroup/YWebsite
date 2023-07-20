@@ -153,7 +153,6 @@ namespace YConsole.ViewModels
                 await _apiInteractor.DeleteLinkAsync(selectedLink.Id.Value);
                 
             }
-            Debug.WriteLine("Links ViewModel");
             links.Remove(selectedLink);
             
             UpdateLinksOfChosenPlayer();

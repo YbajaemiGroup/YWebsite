@@ -103,7 +103,6 @@ namespace YConsole.ViewModels
         #region Command handlers
         private void OnDeletePlayerFromGroupButtonClick(object? ignorable)
         {
-            Debug.WriteLine(SelectedGroupPlayer?.NickName ?? "null");
             if (selectedGroupPlayer == null)
             {
                 MessageBox.Show("Выберите игрока.");

@@ -42,7 +42,7 @@ namespace YConsole.Model
             }
         }
 
-        public int GetPlayersCountByRoundDescriptor(int roundDescriptor, bool isUpper)
+        public static int GetPlayersCountByRoundDescriptor(int roundDescriptor, bool isUpper)
         {
             if (isUpper && roundDescriptor > 5)
             {
@@ -91,6 +91,27 @@ namespace YConsole.Model
                 {
                     SetWinner(round.RoundNumber, game);
                 }
+            }
+            SetFinalPlayers();
+        }
+
+        private void SetFinalPlayers()
+        {
+            var lastUpperRound = rounds.FirstOrDefault(r => r.RoundNumber == 4); // 4 - последний раунд в верхней сетке
+            var lastRound = rounds.FirstOrDefault(r => r.RoundNumber == 7); // 7 - последний раунд в нижней сетке
+            var lastUpperGame = lastUpperRound?.Games?.FirstOrDefault(g => g.IsUpper);
+            var winnerGame = rounds.FirstOrDefault(r => r.RoundNumber == 8)?.Games?.FirstOrDefault();
+            var lastLowerGame = lastRound?.Games?.FirstOrDefault(g => !g.IsUpper);
+            if (lastUpperGame == null || lastLowerGame == null)
+            {
+                return;
+            }
+            lastUpperGame.Player2Id = lastLowerGame.Player1Id;
+            lastLowerGame.Player2Id = lastUpperGame.Player1Id;
+            if (winnerGame != null)
+            {
+                lastLowerGame.WinnerId = winnerGame.Player1Id;
+                lastUpperGame.WinnerId = winnerGame.Player1Id;
             }
         }
 
@@ -155,13 +176,20 @@ namespace YConsole.Model
 
         public void ForEach(Action<int, int, bool, object> action)
         {
-            var games = rounds.Select(r => r.Games.AsEnumerable()).Aggregate((l1, l2) => l1.Concat(l2));
             foreach (var round in rounds)
             {
                 foreach (var game in round.Games)
                 {
-                    action.Invoke(GetPlayerDescriptor(game, g => g.Player1Id), round.RoundNumber, game.IsUpper, players.First(p => p.Id == game.Player1Id));
-                    action.Invoke(GetPlayerDescriptor(game, g => g.Player2Id), round.RoundNumber, game.IsUpper, players.First(p => p.Id == game.Player2Id));
+                    var player1 = players.FirstOrDefault(p => p.Id == game.Player1Id);
+                    var player2 = players.FirstOrDefault(p => p.Id == game.Player2Id);
+                    if (player1 != null)
+                    {
+                        action.Invoke(GetPlayerDescriptor(game, g => g.Player1Id), round.RoundNumber, game.IsUpper, player1);
+                    }
+                    if (player2 != null)
+                    {
+                        action.Invoke(GetPlayerDescriptor(game, g => g.Player2Id), round.RoundNumber, game.IsUpper, player2);
+                    }
                 }
             }
         }

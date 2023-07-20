@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using YApi;
@@ -44,7 +41,6 @@ namespace YConsole.ViewModels
 
         private void OnPlayerChanged(int playerDescriptor, int roundDescriptor, bool isUpper, object value)
         {
-            Debug.WriteLine($"plDes {playerDescriptor}, roDes {roundDescriptor}, val {value}");
             if (value is Player player && player?.Id != null)
             {
                 bracket.SetPlayer(playerDescriptor, roundDescriptor, isUpper, player.Id.Value);
@@ -53,9 +49,7 @@ namespace YConsole.ViewModels
 
         private void OnSaveButtonClick(object? ignorable)
         {
-            Debug.WriteLine("Set winners");
             bracket.SetWinners();
-            Debug.WriteLine("Winners setted");
             _ = Task.Run(async () =>
             {
                 await _apiInteractor.PostBracketAsync(bracket.Rounds);
