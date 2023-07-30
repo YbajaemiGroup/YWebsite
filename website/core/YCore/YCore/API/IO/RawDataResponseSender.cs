@@ -4,22 +4,54 @@ namespace YCore.API.IO
 {
     public class RawDataResponseSender : IResponseSender
     {
-        private readonly Stream data;
+        private readonly Stream _data;
+        private readonly string? _fileExtention;
 
-        public RawDataResponseSender(Stream data)
+        public RawDataResponseSender(Stream fileData)
         {
-            this.data = data;
+            _data = fileData;
         }
 
-        public void Send(Stream outputStream)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fileExtention">File name extention or file type</param>
+        /// <param name="fileData"></param>
+        public RawDataResponseSender(string? fileExtention, Stream fileData)
         {
-            if (!outputStream.CanWrite)
+            _fileExtention = fileExtention;
+            _data = fileData;
+        }
+
+        private string? GetMimeType() => _fileExtention switch
+        {
+            "jpg" => "image/jpeg",
+            "png" => "image/png",
+            "ico" => "image/x-icon",
+            "txt" => "text/plain",
+            "csv" => "text/csv",
+            "html" => "text/html",
+            "js" => "text/javascript",
+            "css" => "text/css",
+            "ttf" => "font/ttf",
+            "woff2" => "font/woff",
+            _ => null
+        };
+
+        public void Send(HttpListenerResponse response)
+        {
+            var mimeType = GetMimeType();
+            if (mimeType != null)
+            {
+                response.Headers.Add("Content-Type", mimeType);
+            }
+            if (!response.OutputStream.CanWrite)
             {
                 throw new AccessViolationException();
             }
-            data.CopyTo(outputStream);
-            outputStream.Flush();
-            data.Close();
+            _data.CopyTo(response.OutputStream);
+            response.OutputStream.Flush();
+            _data.Close();
         }
     }
 }

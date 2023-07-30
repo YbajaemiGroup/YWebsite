@@ -52,8 +52,8 @@ namespace YCore
                 context.Response.OutputStream.Flush();
                 return;
             }
-            var responseSender = new RawDataResponseSender(fileStream);
-            responseSender.Send(context.Response.OutputStream);
+            var responseSender = new RawDataResponseSender(FilesOperator.GetFileExtention(fileName), fileStream);
+            responseSender.Send(context.Response);
             fileStream.Dispose();
             context.Response.Close();
         }

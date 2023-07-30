@@ -1,7 +1,9 @@
-﻿namespace YCore.API
+﻿using System.Net;
+
+namespace YCore.API
 {
     public interface IResponseSender
     {
-        public void Send(Stream outputStream);
+        void Send(HttpListenerResponse response);
     }
 }

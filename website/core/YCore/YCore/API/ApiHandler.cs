@@ -84,7 +84,7 @@ namespace YCore.API
                 return;
             IHandler handler = handlerFactory.GetHandler();
             IResponseSender responseSender = handler.GetResponseSender();
-            responseSender.Send(context.Response.OutputStream);
+            responseSender.Send(context.Response);
             context.Response.Close();
         }
     }

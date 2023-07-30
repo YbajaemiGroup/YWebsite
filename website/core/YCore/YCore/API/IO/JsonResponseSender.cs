@@ -1,26 +1,28 @@
-﻿using System.Text.Json;
+﻿using System.Net;
+using System.Text.Json;
 using YApiModel;
 
 namespace YCore.API.IO
 {
     public class JsonResponseSender : IResponseSender
     {
-        private readonly Response response;
+        private readonly Response _response;
 
         public JsonResponseSender(Response response)
         {
-            this.response = response;
+            _response = response;
         }
 
-        public void Send(Stream outputStream)
+        public void Send(HttpListenerResponse response)
         {
-            if (!outputStream.CanWrite)
+            response.Headers.Add("Content-Type", "application/json");
+            if (!response.OutputStream.CanWrite)
             {
                 throw new AccessViolationException();
             }
-            using var streamWriter = new StreamWriter(outputStream);
-            streamWriter.Write(JsonSerializer.Serialize(response));
-            outputStream.Flush();
+            using var streamWriter = new StreamWriter(response.OutputStream);
+            streamWriter.Write(JsonSerializer.Serialize(_response));
+            response.OutputStream.Flush();
         }
     }
 }

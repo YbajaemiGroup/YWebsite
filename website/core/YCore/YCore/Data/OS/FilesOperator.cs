@@ -9,6 +9,8 @@
             this.filesLocation = filesLocation;
         }
 
+        public static string? GetFileExtention(string fileName) => fileName.Split('.').LastOrDefault();
+
         private static byte[] ReadAllBytes(Stream reader)
         {
             const int bufferSize = 4096;

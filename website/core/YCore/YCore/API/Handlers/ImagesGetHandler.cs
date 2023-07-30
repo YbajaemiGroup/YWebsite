@@ -26,7 +26,7 @@ namespace YCore.API.Handlers
                     Exception = new UnknownInnerException()
                 });
             }
-            return new RawDataResponseSender(imageData);
+            return new RawDataResponseSender(FilesOperator.GetFileExtention(imageName), imageData);
         }
     }
 }
