@@ -6,7 +6,7 @@ public class DialogViewModel : ViewModelBase, IDialogViewModel
 
     public DialogViewModel()
     {
-        QuestionText = string.Empty;
+        QuestionText = "Вы действительно хотите удалить выбранную запись из базы данных? Все связанные данные будут также удалены.";
     }
 
     public DialogViewModel(string questionText)
